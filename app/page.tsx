@@ -1,5 +1,7 @@
 import { buildComparison, type Asset, type CompanyRow, type DirectRoute } from "@/lib/model";
 import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from "@/lib/format";
+import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
+import { latestReport, REPO_URL } from "@/lib/reports-store";
 
 // A cold cache needs ~100 paced SoSoValue requests; allow the first render time to finish.
 export const maxDuration = 60;
@@ -13,8 +15,18 @@ function parse(sp: Record<string, string | string[] | undefined>) {
   const amount = Math.min(Math.max(Number(one("usd")) || 1000, 10), 1_000_000);
   const m = Number(one("months"));
   const months = HORIZONS.includes(m) ? m : 12;
-  return { asset, amount, months };
+  const exclude = (one("exclude") ?? "")
+    .split(",")
+    .filter((x): x is RouteGroup => (ROUTE_GROUPS as readonly string[]).includes(x));
+  return { asset, amount, months, exclude, q: one("q")?.slice(0, 200) ?? "", qerr: one("qerr") ?? "" };
 }
+
+const GROUP_TEXT: Record<RouteGroup, string> = {
+  sodex_spot: "SoDEX spot",
+  sodex_perp: "perps",
+  etf: "ETFs",
+  treasury_stock: "treasury stocks",
+};
 
 const FLAG_TEXT: Record<string, string> = {
   fee_unverified: "fee reported as 0 — not ranked",
@@ -24,8 +36,9 @@ const FLAG_TEXT: Record<string, string> = {
 };
 
 export default async function Page({ searchParams }: { searchParams: SP }) {
-  const { asset, amount, months } = parse(await searchParams);
-  const c = await buildComparison(asset, amount, months);
+  const { asset, amount, months, exclude, q, qerr } = parse(await searchParams);
+  const [full, report] = await Promise.all([buildComparison(asset, amount, months), latestReport()]);
+  const c = { ...full, direct: full.direct.filter((r) => !exclude.includes(r.kind)) };
   const ranked = c.direct.filter((r) => r.ranked);
   const best = ranked[0];
   const worst = ranked.at(-1);
@@ -43,7 +56,27 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         Check puts them on one yardstick with live SoSoValue and SoDEX data.
       </p>
 
-      <form className="card form" method="get">
+      <form className="card form ask" method="get" action="/ask">
+        <label style={{ flex: 1 }}>
+          Ask in your own words
+          <input name="q" defaultValue={q} maxLength={200} placeholder="e.g. 5k in ether for half a year, no broker" />
+        </label>
+        <button type="submit">Ask</button>
+        {q && !qerr && (
+          <span className="sub" style={{ width: "100%" }}>
+            Understood as: {asset}, {usd(amount)}, {horizon}
+            {exclude.length ? `, without ${exclude.map((x) => GROUP_TEXT[x]).join(", ")}` : ""}. The AI only fills in this
+            form; every number below is calculated by code.
+          </span>
+        )}
+        {qerr && (
+          <span className="sub bad" style={{ width: "100%" }}>
+            {qerr === "notunderstood" ? "That doesn't look like a question about holding BTC or ETH." : "The AI parser is unavailable right now — use the form below."}
+          </span>
+        )}
+      </form>
+
+      <form className="card form" method="get" style={{ marginTop: 12 }}>
         <label>
           Asset
           <select name="asset" defaultValue={asset}>
@@ -65,7 +98,13 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
             ))}
           </select>
         </label>
+        {exclude.length > 0 && <input type="hidden" name="exclude" value={exclude.join(",")} />}
         <button type="submit">Compare</button>
+        {exclude.length > 0 && (
+          <span className="sub">
+            Excluding {exclude.map((x) => GROUP_TEXT[x]).join(", ")} · <a href={`/?asset=${asset}&usd=${amount}&months=${months}`}>show all</a>
+          </span>
+        )}
       </form>
 
       {best && (
@@ -102,6 +141,8 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         </section>
       )}
 
+      {report && <DailyNote report={report} />}
+
       <h2>Direct exposure (tracks {asset} 1:1)</h2>
       <p className="lede">
         Total cost = trading cost (SoDEX: buy + sell into today's book vs its mid, fees included; ETFs: premium to NAV) + recurring cost × {horizon}. Ranked cheapest first.
@@ -119,7 +160,7 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         </>
       )}
 
-      {asset === "BTC" && <Companies rows={c.companies} />}
+      {asset === "BTC" && !exclude.includes("treasury_stock") && <Companies rows={c.companies} />}
 
       <h2>Method and limits</h2>
       <div className="card">
@@ -348,6 +389,52 @@ function Companies({ rows }: { rows: CompanyRow[] }) {
           </div>
         </>
       )}
+    </>
+  );
+}
+
+function DailyNote({ report }: { report: NonNullable<Awaited<ReturnType<typeof latestReport>>> }) {
+  const byId = new Map(report.facts.map((f) => [f.id, f.text]));
+  const a = report.author;
+  return (
+    <>
+      <h2>Premium Report · {report.day}</h2>
+      <div className="card">
+        <div className="big" style={{ fontSize: 17, fontWeight: 650, marginBottom: 6 }}>
+          {report.note.headline}
+        </div>
+        <ul className="notes" style={{ color: "var(--text)", fontSize: 14 }}>
+          {report.note.points.map((p, i) => (
+            <li key={i}>
+              {p.text}{" "}
+              {p.facts.map((f) => (
+                <span key={f} className="chip" title={byId.get(f)}>
+                  {f}
+                </span>
+              ))}
+            </li>
+          ))}
+        </ul>
+        <details style={{ marginTop: 8 }}>
+          <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
+            How this note is made: facts and checks
+          </summary>
+          <p className="muted" style={{ fontSize: 13 }}>
+            Our code computes the facts below from that day&apos;s snapshot.{" "}
+            {a.kind === "llm"
+              ? `${a.model} turned them into prose; a validator confirmed every number appears in the facts each sentence cites (accepted on attempt ${a.attempts}).`
+              : `The AI writer was not used (${a.reason}); this is the template version.`}{" "}
+            Raw file: <a href={`${REPO_URL}/blob/main/data/reports/${report.day}.json`}>data/reports/{report.day}.json</a>
+          </p>
+          <ul className="notes">
+            {report.facts.map((f) => (
+              <li key={f.id}>
+                <b>{f.id}</b> {f.text}
+              </li>
+            ))}
+          </ul>
+        </details>
+      </div>
     </>
   );
 }

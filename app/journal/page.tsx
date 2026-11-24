@@ -1,5 +1,6 @@
 import { pct, ratio, timeUtc, usd } from "@/lib/format";
 import type { Snapshot } from "@/lib/snapshot";
+import type { Report } from "@/lib/report";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ type GhFile = { name: string; html_url: string };
 // Snapshot files are named by UTC day, so we can read them straight from
 // raw.githubusercontent.com — no GitHub API, whose unauthenticated rate limit is
 // shared across serverless IPs.
-async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot }[]> {
+async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot; report: Report | null }[]> {
   const days: string[] = [];
   for (let d = new Date(); d.toISOString().slice(0, 10) >= FIRST_DAY && days.length < 60; d.setUTCDate(d.getUTCDate() - 1)) {
     days.push(d.toISOString().slice(0, 10));
@@ -27,13 +28,15 @@ async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot }[]> {
         const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${DIR}/${name}`, { next: { revalidate } });
         if (!r.ok) return null;
         const snap = (await r.json()) as Snapshot;
-        return { file: { name, html_url: `https://github.com/${REPO}/blob/main/${DIR}/${name}` }, snap };
+        const rr = await fetch(`https://raw.githubusercontent.com/${REPO}/main/data/reports/${name}`, { next: { revalidate } });
+        const report = rr.ok ? ((await rr.json()) as Report) : null;
+        return { file: { name, html_url: `https://github.com/${REPO}/blob/main/${DIR}/${name}` }, snap, report };
       } catch {
         return null;
       }
     }),
   );
-  return rows.filter((r): r is { file: GhFile; snap: Snapshot } => r !== null);
+  return rows.filter((r): r is { file: GhFile; snap: Snapshot; report: Report | null } => r !== null);
 }
 
 export default async function Journal() {
@@ -42,7 +45,8 @@ export default async function Journal() {
     <>
       <h1>Journal</h1>
       <p className="lede">
-        Every day at 00:30 UTC a GitHub Action calls <code>/api/snapshot</code> and commits the result to{" "}
+        Every day at 00:30 UTC a GitHub Action calls <code>/api/report</code> (snapshot + AI note checked against the
+        facts) and commits the result to{" "}
         <a href={`https://github.com/${REPO}/tree/main/${DIR}`}>{DIR}</a>. The git history is the record: nothing here
         can be edited after the fact without it showing in the commits.
       </p>
@@ -59,12 +63,13 @@ export default async function Journal() {
                 <th className="num">SoDEX BTC perp funding / year</th>
                 <th className="num">MSTR mNAV (equity / with debt)</th>
                 <th>Cheapest way to hold ETH</th>
+                <th>Note</th>
                 <th>Raw</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map(({ file, snap }) => {
-                const mstr = snap?.btc.companies.find((c) => c.ticker === "MSTR");
+              {rows.map(({ file, snap, report }) => {
+                const mstr = snap.btc.companies.find((c) => c.ticker === "MSTR");
                 return (
                   <tr key={file.name}>
                     <td>
@@ -73,9 +78,9 @@ export default async function Journal() {
                         {`${timeUtc(snap.takenAt)} · ${snap.takenBy}`}
                       </span>
                     </td>
-                    <td className="num">{usd(snap?.btc.reference.price, 0)}</td>
+                    <td className="num">{usd(snap.btc.reference.price, 0)}</td>
                     <td>
-                      {snap?.btc.cheapest ? (
+                      {snap.btc.cheapest ? (
                         <>
                           {snap.btc.cheapest.name} <b>{pct(snap.btc.cheapest.cost)}</b>
                         </>
@@ -83,12 +88,12 @@ export default async function Journal() {
                         "—"
                       )}
                     </td>
-                    <td className="num">{pct(snap?.btc.perpAnnualFunding)}</td>
+                    <td className="num">{pct(snap.btc.perpAnnualFunding)}</td>
                     <td className="num">
                       {ratio(mstr?.mnavEquity)} / {ratio(mstr?.mnavWithDebt)}
                     </td>
                     <td>
-                      {snap?.eth.cheapest ? (
+                      {snap.eth.cheapest ? (
                         <>
                           {snap.eth.cheapest.name} <b>{pct(snap.eth.cheapest.cost)}</b>
                         </>
@@ -97,7 +102,23 @@ export default async function Journal() {
                       )}
                     </td>
                     <td>
-                      <a href={file.html_url}>json</a>
+                      {report ? (
+                        <>
+                          {report.note.headline}
+                          <span className="sub">{report.author.kind === "llm" ? `${report.author.model}, validated` : "template"}</span>
+                        </>
+                      ) : (
+                        <span className="muted">—</span>
+                      )}
+                    </td>
+                    <td>
+                      <a href={file.html_url}>snapshot</a>
+                      {report && (
+                        <>
+                          {" · "}
+                          <a href={`https://github.com/${REPO}/blob/main/data/reports/${file.name}`}>report</a>
+                        </>
+                      )}
                     </td>
                   </tr>
                 );

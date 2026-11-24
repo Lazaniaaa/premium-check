@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "day": "2026-11-24",
+  "generatedAt": "2026-11-24T22:57:01.428Z",
+  "by": "manual",
+  "facts": [
+    {
+      "id": "F1",
+      "text": "Comparison basis: $1,000 held for 12 months; costs include trading and recurring costs."
+    },
+    {
+      "id": "F2",
+      "text": "BTC reference price $60,034 (SoDEX BTC-USD index); SoSoValue price differs by 0.1 bps."
+    },
+    {
+      "id": "F3",
+      "text": "Cheapest way to hold BTC: SoDEX spot vBTC/vUSDC at 0.13% total cost."
+    },
+    {
+      "id": "F4",
+      "text": "Second cheapest BTC route: Grayscale Bitcoin Mini Trust (BTC) at 0.20%."
+    },
+    {
+      "id": "F5",
+      "text": "BlackRock IBIT total cost 0.30% (sponsor fee 0.25%)."
+    },
+    {
+      "id": "F6",
+      "text": "SoDEX BTC-USD perp funding is 9.22% per year at the current hourly rate."
+    },
+    {
+      "id": "F7",
+      "text": "Holding BTC through the SoDEX perp costs 9.30% in total."
+    },
+    {
+      "id": "F8",
+      "text": "Strategy (MSTR) mNAV is 0.62× on equity and 0.70× with debt; price $78.39 from SoDEX MSTR-USD (24/7)."
+    },
+    {
+      "id": "F9",
+      "text": "7 of 7 treasury companies trade below 1.00× mNAV on equity."
+    },
+    {
+      "id": "F10",
+      "text": "Cheapest way to hold ETH: Bitwise Ethereum ETF (ETHW) at 0.09% total cost."
+    },
+    {
+      "id": "F11",
+      "text": "SoDEX ETH-USD perp funding is 10.95% per year at the current hourly rate."
+    },
+    {
+      "id": "F12",
+      "text": "5 ETH ETFs are under $100M in net assets and are not ranked."
+    }
+  ],
+  "note": {
+    "headline": "SoDEX spot is the cheapest BTC route at 0.13% total cost.",
+    "headlineFacts": [
+      "F3"
+    ],
+    "points": [
+      {
+        "text": "Costs compare $1,000 held for 12 months, including trading and recurring costs. Grayscale Bitcoin Mini Trust is the second-cheapest BTC route at 0.20%, while IBIT costs 0.30%.",
+        "facts": [
+          "F1",
+          "F4",
+          "F5"
+        ]
+      },
+      {
+        "text": "The cheapest ETH route is the Bitwise Ethereum ETF at 0.09% total cost. 5 ETH ETFs are not ranked because their net assets are under $100M.",
+        "facts": [
+          "F10",
+          "F12"
+        ]
+      },
+      {
+        "text": "At current hourly rates, annualized SoDEX perp funding is 9.22% for BTC and 10.95% for ETH. Total BTC perp cost is 9.30%.",
+        "facts": [
+          "F6",
+          "F7",
+          "F11"
+        ]
+      },
+      {
+        "text": "All 7 of 7 treasury companies trade below 1.00× mNAV on equity. Strategy's mNAV is 0.62× on equity and 0.70× with debt.",
+        "facts": [
+          "F8",
+          "F9"
+        ]
+      }
+    ]
+  },
+  "author": {
+    "kind": "llm",
+    "model": "gpt-6.1-terra",
+    "attempts": 1,
+    "tokens": {
+      "input": 589,
+      "output": 611
+    }
+  }
+}
