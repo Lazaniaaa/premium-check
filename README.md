@@ -6,6 +6,7 @@ that holds bitcoin — every route has a premium on top of the asset itself. Pre
 yardstick, on live SoSoValue and SoDEX data.
 
 - **Live demo:** https://premium-check-iota.vercel.app
+- **For judges — the 60-second path:** https://premium-check-iota.vercel.app/judges
 - **Data status (every upstream endpoint, live):** https://premium-check-iota.vercel.app/diag
 - **Daily journal (committed by GitHub Actions):** https://premium-check-iota.vercel.app/journal · raw files in [`data/snapshots`](data/snapshots)
 - **Snapshot API (JSON):** https://premium-check-iota.vercel.app/api/snapshot

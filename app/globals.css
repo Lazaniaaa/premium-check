@@ -87,3 +87,15 @@ pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; 
 .footer { color: var(--muted); font-size: 12px; padding-bottom: 32px; }
 .status-ok { color: var(--good); font-weight: 600; }
 .status-bad { color: var(--bad); font-weight: 600; }
+
+/* phone widths */
+@media (max-width: 640px) {
+  .topbar-inner { height: auto; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+  nav { flex-wrap: wrap; gap: 6px 14px; }
+  h1 { font-size: 22px; }
+  .answer .big { font-size: 17px; }
+  .form > label, .form input, .form select { min-width: 0; width: 100%; }
+  .form > label { flex: 1 1 100%; }
+  .form button { width: 100%; }
+  th, td { padding: 7px 8px; }
+}
