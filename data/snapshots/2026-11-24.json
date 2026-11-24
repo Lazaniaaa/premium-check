@@ -1,31 +1,31 @@
 {
   "schema": 1,
-  "takenAt": "2026-11-24T22:30:28.511Z",
-  "takenBy": "manual",
+  "takenAt": "2026-11-24T22:40:40.810Z",
+  "takenBy": "github-actions",
   "params": {
     "usd": 1000,
     "months": 12
   },
   "btc": {
     "reference": {
-      "price": 59998,
+      "price": 60080,
       "source": "SoDEX BTC-USD index price",
-      "sosoPrice": 59994.01,
-      "deviationBps": -0.6650221674053824
+      "sosoPrice": 60035.51,
+      "deviationBps": -7.405126498002401
     },
     "cheapest": {
       "id": "sodex-spot",
       "name": "SoDEX spot vBTC/vUSDC",
-      "cost": 0.0013166862730376039
+      "cost": 0.0013166654167605651
     },
-    "perpAnnualFunding": 0.088091101265508,
+    "perpAnnualFunding": 0.09200626028561999,
     "routes": [
       {
         "id": "sodex-spot",
         "name": "SoDEX spot vBTC/vUSDC",
-        "entryPremium": 0.0013166862730376039,
+        "entryPremium": 0.0013166654167605651,
         "annualCarry": 0,
-        "cost": 0.0013166862730376039,
+        "cost": 0.0013166654167605651,
         "ranked": true,
         "flags": []
       },
@@ -50,7 +50,7 @@
       {
         "id": "etf-BITB",
         "name": "BITB — Bitwise Bitcoin ETF",
-        "entryPremium": 8.336540564823913e-05,
+        "entryPremium": 0.00008336540564823913,
         "annualCarry": 0.002,
         "cost": 0.002083365405648239,
         "ranked": true,
@@ -68,7 +68,7 @@
       {
         "id": "etf-BTCO",
         "name": "BTCO — Invesco Galaxy Bitcoin ETF",
-        "entryPremium": 9.007390205062471e-05,
+        "entryPremium": 0.00009007390205062471,
         "annualCarry": 0.0025,
         "cost": 0.0025900739020506248,
         "ranked": true,
@@ -131,9 +131,9 @@
       {
         "id": "sodex-perp",
         "name": "SoDEX perp BTC-USD (1x long)",
-        "entryPremium": 0.0008166734750020277,
-        "annualCarry": 0.088091101265508,
-        "cost": 0.08890777474051002,
+        "entryPremium": 0.0008166540373550912,
+        "annualCarry": 0.09200626028561999,
+        "cost": 0.09282291432297508,
         "ranked": true,
         "flags": [
           "funding_varies"
@@ -142,7 +142,7 @@
       {
         "id": "etf-FBTC",
         "name": "FBTC — Fidelity Wise Origin Bitcoin Fund",
-        "entryPremium": -1.7233945695416253e-05,
+        "entryPremium": -0.000017233945695416253,
         "annualCarry": null,
         "cost": null,
         "ranked": false,
@@ -157,10 +157,10 @@
         "kind": "treasury",
         "btcHolding": 851305,
         "holdingsAsOf": "2026-11-23",
-        "price": 78.37,
+        "price": 78.52,
         "priceSource": "sodex_24_7",
-        "mnavEquity": 0.6193320930889442,
-        "mnavWithDebt": 0.7039656673850725
+        "mnavEquity": 0.6196705819336148,
+        "mnavWithDebt": 0.7041886443606973
       },
       {
         "ticker": "ASST",
@@ -169,8 +169,8 @@
         "holdingsAsOf": "2026-11-16",
         "price": 14.3,
         "priceSource": "exchange",
-        "mnavEquity": 0.6486952971083124,
-        "mnavWithDebt": 0.5941105666720701
+        "mnavEquity": 0.6478099273619262,
+        "mnavWithDebt": 0.5932996967242155
       },
       {
         "ticker": "MARA",
@@ -179,7 +179,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 5.385,
         "priceSource": "exchange",
-        "mnavEquity": 0.9849271647935479,
+        "mnavEquity": 0.9835828900346753,
         "mnavWithDebt": null
       },
       {
@@ -197,7 +197,7 @@
         "kind": "operating",
         "btcHolding": 18712,
         "holdingsAsOf": "2025-12-31",
-        "price": 126.94,
+        "price": 126.96,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -217,7 +217,7 @@
         "kind": "operating",
         "btcHolding": 17864,
         "holdingsAsOf": "2026-07-30",
-        "price": 103.19,
+        "price": 103.38,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -229,7 +229,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 48.695,
         "priceSource": "exchange",
-        "mnavEquity": 5.96520495231709,
+        "mnavEquity": 5.957063361004007,
         "mnavWithDebt": null
       },
       {
@@ -239,7 +239,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 16.295,
         "priceSource": "exchange",
-        "mnavEquity": 6.498954550557855,
+        "mnavEquity": 6.490084472775802,
         "mnavWithDebt": null
       },
       {
@@ -249,7 +249,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 5.145,
         "priceSource": "exchange",
-        "mnavEquity": 1.8475501764278606,
+        "mnavEquity": 1.845028553350845,
         "mnavWithDebt": null
       },
       {
@@ -257,7 +257,7 @@
         "kind": "operating",
         "btcHolding": 11509,
         "holdingsAsOf": "2025-03-31",
-        "price": 384.79,
+        "price": 385.25,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -279,7 +279,7 @@
         "holdingsAsOf": "2026-09-30",
         "price": 3.7,
         "priceSource": "exchange",
-        "mnavEquity": 0.19619942416260205,
+        "mnavEquity": 0.19593164199247332,
         "mnavWithDebt": null
       },
       {
@@ -289,7 +289,7 @@
         "holdingsAsOf": "2025-06-30",
         "price": 3.45,
         "priceSource": "exchange",
-        "mnavEquity": 0.027808993570258275,
+        "mnavEquity": 0.02777103855240273,
         "mnavWithDebt": null
       },
       {
@@ -299,8 +299,8 @@
         "holdingsAsOf": "2026-06-30",
         "price": 3.36,
         "priceSource": "exchange",
-        "mnavEquity": 0.230005985200626,
-        "mnavWithDebt": 0.7733865335247015
+        "mnavEquity": 0.22969206225145072,
+        "mnavWithDebt": 0.7723309793344715
       },
       {
         "ticker": "DDC",
@@ -309,8 +309,8 @@
         "holdingsAsOf": "2026-06-17",
         "price": 0.0865,
         "priceSource": "exchange",
-        "mnavEquity": 0.03390147315304899,
-        "mnavWithDebt": 0.4725194627305101
+        "mnavEquity": 0.03385520283349922,
+        "mnavWithDebt": 0.47187454602039186
       },
       {
         "ticker": "CAN",
@@ -319,7 +319,7 @@
         "holdingsAsOf": "2026-06-30",
         "price": 0.1242,
         "priceSource": "exchange",
-        "mnavEquity": 0.7834150920035019,
+        "mnavEquity": 0.782345850366613,
         "mnavWithDebt": null
       },
       {
@@ -329,7 +329,7 @@
         "holdingsAsOf": "2026-05-14",
         "price": 1.005,
         "priceSource": "exchange",
-        "mnavEquity": 0.29301121268059926,
+        "mnavEquity": 0.29261129724385143,
         "mnavWithDebt": null
       },
       {
@@ -339,7 +339,7 @@
         "holdingsAsOf": "2025-09-30",
         "price": 5.495,
         "priceSource": "exchange",
-        "mnavEquity": 27.864554328866518,
+        "mnavEquity": 27.826523479083445,
         "mnavWithDebt": null
       },
       {
@@ -349,8 +349,8 @@
         "holdingsAsOf": "2026-11-06",
         "price": 2.141,
         "priceSource": "exchange",
-        "mnavEquity": 0.9758055168693065,
-        "mnavWithDebt": 1.7876024924198506
+        "mnavEquity": 0.9744736917630601,
+        "mnavWithDebt": 1.7851626887517675
       },
       {
         "ticker": "CANG",
@@ -359,7 +359,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 1.33,
         "priceSource": "exchange",
-        "mnavEquity": 0.8495769889860526,
+        "mnavEquity": 0.8484174464910983,
         "mnavWithDebt": null
       },
       {
@@ -369,18 +369,18 @@
         "holdingsAsOf": "2025-06-26",
         "price": 1.0034,
         "priceSource": "exchange",
-        "mnavEquity": 0.3404178241841395,
-        "mnavWithDebt": 2.131541061625388
+        "mnavEquity": 0.339953205982024,
+        "mnavWithDebt": 2.1286318344773636
       }
     ],
     "errors": []
   },
   "eth": {
     "reference": {
-      "price": 1684.2,
+      "price": 1687.6,
       "source": "SoDEX ETH-USD index price",
       "sosoPrice": 1683.88,
-      "deviationBps": -1.9000118750733819
+      "deviationBps": -22.043138184402178
     },
     "cheapest": {
       "id": "etf-ETHW",
