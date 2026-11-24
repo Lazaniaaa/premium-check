@@ -1,29 +1,39 @@
 import { pct, ratio, timeUtc, usd } from "@/lib/format";
 import type { Snapshot } from "@/lib/snapshot";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 const REPO = "Lazaniaaa/premium-check";
 const DIR = "data/snapshots";
+const FIRST_DAY = "2026-11-24";
 
-type GhFile = { name: string; download_url: string; html_url: string };
+type GhFile = { name: string; html_url: string };
 
-async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot | null }[]> {
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${DIR}`, {
-    headers: { Accept: "application/vnd.github+json", "User-Agent": "premium-check" },
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) return [];
-  const files = ((await res.json()) as GhFile[])
-    .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f.name))
-    .sort((a, b) => b.name.localeCompare(a.name))
-    .slice(0, 60);
-  return Promise.all(
-    files.map(async (file) => {
-      const r = await fetch(file.download_url, { next: { revalidate: 86400 } }); // a dated file never changes
-      return { file, snap: r.ok ? ((await r.json()) as Snapshot) : null };
+// Snapshot files are named by UTC day, so we can read them straight from
+// raw.githubusercontent.com — no GitHub API, whose unauthenticated rate limit is
+// shared across serverless IPs.
+async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot }[]> {
+  const days: string[] = [];
+  for (let d = new Date(); d.toISOString().slice(0, 10) >= FIRST_DAY && days.length < 60; d.setUTCDate(d.getUTCDate() - 1)) {
+    days.push(d.toISOString().slice(0, 10));
+  }
+  const today = days[0];
+  const rows = await Promise.all(
+    days.map(async (day) => {
+      const name = `${day}.json`;
+      // recent days may still appear; older dated files never change
+      const revalidate = day >= today || days.indexOf(day) <= 1 ? 600 : 86400;
+      try {
+        const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${DIR}/${name}`, { next: { revalidate } });
+        if (!r.ok) return null;
+        const snap = (await r.json()) as Snapshot;
+        return { file: { name, html_url: `https://github.com/${REPO}/blob/main/${DIR}/${name}` }, snap };
+      } catch {
+        return null;
+      }
     }),
   );
+  return rows.filter((r): r is { file: GhFile; snap: Snapshot } => r !== null);
 }
 
 export default async function Journal() {
@@ -60,7 +70,7 @@ export default async function Journal() {
                     <td>
                       {file.name.replace(".json", "")}
                       <span className="sub">
-                        {snap ? `${timeUtc(snap.takenAt)} · ${snap.takenBy}` : "unreadable"}
+                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy}`}
                       </span>
                     </td>
                     <td className="num">{usd(snap?.btc.reference.price, 0)}</td>
