@@ -56,6 +56,34 @@ export async function orderbook(market: "perps" | "spot", symbol: string): Promi
   return { bids: lv(raw.bids), asks: lv(raw.asks), blockTime: raw.blockTime };
 }
 
+export type SymbolInfo = {
+  id: number;
+  name: string;
+  displayName: string;
+  tickSize: number;
+  stepSize: number;
+  quantityPrecision: number;
+  pricePrecision: number;
+  minQuantity: number;
+  minNotional: number;
+};
+export async function symbolInfo(market: "perps" | "spot", symbol: string): Promise<SymbolInfo | null> {
+  const r = await maybe(getJson<any[]>("sodex", `/${market}/markets/symbols`, { symbol }, 3600));
+  const s = r?.find((x) => x.name === symbol);
+  if (!s) return null;
+  return {
+    id: Number(s.id),
+    name: s.name,
+    displayName: s.displayName ?? s.name,
+    tickSize: num(s.tickSize) ?? 1,
+    stepSize: num(s.stepSize) ?? 0,
+    quantityPrecision: Number(s.quantityPrecision ?? 8),
+    pricePrecision: Number(s.pricePrecision ?? 2),
+    minQuantity: num(s.minQuantity) ?? 0,
+    minNotional: num(s.minNotional) ?? 0,
+  };
+}
+
 // ---------- SoSoValue: treasuries & stocks ----------
 export type TreasuryListItem = { ticker: string; name: string; list_location: string };
 export const treasuryList = () => getJson<TreasuryListItem[]>("sosovalue", "/btc-treasuries", {}, TTL.list);
@@ -141,6 +169,6 @@ export async function etfData(ticker: string): Promise<EtfData | null> {
 // ---------- SoSoValue: reference price ----------
 export const CURRENCY_ID = { BTC: "1673723677362319866", ETH: "1673723677362319867" } as const;
 export async function sosoPrice(asset: "BTC" | "ETH"): Promise<number | null> {
-  const r = await maybe(getJson<any>("sosovalue", `/currencies/${CURRENCY_ID[asset]}/market-snapshot`, {}, 300));
+  const r = await maybe(getJson<any>("sosovalue", `/currencies/${CURRENCY_ID[asset]}/market-snapshot`, {}, 1800));
   return num(r?.price);
 }

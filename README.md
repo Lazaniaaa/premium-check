@@ -29,7 +29,9 @@ Pick an asset, an amount and a holding period. You get:
 1. **Direct exposure, ranked by total cost** — SoDEX spot, SoDEX perp (1x long), 12 US BTC ETFs or 11 US ETH ETFs.
    Total cost = trading cost + recurring cost × holding period, and how much of the asset you actually keep.
 2. **A SoDEX execution check** for your exact size — VWAP, slippage, fee, and the largest size that stays within
-   10 bps, from the live order book. Preview only; nothing is signed or sent.
+   10 bps, from the live order book — plus a button that opens that market on SoDEX and the exact order body you
+   would sign (IOC limit, quantity and price rounded to the market's step and tick size from
+   `/markets/symbols`, SoDEX enum values). Nothing is signed or sent.
 3. **Indirect exposure** — US-listed companies holding ≥ 1,000 BTC: mNAV (equity, and with debt), BTC per $1,000
    of stock, last purchase. When the US market is closed, the price switches to the SoDEX 24/7 perp
    (e.g. `MSTR-USD`).
@@ -123,8 +125,9 @@ The model choice was tested on the actual task: on parsing requests into the sch
 ## Trust and verifiability
 
 - **/diag** checks every upstream endpoint the app depends on, live, and shows the SoSoValue quota left.
-- **/journal** — a GitHub Action commits a dated snapshot and the day's validated note every day; the git history
-  makes it tamper-evident.
+- **/journal** — a GitHub Action commits a dated snapshot and the day's validated note every day, with the change vs
+  the previous day; the git history makes it tamper-evident. Below it, history straight from SoSoValue (clearly
+  separated from what we recorded): 30 days of BTC ETF premium/discount and Strategy's BTC purchases.
 - **Tests on real data:** `fixtures/` holds responses recorded from the live APIs (key stripped).
   `tests/model.test.ts` runs the whole pipeline on them and re-derives each figure from the raw JSON
   (e.g. IBIT cost = latest `prem_dsc` + 0.25 %, MSTR mNAV from the raw snapshot and holdings).
@@ -147,7 +150,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 29 tests: math, full pipeline on fixtures, note validator
+npm test                    # 35 tests: math, full pipeline on fixtures, note validator, order tickets
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
 
@@ -172,6 +175,8 @@ lib/
   model.ts              assembles the comparison
   universe.ts           company classification and thresholds
   snapshot.ts           compact snapshot shape
+  trade.ts              SoDEX deep links and unsigned order tickets
+  history.ts            ETF premium history and Strategy purchases from SoSoValue
   llm.ts                OpenAI Responses API client (strict JSON schema)
   query.ts              question parser + normalisation
   report.ts             facts, writer prompt, validator, template fallback
@@ -192,8 +197,8 @@ tests/                  vitest
 ## Wave 3 changelog
 
 New project in Wave 3: comparison engine, SoDEX execution check, treasury mNAV with 24/7 SoDEX pricing, ETF coverage
-for BTC and ETH, plain-language ask box, daily AI note with a number validator, /diag, daily journal, tests on
-recorded real data.
+for BTC and ETH, plain-language ask box, daily AI note with a number validator, SoDEX order tickets and deep links,
+/diag, daily journal with day-over-day changes and SoSoValue history, /judges, tests on recorded real data.
 
 ## Team
 

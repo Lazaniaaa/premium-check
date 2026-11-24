@@ -21,7 +21,8 @@ export const ratio = (x: number | null | undefined) => (x == null || !Number.isF
 
 export const int = (x: number | null | undefined) => (x == null || !Number.isFinite(x) ? "—" : Math.round(x).toLocaleString("en-US"));
 
-export const bps = (x: number | null | undefined) => (x == null || !Number.isFinite(x) ? "—" : `${x.toFixed(1)} bps`);
+export const bps = (x: number | null | undefined) =>
+  x == null || !Number.isFinite(x) ? "—" : `${(Math.abs(x) < 0.05 ? 0 : x).toFixed(1)} bps`;
 
 export const timeUtc = (iso: string | null | undefined) =>
   iso ? new Date(iso).toISOString().replace("T", " ").slice(0, 16) + " UTC" : "—";

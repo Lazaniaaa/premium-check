@@ -1,0 +1,39 @@
+{
+ "recordedAt": "2026-11-24T23:11:07.479Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "timestamp": 1795561866443,
+  "data": [
+   {
+    "id": 2,
+    "name": "vETH_vUSDC",
+    "displayName": "ETH/USDC",
+    "baseCoinID": 2,
+    "baseCoin": "vETH",
+    "baseCoinPrecision": 18,
+    "quoteCoinID": 0,
+    "quoteCoin": "vUSDC",
+    "quoteCoinPrecision": 6,
+    "pricePrecision": 1,
+    "tickSize": "0.1",
+    "minPrice": "0.1",
+    "maxPrice": "0",
+    "quantityPrecision": 4,
+    "stepSize": "0.0001",
+    "minQuantity": "0.0001",
+    "maxQuantity": "0",
+    "marketMinQuantity": "0.0001",
+    "marketMaxQuantity": "0",
+    "minNotional": "5",
+    "maxNotional": "0",
+    "buyLimitUpRatio": "1",
+    "sellLimitDownRatio": "0.5",
+    "marketDeviationRatio": "0.1",
+    "makerFee": "0.00035",
+    "takerFee": "0.00065",
+    "status": "TRADING"
+   }
+  ]
+ }
+}

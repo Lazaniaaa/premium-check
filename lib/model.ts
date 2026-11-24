@@ -23,9 +23,11 @@ import {
   purchaseHistory,
   sosoPrice,
   stockSnapshot,
+  symbolInfo,
   treasuryList,
   type PerpTicker,
 } from "./sources";
+import { buildTicket, sodexTradeUrl, type OrderTicket } from "./trade";
 import { COMPANY_KIND, LISTING, MIN_BTC_HOLDING, STALE_HOLDINGS_DAYS, type CompanyKind } from "./universe";
 
 export type Asset = "BTC" | "ETH";
@@ -46,6 +48,7 @@ export type DirectRoute = {
   source: string;
   asOf: string | null;
   fill?: Fill & { maxUsdWithin10bps: number; feeRate: number };
+  ticket?: OrderTicket | null;
 };
 
 export type CompanyRow = {
@@ -60,6 +63,7 @@ export type CompanyRow = {
   priceSource: "exchange" | "sodex_24_7";
   marketStatus: string;
   sodexSymbol: string | null;
+  sodexUrl: string | null;
   mnavEquity: number | null;
   mnavWithDebt: number | null;
   balanceAsOf: string | null;
@@ -140,11 +144,14 @@ async function directRoutes(
     return { ...r, cost, units: cost != null ? effectiveUnits(usd, ref, cost) : null, ranked: cost != null && !untrusted };
   };
 
-  const [spotBook, perpBook, etfs] = await Promise.all([
+  const [spotBook, perpBook, etfs, spotInfo, perpInfo] = await Promise.all([
     orderbook("spot", SPOT[asset]).catch(note(`SoDEX spot ${SPOT[asset]}`)),
     orderbook("perps", PERP[asset]).catch(note(`SoDEX perp ${PERP[asset]}`)),
     etfList(asset).catch(note(`SoSoValue ETF list ${asset}`)),
+    symbolInfo("spot", SPOT[asset]),
+    symbolInfo("perps", PERP[asset]),
   ]);
+  const now = Date.now();
 
   const basisNote = (mid: number) => `Trades ${signedBps((mid / ref - 1) * 1e4)} vs ${asset} index (you get it back on exit)`;
 
@@ -169,6 +176,7 @@ async function directRoutes(
         source: `SoDEX /spot/markets/${SPOT[asset]}/orderbook`,
         asOf: spotBook.blockTime ? new Date(spotBook.blockTime).toISOString() : null,
         fill: { ...f, maxUsdWithin10bps: maxSizeWithin(spotBook.asks, 10), feeRate: fee },
+        ticket: spotInfo ? buildTicket("spot", spotInfo, f, now) : null,
       }),
     );
   }
@@ -193,6 +201,7 @@ async function directRoutes(
         source: `SoDEX /perps/markets/${PERP[asset]}/orderbook + tickers`,
         asOf: perpBook.blockTime ? new Date(perpBook.blockTime).toISOString() : null,
         fill: { ...f, maxUsdWithin10bps: maxSizeWithin(perpBook.asks, 10), feeRate: fee },
+        ticket: perpInfo ? buildTicket("perps", perpInfo, f, now) : null,
       }),
     );
   }
@@ -269,6 +278,7 @@ async function companyRows(
           priceSource: useSodex ? "sodex_24_7" : "exchange",
           marketStatus: snap.status,
           sodexSymbol,
+          sodexUrl: sodexSymbol ? sodexTradeUrl("perps", { name: sodexSymbol, displayName: sodexSymbol }) : null,
           mnavEquity: kind === "operating" ? null : m.equity,
           mnavWithDebt: kind === "operating" ? null : m.withDebt,
           balanceAsOf: balance?.fiscalDate ?? null,

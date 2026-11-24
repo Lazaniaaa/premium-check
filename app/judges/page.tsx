@@ -71,7 +71,9 @@ export default async function Judges() {
               <td className="muted">3</td>
               <td>
                 Scroll to <b>SoDEX execution check</b> — VWAP, slippage, fee and the largest size within 10 bps from the
-                live order book — and to <b>companies holding BTC</b> for mNAV with 24/7 SoDEX pricing.
+                live order book, a button that opens that market on SoDEX, and the exact order body you would sign (IOC
+                limit, rounded to the market&apos;s tick and step size; never sent). Then <b>companies holding BTC</b> for
+                mNAV with 24/7 SoDEX pricing.
               </td>
             </tr>
             <tr>
@@ -121,7 +123,7 @@ export default async function Judges() {
             <tr>
               <td>&ldquo;Needs proof / validation, not claims&rdquo;</td>
               <td>
-                29 tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
+                35 tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
                 and re-derive each figure from the raw JSON; a daily, git-committed journal shows what the site said each day.
               </td>
             </tr>

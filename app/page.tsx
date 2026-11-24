@@ -282,7 +282,33 @@ function Ticket({ r, asset }: { r: DirectRoute; asset: string }) {
           </tr>
         </tbody>
       </table>
-      <span className="sub">Preview only — no order is signed or sent.</span>
+      {r.ticket ? (
+        <>
+          <p style={{ margin: "10px 0 6px" }}>
+            <a className="btn-link" href={r.ticket.tradeUrl} target="_blank" rel="noreferrer">
+              Open this market on SoDEX ↗
+            </a>
+          </p>
+          {r.ticket.warnings.map((w) => (
+            <span key={w} className="chip warn">
+              {w}
+            </span>
+          ))}
+          <details>
+            <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
+              The order you would sign: IOC limit buy {r.ticket.quantity} at {r.ticket.limitPrice}
+            </summary>
+            <pre>{`${r.ticket.endpoint}
+${JSON.stringify(r.ticket.body, null, 2)}`}</pre>
+            <span className="sub">
+              Built from the live book and the market&apos;s tick/step size. You sign it with your own SoDEX API key
+              (EIP-712); this site never asks for keys and sends nothing.
+            </span>
+          </details>
+        </>
+      ) : (
+        <span className="sub">Preview only — no order is signed or sent.</span>
+      )}
     </div>
   );
 }
@@ -329,6 +355,14 @@ function Companies({ rows }: { rows: CompanyRow[] }) {
                   {usd(r.price, 2)}
                   <span className="sub">
                     {r.priceSource === "sodex_24_7" ? `SoDEX ${r.sodexSymbol} (24/7)` : `exchange · ${r.marketStatus}`}
+                    {r.sodexUrl && (
+                      <>
+                        {" · "}
+                        <a href={r.sodexUrl} target="_blank" rel="noreferrer">
+                          trade on SoDEX ↗
+                        </a>
+                      </>
+                    )}
                   </span>
                 </td>
                 <td className={`num ${r.mnavEquity != null && r.mnavEquity < 1 ? "good" : ""}`}>

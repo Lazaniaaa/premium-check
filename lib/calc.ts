@@ -11,6 +11,7 @@ export type Fill = {
   qty: number;
   vwap: number | null;
   bestPrice: number | null;
+  worstPrice: number | null; // deepest level the order reaches (an IOC limit at this price fills it)
   slippageBps: number | null; // vwap vs best level
   complete: boolean; // false if the visible book could not absorb the order
 };
@@ -20,6 +21,7 @@ export function walkAsks(asks: BookLevel[], usd: number): Fill {
   let left = usd;
   let qty = 0;
   let spent = 0;
+  let worst: number | null = null;
   for (const [px, sz] of asks) {
     if (left <= 1e-9) break;
     const levelUsd = px * sz;
@@ -27,6 +29,7 @@ export function walkAsks(asks: BookLevel[], usd: number): Fill {
     qty += take / px;
     spent += take;
     left -= take;
+    worst = px;
   }
   const best = asks[0]?.[0] ?? null;
   const vwap = qty > 0 ? spent / qty : null;
@@ -36,6 +39,7 @@ export function walkAsks(asks: BookLevel[], usd: number): Fill {
     qty,
     vwap,
     bestPrice: best,
+    worstPrice: worst,
     slippageBps: vwap && best ? (vwap / best - 1) * 1e4 : null,
     complete: left <= 1e-6,
   };

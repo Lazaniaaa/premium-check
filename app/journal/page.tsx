@@ -1,4 +1,5 @@
-import { pct, ratio, timeUtc, usd } from "@/lib/format";
+import { int, pct, ratio, signedPct, timeUtc, usd } from "@/lib/format";
+import { etfPremiumHistory, strategyPurchases } from "@/lib/history";
 import type { Snapshot } from "@/lib/snapshot";
 import type { Report } from "@/lib/report";
 
@@ -39,8 +40,16 @@ async function loadSnapshots(): Promise<{ file: GhFile; snap: Snapshot; report: 
   return rows.filter((r): r is { file: GhFile; snap: Snapshot; report: Report | null } => r !== null);
 }
 
+// change vs the previous recorded day, in percentage points / ratio points
+function Delta({ now, prev, kind }: { now: number | null | undefined; prev: number | null | undefined; kind: "pp" | "x" }) {
+  if (now == null || prev == null) return null;
+  const d = now - prev;
+  const text = kind === "pp" ? `${d >= 0 ? "+" : ""}${(d * 100).toFixed(2)} pp` : `${d >= 0 ? "+" : ""}${d.toFixed(2)}×`;
+  return <span className="sub">{text} vs previous day</span>;
+}
+
 export default async function Journal() {
-  const rows = await loadSnapshots();
+  const [rows, etfHist, mstrBuys] = await Promise.all([loadSnapshots(), etfPremiumHistory("BTC"), strategyPurchases()]);
   return (
     <>
       <h1>Journal</h1>
@@ -68,8 +77,10 @@ export default async function Journal() {
               </tr>
             </thead>
             <tbody>
-              {rows.map(({ file, snap, report }) => {
+              {rows.map(({ file, snap, report }, i) => {
                 const mstr = snap.btc.companies.find((c) => c.ticker === "MSTR");
+                const prev = rows[i + 1]?.snap;
+                const prevMstr = prev?.btc.companies.find((c) => c.ticker === "MSTR");
                 return (
                   <tr key={file.name}>
                     <td>
@@ -83,14 +94,19 @@ export default async function Journal() {
                       {snap.btc.cheapest ? (
                         <>
                           {snap.btc.cheapest.name} <b>{pct(snap.btc.cheapest.cost)}</b>
+                          <Delta now={snap.btc.cheapest.cost} prev={prev?.btc.cheapest?.cost} kind="pp" />
                         </>
                       ) : (
                         "—"
                       )}
                     </td>
-                    <td className="num">{pct(snap.btc.perpAnnualFunding)}</td>
+                    <td className="num">
+                      {pct(snap.btc.perpAnnualFunding)}
+                      <Delta now={snap.btc.perpAnnualFunding} prev={prev?.btc.perpAnnualFunding} kind="pp" />
+                    </td>
                     <td className="num">
                       {ratio(mstr?.mnavEquity)} / {ratio(mstr?.mnavWithDebt)}
+                      <Delta now={mstr?.mnavEquity} prev={prevMstr?.mnavEquity} kind="x" />
                     </td>
                     <td>
                       {snap.eth.cheapest ? (
@@ -127,6 +143,79 @@ export default async function Journal() {
           </table>
         </div>
       )}
+
+      <h2>History from SoSoValue (not recorded by us)</h2>
+      <p className="lede">
+        The rows above are what Premium Check recorded live, day by day. The tables below come straight from
+        SoSoValue&apos;s own history endpoints, limited by this API key to the last 30 days for ETFs.
+      </p>
+
+      <h2 style={{ fontSize: 16 }}>BTC ETF premium / discount to NAV</h2>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ETF</th>
+              <th className="num">Days</th>
+              <th className="num">Min</th>
+              <th className="num">Median</th>
+              <th className="num">Max</th>
+              <th className="num">Latest</th>
+              <th className="num">Fee / year</th>
+            </tr>
+          </thead>
+          <tbody>
+            {etfHist.map((e) => (
+              <tr key={e.ticker}>
+                <td>
+                  <b>{e.ticker}</b> {e.name}
+                  <span className="sub">
+                    {e.from} → {e.to}
+                  </span>
+                </td>
+                <td className="num">{e.days}</td>
+                <td className="num">{signedPct(e.min, 3)}</td>
+                <td className="num">{signedPct(e.median, 3)}</td>
+                <td className="num">{signedPct(e.max, 3)}</td>
+                <td className="num">{signedPct(e.latest, 3)}</td>
+                <td className="num">{e.fee ? pct(e.fee) : "n/a"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="muted" style={{ fontSize: 13 }}>
+        How to read it: the premium is paid once, on entry, while the fee is paid every year. Compare the min–max range
+        with the fee to see which of the two matters more for your holding period.
+      </p>
+
+      <h2 style={{ fontSize: 16 }}>Strategy (MSTR) BTC purchases</h2>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th className="num">BTC bought</th>
+              <th className="num">Price per BTC</th>
+              <th className="num">BTC held after</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mstrBuys.rows.map((r) => (
+              <tr key={r.date}>
+                <td>{r.date}</td>
+                <td className={`num ${r.btcAcq < 0 ? "bad" : ""}`}>{r.btcAcq > 0 ? "+" : ""}{int(r.btcAcq)}</td>
+                <td className="num">{usd(r.usdPerBtc)}</td>
+                <td className="num">{int(r.btcHolding)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="muted" style={{ fontSize: 13 }}>
+        Latest {mstrBuys.rows.length} of {mstrBuys.total} disclosures since {mstrBuys.since} (SoSoValue BTC treasuries).
+        Price per BTC = acquisition cost ÷ BTC acquired; negative rows are sales.
+      </p>
     </>
   );
 }
