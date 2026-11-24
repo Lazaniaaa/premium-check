@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:37.154Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795556280000",
+   "ticker": "GLXY",
+   "mkt_price": "11.685",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "5148098",
+   "turnover": "60043816.74521472",
+   "circulating_marketcap": "2197059224.76",
+   "total_marketcap": "2210103681.03",
+   "total_shares": "189140238",
+   "circulating_shares": "188023896",
+   "pe_ttm": "-53.13898849196416",
+   "pb": "1.1546896382649074"
+  },
+  "details": null
+ }
+}

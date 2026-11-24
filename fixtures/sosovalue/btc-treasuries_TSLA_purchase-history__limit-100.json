@@ -1,0 +1,17 @@
+{
+ "recordedAt": "2026-11-24T21:55:49.671Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-03-31",
+    "ticker": "TSLA",
+    "btc_holding": "11509",
+    "avg_btc_cost": 2.91
+   }
+  ],
+  "details": null
+ }
+}

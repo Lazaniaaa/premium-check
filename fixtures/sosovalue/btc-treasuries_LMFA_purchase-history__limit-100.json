@@ -1,0 +1,95 @@
+{
+ "recordedAt": "2026-11-24T21:56:22.707Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-01-31",
+    "ticker": "LMFA",
+    "btc_holding": "364",
+    "btc_acq": "7",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "LMFA",
+    "btc_holding": "356",
+    "btc_acq": "7",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "LMFA",
+    "btc_holding": "301",
+    "btc_acq": "6",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "LMFA",
+    "btc_holding": "294",
+    "btc_acq": "7",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "LMFA",
+    "btc_holding": "304",
+    "btc_acq": "5",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "LMFA",
+    "btc_holding": "311",
+    "btc_acq": "5",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "LMFA",
+    "btc_holding": "150",
+    "btc_acq": "5",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "LMFA",
+    "btc_holding": "155",
+    "btc_acq": "5",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "LMFA",
+    "btc_holding": "155",
+    "btc_acq": "6",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "LMFA",
+    "btc_holding": "148",
+    "btc_acq": "6",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "LMFA",
+    "btc_holding": "160",
+    "btc_acq": "8",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "LMFA",
+    "btc_holding": "165",
+    "btc_acq": "8",
+    "avg_btc_cost": 0
+   }
+  ],
+  "details": null
+ }
+}

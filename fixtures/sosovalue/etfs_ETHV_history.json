@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:14.320Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 75613980,
+    "currency_share": 25.20466,
+    "prem_dsc": -0.0013751425331663958,
+    "value_traded": 631820,
+    "volume": "24444"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 70171500,
+    "currency_share": 23.3905,
+    "prem_dsc": -0.0017314721788759257,
+    "value_traded": 927094,
+    "volume": "38800"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 77134560,
+    "currency_share": 25.71152,
+    "prem_dsc": -0.0016148403517177723,
+    "value_traded": 397326,
+    "volume": "15235"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 76713030,
+    "currency_share": 25.57101,
+    "prem_dsc": -0.00043056570702537655,
+    "value_traded": 235135,
+    "volume": "9130"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 78627810,
+    "currency_share": 26.20927,
+    "prem_dsc": 0.0011724859181503344,
+    "value_traded": 768300,
+    "volume": "29375"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 79712070,
+    "currency_share": 26.57069,
+    "prem_dsc": -0.000402323010806227,
+    "value_traded": 925721.385,
+    "volume": "34801"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 151641334.5,
+    "net_assets": 85402860,
+    "currency_share": 28.46762,
+    "prem_dsc": -0.0016727777032290447,
+    "value_traded": 308340,
+    "volume": "10899"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "ETHV",
+    "net_inflow": -2944344,
+    "cum_inflow": 151641334.5,
+    "net_assets": 88330320,
+    "currency_share": 29.44344,
+    "prem_dsc": -0.001135736856834657,
+    "value_traded": 403668,
+    "volume": "13767"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 94121642,
+    "currency_share": 30.36182,
+    "prem_dsc": -0.00005994370561457352,
+    "value_traded": 675851,
+    "volume": "22359"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 92784612,
+    "currency_share": 29.93052,
+    "prem_dsc": 0.0029895905583998683,
+    "value_traded": 1988705,
+    "volume": "65893"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 96282993,
+    "currency_share": 31.05903,
+    "prem_dsc": -0.0006127042602425137,
+    "value_traded": 817617,
+    "volume": "26358"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 100937426,
+    "currency_share": 32.56046,
+    "prem_dsc": -0.0018568533736931236,
+    "value_traded": 418024,
+    "volume": "12871"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 101728515,
+    "currency_share": 32.81565,
+    "prem_dsc": 0.00013255870293593652,
+    "value_traded": 2944530,
+    "volume": "88872"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 109260337,
+    "currency_share": 35.24527,
+    "prem_dsc": 0.002971405808495753,
+    "value_traded": 3473098.462,
+    "volume": "98417"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 103476016,
+    "currency_share": 33.37936,
+    "prem_dsc": 0.0018166615537267283,
+    "value_traded": 507634,
+    "volume": "15211"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 101803937.99999999,
+    "currency_share": 32.83998,
+    "prem_dsc": -0.0015218949585231734,
+    "value_traded": 660066,
+    "volume": "19967"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 100933240.99999999,
+    "currency_share": 32.55911,
+    "prem_dsc": 0.0020237039648811628,
+    "value_traded": 1150674,
+    "volume": "35489"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 105500347,
+    "currency_share": 34.03237,
+    "prem_dsc": 0.0008119034907061451,
+    "value_traded": 1187975,
+    "volume": "34894"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 106814065,
+    "currency_share": 34.45615,
+    "prem_dsc": 0.0033041996856875144,
+    "value_traded": 643324,
+    "volume": "18809"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 106092571,
+    "currency_share": 34.22341,
+    "prem_dsc": 0.0007769535531381155,
+    "value_traded": 619833,
+    "volume": "18090"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ETHV",
+    "net_inflow": 0,
+    "cum_inflow": 154585678.5,
+    "net_assets": 104793640,
+    "currency_share": 33.8044,
+    "prem_dsc": 0.0016447563039130308,
+    "value_traded": 1436561,
+    "volume": "42620"
+   }
+  ],
+  "details": null
+ }
+}

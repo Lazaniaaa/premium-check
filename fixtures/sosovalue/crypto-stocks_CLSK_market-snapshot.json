@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:45.803Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "CLSK",
+   "mkt_price": "5.145",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "13160910",
+   "turnover": "66921912.231522724",
+   "circulating_marketcap": "1268377921.5449998",
+   "total_marketcap": "1321323840.5849998",
+   "total_shares": "256817073",
+   "circulating_shares": "246526321",
+   "pe_ttm": "-1.32420929365446",
+   "pb": "1.7356539405472369"
+  },
+  "details": null
+ }
+}

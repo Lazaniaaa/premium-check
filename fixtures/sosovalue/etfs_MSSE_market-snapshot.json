@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:27.707Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "MSSE",
+   "sponsor_fee": 0.0014,
+   "net_inflow": 0,
+   "cum_inflow": 49842333.28,
+   "net_assets": 40842137.6,
+   "mkt_price": 18.0559,
+   "prem_dsc": null,
+   "value_traded": 316381.738,
+   "volume": "17506"
+  },
+  "details": null
+ }
+}

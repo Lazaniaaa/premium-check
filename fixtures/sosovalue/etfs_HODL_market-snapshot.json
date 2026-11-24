@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:57.990Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "HODL",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 0,
+   "cum_inflow": 977142298.6,
+   "net_assets": 870552540,
+   "mkt_price": 16.86,
+   "prem_dsc": null,
+   "value_traded": 42708942.448,
+   "volume": "2529754"
+  },
+  "details": null
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "recordedAt": "2026-11-24T21:55:46.815Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-03-31",
+    "ticker": "CLSK",
+    "btc_holding": "11920",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2026-01-31",
+    "ticker": "CLSK",
+    "btc_holding": "13513",
+    "btc_acq": "573",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "CLSK",
+    "btc_holding": "13099",
+    "btc_acq": "622",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "CLSK",
+    "btc_holding": "13054",
+    "btc_acq": "587",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "CLSK",
+    "btc_holding": "13033",
+    "btc_acq": "612",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "CLSK",
+    "btc_holding": "13011",
+    "btc_acq": "629",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "CLSK",
+    "btc_holding": "12827",
+    "btc_acq": "657",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "CLSK",
+    "btc_holding": "12703",
+    "btc_acq": "671",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "CLSK",
+    "btc_holding": "12608",
+    "btc_acq": "685",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "CLSK",
+    "btc_holding": "12502",
+    "btc_acq": "694",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "CLSK",
+    "btc_holding": "12101",
+    "btc_acq": "633",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "CLSK",
+    "btc_holding": "11468",
+    "btc_acq": "706",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "CLSK",
+    "btc_holding": "11177",
+    "btc_acq": "624",
+    "avg_btc_cost": 0
+   }
+  ],
+  "details": null
+ }
+}

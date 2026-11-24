@@ -1,0 +1,10 @@
+{
+ "recordedAt": "2026-11-24T21:56:21.696Z",
+ "status": 404,
+ "body": {
+  "code": 400401,
+  "message": "Market data not found for ticker: LMFA",
+  "data": null,
+  "details": null
+ }
+}

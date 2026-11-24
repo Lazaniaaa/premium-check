@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:28.769Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "BMNR",
+   "mkt_price": "13.27",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "37263228",
+   "turnover": "500959390.56036764",
+   "circulating_marketcap": "8196355856.79",
+   "total_marketcap": "8313005048.67",
+   "total_shares": "626451021",
+   "circulating_shares": "617660577",
+   "pe_ttm": "-1.3167331367842705",
+   "pb": "0.5400072187692957"
+  },
+  "details": null
+ }
+}

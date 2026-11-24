@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:21.767Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557240000",
+   "ticker": "MSTR",
+   "mkt_price": "78.805",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "13144116",
+   "turnover": "1037249521.4360132",
+   "circulating_marketcap": "31660500181.525",
+   "total_marketcap": "33283654804.635002",
+   "total_shares": "403641393",
+   "circulating_shares": "401757505",
+   "pe_ttm": "-2.4355121022931283",
+   "pb": "0.48591067508148034"
+  },
+  "details": null
+ }
+}

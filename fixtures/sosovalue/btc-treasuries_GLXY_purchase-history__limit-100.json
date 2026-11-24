@@ -1,0 +1,25 @@
+{
+ "recordedAt": "2026-11-24T21:55:38.356Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-03-31",
+    "ticker": "GLXY",
+    "btc_holding": "18380",
+    "avg_btc_cost": 3.73
+   },
+   {
+    "date": "2025-08-11",
+    "ticker": "GLXY",
+    "btc_holding": "6894",
+    "btc_acq": "2894",
+    "acq_cost": "356580000",
+    "avg_btc_cost": 17.31
+   }
+  ],
+  "details": null
+ }
+}

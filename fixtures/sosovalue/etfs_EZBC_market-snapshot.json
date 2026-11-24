@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:55.908Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "EZBC",
+   "sponsor_fee": 0.0019,
+   "net_inflow": 0,
+   "cum_inflow": 298777722.5,
+   "net_assets": 319535372.79999995,
+   "mkt_price": 34.46,
+   "prem_dsc": null,
+   "value_traded": 5383815.861,
+   "volume": "156075"
+  },
+  "details": null
+ }
+}

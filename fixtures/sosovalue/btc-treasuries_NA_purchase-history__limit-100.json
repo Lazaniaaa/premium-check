@@ -1,0 +1,27 @@
+{
+ "recordedAt": "2026-11-24T21:56:18.649Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-06-26",
+    "ticker": "NA",
+    "btc_holding": "1000",
+    "btc_acq": "600",
+    "acq_cost": "63600000",
+    "avg_btc_cost": 101.37
+   },
+   {
+    "date": "2025-02-21",
+    "ticker": "NA",
+    "btc_holding": "400",
+    "btc_acq": "40",
+    "acq_cost": "3940000",
+    "avg_btc_cost": 246.25
+   }
+  ],
+  "details": null
+ }
+}

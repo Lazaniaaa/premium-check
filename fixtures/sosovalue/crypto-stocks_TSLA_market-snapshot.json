@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:47.895Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "TSLA",
+   "mkt_price": "384.69",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "20156802",
+   "turnover": "7715481720.2188015",
+   "circulating_marketcap": "1085752814805.99",
+   "total_marketcap": "1520586454246.74",
+   "total_shares": "3952757946",
+   "circulating_shares": "2822409771",
+   "pe_ttm": "466.00872245154534",
+   "pb": "17.029941585640263"
+  },
+  "details": null
+ }
+}

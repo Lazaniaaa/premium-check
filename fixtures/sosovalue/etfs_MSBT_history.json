@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:05.081Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 890778556.61,
+    "net_assets": 763640699.6700001,
+    "currency_share": 17.518713,
+    "prem_dsc": 0.0006442824881027764,
+    "value_traded": 24258777.616,
+    "volume": "1354422"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "MSBT",
+    "net_inflow": 2342641.2800000003,
+    "cum_inflow": 890778556.61,
+    "net_assets": 729398095.6800001,
+    "currency_share": 16.733152,
+    "prem_dsc": -0.0007859846130604531,
+    "value_traded": 63929353,
+    "volume": "3754748"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "MSBT",
+    "net_inflow": 49595969.07,
+    "cum_inflow": 888435915.33,
+    "net_assets": 772381668.85,
+    "currency_share": 17.776333,
+    "prem_dsc": 0.00020628551456591815,
+    "value_traded": 23717934,
+    "volume": "1318588"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 838839946.26,
+    "net_assets": 728483710.86,
+    "currency_share": 17.916471,
+    "prem_dsc": 0.00019696959295156802,
+    "value_traded": 43477388,
+    "volume": "2415966"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "MSBT",
+    "net_inflow": 2926307.0399999996,
+    "cum_inflow": 838839946.26,
+    "net_assets": 743647776.54,
+    "currency_share": 18.289419,
+    "prem_dsc": 0.0027655881250248093,
+    "value_traded": 40702347,
+    "volume": "2222086"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "MSBT",
+    "net_inflow": -1489290.8,
+    "cum_inflow": 835913639.22,
+    "net_assets": 753953467.5,
+    "currency_share": 18.616135,
+    "prem_dsc": 0.001819120886263459,
+    "value_traded": 30339704,
+    "volume": "1636158"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 837402930.02,
+    "net_assets": 801081664,
+    "currency_share": 19.7408,
+    "prem_dsc": -0.0015602204571243394,
+    "value_traded": 23356177,
+    "volume": "1184588"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "MSBT",
+    "net_inflow": 3274997.76,
+    "cum_inflow": 837402930.02,
+    "net_assets": 830621306.88,
+    "currency_share": 20.468736,
+    "prem_dsc": -0.0009153471909550959,
+    "value_traded": 16483968,
+    "volume": "802879"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "MSBT",
+    "net_inflow": 8963653.86,
+    "cum_inflow": 834127932.26,
+    "net_assets": 862644973.86,
+    "currency_share": 21.342033,
+    "prem_dsc": 0.0022475365866034824,
+    "value_traded": 6108854,
+    "volume": "287915"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "MSBT",
+    "net_inflow": 20025138.35,
+    "cum_inflow": 825164278.4,
+    "net_assets": 843163720,
+    "currency_share": 21.079093,
+    "prem_dsc": 0.0009918358441702857,
+    "value_traded": 14811170,
+    "volume": "704143"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "MSBT",
+    "net_inflow": 22061851.19,
+    "cum_inflow": 805139140.05,
+    "net_assets": 836422610.65,
+    "currency_share": 21.419273,
+    "prem_dsc": -0.00043292785894277763,
+    "value_traded": 10984843,
+    "volume": "512555"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 783077288.86,
+    "net_assets": 825281624.26,
+    "currency_share": 21.706513,
+    "prem_dsc": 0.001082025473184034,
+    "value_traded": 17286746,
+    "volume": "797318"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 783077288.86,
+    "net_assets": 828067463.72,
+    "currency_share": 21.779786,
+    "prem_dsc": 0.00000987153868248214,
+    "value_traded": 17471811,
+    "volume": "796461"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 783077288.86,
+    "net_assets": 872101049.0999999,
+    "currency_share": 22.937955,
+    "prem_dsc": 0.0005251557952747898,
+    "value_traded": 33012082.951,
+    "volume": "1436995"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "MSBT",
+    "net_inflow": 3338789.0999999996,
+    "cum_inflow": 783077288.86,
+    "net_assets": 846271743.88,
+    "currency_share": 22.258594,
+    "prem_dsc": 0.0005124312883375559,
+    "value_traded": 6225112,
+    "volume": "280767"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 779738499.76,
+    "net_assets": 833947804.97,
+    "currency_share": 22.021331,
+    "prem_dsc": -0.0036932372525529944,
+    "value_traded": 11069849,
+    "volume": "500125"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 779738499.76,
+    "net_assets": 829575221.1600001,
+    "currency_share": 21.905868,
+    "prem_dsc": 0.003840614761304817,
+    "value_traded": 17255274,
+    "volume": "784003"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "MSBT",
+    "net_inflow": 4164582.5999999996,
+    "cum_inflow": 779738499.76,
+    "net_assets": 876181905.9,
+    "currency_share": 23.13657,
+    "prem_dsc": -0.0002840092546128048,
+    "value_traded": 7705393,
+    "volume": "334533"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 775573917.16,
+    "net_assets": 876417480.0400001,
+    "currency_share": 23.253316,
+    "prem_dsc": 0.0037278124117867684,
+    "value_traded": 4731907,
+    "volume": "204714"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 775573917.16,
+    "net_assets": 870550202.36,
+    "currency_share": 23.097644,
+    "prem_dsc": 0.0011843632190364772,
+    "value_traded": 4380517,
+    "volume": "190367"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "MSBT",
+    "net_inflow": 0,
+    "cum_inflow": 775573917.16,
+    "net_assets": 862762430.73,
+    "currency_share": 22.891017,
+    "prem_dsc": -0.0004813241805726731,
+    "value_traded": 8290992,
+    "volume": "361976"
+   }
+  ],
+  "details": null
+ }
+}

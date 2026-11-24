@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:50.619Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 75143789.77000001,
+    "net_assets": 122989053.615,
+    "currency_share": 64.561183,
+    "prem_dsc": 0.0006012436296278789,
+    "value_traded": 867114,
+    "volume": "13265"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 75143789.77000001,
+    "net_assets": 117487272.645,
+    "currency_share": 61.673109,
+    "prem_dsc": -0.002482589291874282,
+    "value_traded": 680596,
+    "volume": "10981"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "BTCW",
+    "net_inflow": 327772.545,
+    "cum_inflow": 75143789.77000001,
+    "net_assets": 124881339.645,
+    "currency_share": 65.554509,
+    "prem_dsc": -0.0008315064948468676,
+    "value_traded": 600913,
+    "volume": "9106"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 125480145.8,
+    "currency_share": 66.042182,
+    "prem_dsc": -0.0006387129970962802,
+    "value_traded": 335785,
+    "volume": "5058"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 128074424.79999998,
+    "currency_share": 67.407592,
+    "prem_dsc": 0.0006291279474870404,
+    "value_traded": 611159,
+    "volume": "9030"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 130361114.7,
+    "currency_share": 68.611113,
+    "prem_dsc": 0.0007125230573070684,
+    "value_traded": 1104994.103,
+    "volume": "16136"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 138265844.29999998,
+    "currency_share": 72.771497,
+    "prem_dsc": -0.0016695685125178716,
+    "value_traded": 609453,
+    "volume": "8382"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 143336843.6,
+    "currency_share": 75.440444,
+    "prem_dsc": -0.001729099049310956,
+    "value_traded": 540923,
+    "volume": "7156"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 149410628.70000002,
+    "currency_share": 78.637173,
+    "prem_dsc": 0.0021977773794079614,
+    "value_traded": 704396,
+    "volume": "8972"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 147527998.5,
+    "currency_share": 77.646315,
+    "prem_dsc": 0.0015929281383153526,
+    "value_traded": 284923,
+    "volume": "3668"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 149984481.9,
+    "currency_share": 78.939201,
+    "prem_dsc": 0.00013680148599437558,
+    "value_traded": 1197279,
+    "volume": "15164"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 151984585.3,
+    "currency_share": 79.991887,
+    "prem_dsc": -0.0001486025701581406,
+    "value_traded": 771486,
+    "volume": "9661"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 152513541.5,
+    "currency_share": 80.270285,
+    "prem_dsc": 0.00037022417448762113,
+    "value_traded": 2023652,
+    "volume": "25127"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 160676557.1,
+    "currency_share": 84.566609,
+    "prem_dsc": 0.00015837220101833083,
+    "value_traded": 4078447,
+    "volume": "48330"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 155883480.3,
+    "currency_share": 82.043937,
+    "prem_dsc": 0.00202406181458592,
+    "value_traded": 628796,
+    "volume": "7661"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 154162722.5,
+    "currency_share": 81.138275,
+    "prem_dsc": -0.003183183275710433,
+    "value_traded": 212807,
+    "volume": "2613"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 153421967.6,
+    "currency_share": 80.748404,
+    "prem_dsc": 0.003858825494557072,
+    "value_traded": 3007824,
+    "volume": "37065"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "BTCW",
+    "net_inflow": -3837429.495,
+    "cum_inflow": 74816017.22500001,
+    "net_assets": 162024800.9,
+    "currency_share": 85.276211,
+    "prem_dsc": -0.0007764416268448704,
+    "value_traded": 1082918,
+    "volume": "12782"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 78653446.72000001,
+    "net_assets": 166750745.295,
+    "currency_share": 85.733031,
+    "prem_dsc": 0.0034638807999218812,
+    "value_traded": 836364,
+    "volume": "9794"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 78653446.72000001,
+    "net_assets": 165553109.6,
+    "currency_share": 85.11728,
+    "prem_dsc": 0.0008543506089480069,
+    "value_traded": 6985572,
+    "volume": "82010"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "BTCW",
+    "net_inflow": 0,
+    "cum_inflow": 78653446.72000001,
+    "net_assets": 164113564.53,
+    "currency_share": 84.377154,
+    "prem_dsc": 0.0001522331506937924,
+    "value_traded": 2893935,
+    "volume": "34287"
+   }
+  ],
+  "details": null
+ }
+}

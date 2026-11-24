@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:01.014Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28268131168,
+    "net_assets": 7410915970.92,
+    "currency_share": 47.1492,
+    "prem_dsc": -0.0001951252619344368,
+    "value_traded": 135457151,
+    "volume": "2818602"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "GBTC",
+    "net_inflow": -32841094,
+    "cum_inflow": -28268131168,
+    "net_assets": 7071186902.78,
+    "currency_share": 44.9878,
+    "prem_dsc": -0.0003956628241434945,
+    "value_traded": 174864398,
+    "volume": "3837967"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "GBTC",
+    "net_inflow": -13876152,
+    "cum_inflow": -28235290074,
+    "net_assets": 7555808792.879999,
+    "currency_share": 47.8488,
+    "prem_dsc": -0.00039290431525973446,
+    "value_traded": 81034876,
+    "volume": "1674631"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "GBTC",
+    "net_inflow": -20252484,
+    "cum_inflow": -28221413922,
+    "net_assets": 7628440462.0199995,
+    "currency_share": 48.2202,
+    "prem_dsc": -0.0006262935450288554,
+    "value_traded": 56966087,
+    "volume": "1173761"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "GBTC",
+    "net_inflow": -17743716,
+    "cum_inflow": -28201161438,
+    "net_assets": 7818083350.81,
+    "currency_share": 49.2881,
+    "prem_dsc": 0.00003854885864940094,
+    "value_traded": 144850890,
+    "volume": "2937338"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "GBTC",
+    "net_inflow": -34594530,
+    "cum_inflow": -28183417722,
+    "net_assets": 7970785273.7,
+    "currency_share": 50.137,
+    "prem_dsc": -0.0003390709456091434,
+    "value_traded": 80678638,
+    "volume": "1615269"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28148823192,
+    "net_assets": 8478035233.72,
+    "currency_share": 53.0972,
+    "prem_dsc": -0.0005122680668661062,
+    "value_traded": 82348210,
+    "volume": "1553689"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28148823192,
+    "net_assets": 8788130534.93,
+    "currency_share": 55.0393,
+    "prem_dsc": -0.0005323468866791359,
+    "value_traded": 101159946,
+    "volume": "1829172"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "GBTC",
+    "net_inflow": -39127676,
+    "cum_inflow": -28148823192,
+    "net_assets": 9187529323.07,
+    "currency_share": 57.5407,
+    "prem_dsc": 0.0005092047889581064,
+    "value_traded": 104943007.54,
+    "volume": "1832428"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28109695516,
+    "net_assets": 9114844874.34,
+    "currency_share": 56.8434,
+    "prem_dsc": -0.00023573537121290844,
+    "value_traded": 84910795,
+    "volume": "1499561"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28109695516,
+    "net_assets": 9250324673.83,
+    "currency_share": 57.6883,
+    "prem_dsc": -0.0008372581615335717,
+    "value_traded": 87871624,
+    "volume": "1524281"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "GBTC",
+    "net_inflow": -11107742,
+    "cum_inflow": -28109695516,
+    "net_assets": 9374355476.18,
+    "currency_share": 58.4618,
+    "prem_dsc": -0.0003728930686363041,
+    "value_traded": 104073407,
+    "volume": "1785353"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "GBTC",
+    "net_inflow": -49900355,
+    "cum_inflow": -28098587774,
+    "net_assets": 9424715272.63,
+    "currency_share": 58.7063,
+    "prem_dsc": -0.0006183322743895658,
+    "value_traded": 212075740,
+    "volume": "3589412"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28048687419,
+    "net_assets": 9968646862.74,
+    "currency_share": 61.7674,
+    "prem_dsc": 0.00020399110210234106,
+    "value_traded": 157872566.936,
+    "volume": "2554311"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28048687419,
+    "net_assets": 9685584766.35,
+    "currency_share": 60.0135,
+    "prem_dsc": 0.0002749381389186567,
+    "value_traded": 91090633,
+    "volume": "1524975"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -28048687419,
+    "net_assets": 9545030128.26,
+    "currency_share": 59.1426,
+    "prem_dsc": -0.0008893758475277957,
+    "value_traded": 82173977,
+    "volume": "1378129"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "GBTC",
+    "net_inflow": -53324820,
+    "cum_inflow": -28048687419,
+    "net_assets": 9562331146.98,
+    "currency_share": 59.2498,
+    "prem_dsc": -0.00219072469442938,
+    "value_traded": 204441674,
+    "volume": "3443268"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -27995362599,
+    "net_assets": 10114487047.35,
+    "currency_share": 62.3235,
+    "prem_dsc": -0.00021661171147324687,
+    "value_traded": 80354471,
+    "volume": "1289498"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -27995362599,
+    "net_assets": 10210887366.75,
+    "currency_share": 62.9175,
+    "prem_dsc": 0.00019867286526009664,
+    "value_traded": 43709790,
+    "volume": "700944"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -27995362599,
+    "net_assets": 10109667031.38,
+    "currency_share": 62.2938,
+    "prem_dsc": 0.00042058760261864947,
+    "value_traded": 70391469,
+    "volume": "1134685"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "GBTC",
+    "net_inflow": 0,
+    "cum_inflow": -27995362599,
+    "net_assets": 10007278207.29,
+    "currency_share": 61.6629,
+    "prem_dsc": -0.0005335461030863131,
+    "value_traded": 81239299,
+    "volume": "1317263"
+   }
+  ],
+  "details": null
+ }
+}

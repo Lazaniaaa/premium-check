@@ -1,0 +1,58 @@
+{
+ "recordedAt": "2026-11-24T21:56:10.448Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-06",
+    "ticker": "EMPD",
+    "btc_holding": "1067",
+    "btc_acq": "131",
+    "acq_cost": "10500000",
+    "avg_btc_cost": 105.94
+   },
+   {
+    "date": "2026-07-07",
+    "ticker": "EMPD",
+    "btc_holding": "1514",
+    "btc_acq": "-1400",
+    "acq_cost": "-87100000"
+   },
+   {
+    "date": "2026-02-09",
+    "ticker": "EMPD",
+    "btc_holding": "3723",
+    "btc_acq": "-357",
+    "acq_cost": "24000000",
+    "avg_btc_cost": 32.5
+   },
+   {
+    "date": "2025-08-11",
+    "ticker": "EMPD",
+    "btc_holding": "4018",
+    "btc_acq": "17",
+    "acq_cost": "2000000",
+    "avg_btc_cost": 29.25
+   },
+   {
+    "date": "2025-08-06",
+    "ticker": "EMPD",
+    "btc_holding": "4000",
+    "btc_acq": "197",
+    "acq_cost": "22600000",
+    "avg_btc_cost": 29.38
+   },
+   {
+    "date": "2025-07-25",
+    "ticker": "EMPD",
+    "btc_holding": "3183",
+    "btc_acq": "3183",
+    "acq_cost": "374673098",
+    "avg_btc_cost": 36.97
+   }
+  ],
+  "details": null
+ }
+}

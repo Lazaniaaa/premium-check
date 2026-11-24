@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:47.591Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "BTCO",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 0,
+   "cum_inflow": 132682942.25500001,
+   "net_assets": 302756729.52000004,
+   "mkt_price": 59.31,
+   "prem_dsc": null,
+   "value_traded": 2548368.806,
+   "volume": "42888"
+  },
+  "details": null
+ }
+}

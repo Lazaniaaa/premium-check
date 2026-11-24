@@ -1,0 +1,17 @@
+{
+ "recordedAt": "2026-11-24T21:55:34.050Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-08-13",
+    "ticker": "BLSH",
+    "btc_holding": "24000",
+    "avg_btc_cost": 5.14
+   }
+  ],
+  "details": null
+ }
+}

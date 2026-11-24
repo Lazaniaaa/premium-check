@@ -1,0 +1,627 @@
+{
+ "recordedAt": "2026-11-24T21:55:22.778Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "MSTR",
+    "btc_holding": "851305",
+    "btc_acq": "457",
+    "acq_cost": "29600000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "MSTR",
+    "btc_holding": "850849",
+    "btc_acq": "485",
+    "acq_cost": "33400000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "MSTR",
+    "btc_holding": "850364",
+    "btc_acq": "1036",
+    "acq_cost": "81900000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "MSTR",
+    "btc_holding": "849327",
+    "btc_acq": "811",
+    "acq_cost": "65500000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-10-19",
+    "ticker": "MSTR",
+    "btc_holding": "848517",
+    "btc_acq": "267",
+    "acq_cost": "22100000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-10-12",
+    "ticker": "MSTR",
+    "btc_holding": "848250",
+    "btc_acq": "250",
+    "acq_cost": "22000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-10-05",
+    "ticker": "MSTR",
+    "btc_holding": "848000",
+    "btc_acq": "334",
+    "acq_cost": "28700000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-09-28",
+    "ticker": "MSTR",
+    "btc_holding": "847666",
+    "btc_acq": "1665",
+    "acq_cost": "143000000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-09-21",
+    "ticker": "MSTR",
+    "btc_holding": "846000",
+    "btc_acq": "950",
+    "acq_cost": "75700000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-08-31",
+    "ticker": "MSTR",
+    "btc_holding": "845050",
+    "btc_acq": "4603",
+    "acq_cost": "369700000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-08-10",
+    "ticker": "MSTR",
+    "btc_holding": "840447",
+    "btc_acq": "-1690",
+    "acq_cost": "-108600000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-08-03",
+    "ticker": "MSTR",
+    "btc_holding": "842138",
+    "btc_acq": "-1638",
+    "acq_cost": "-104730000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-07-05",
+    "ticker": "MSTR",
+    "btc_holding": "843775",
+    "btc_acq": "-2225",
+    "acq_cost": "-135200000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-06-30",
+    "ticker": "MSTR",
+    "btc_holding": "846000",
+    "btc_acq": "-1363",
+    "acq_cost": "-80800000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-06-22",
+    "ticker": "MSTR",
+    "btc_holding": "847363",
+    "btc_acq": "520",
+    "acq_cost": "34900000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-06-15",
+    "ticker": "MSTR",
+    "btc_holding": "846842",
+    "btc_acq": "1587",
+    "acq_cost": "100000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-06-08",
+    "ticker": "MSTR",
+    "btc_holding": "845256",
+    "btc_acq": "1550",
+    "acq_cost": "101000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-06-01",
+    "ticker": "MSTR",
+    "btc_holding": "843706",
+    "btc_acq": "-32",
+    "acq_cost": "-2500000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-05-18",
+    "ticker": "MSTR",
+    "btc_holding": "843738",
+    "btc_acq": "24869",
+    "acq_cost": "2010000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-05-11",
+    "ticker": "MSTR",
+    "btc_holding": "818869",
+    "btc_acq": "535",
+    "acq_cost": "43000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-04-27",
+    "ticker": "MSTR",
+    "btc_holding": "818334",
+    "btc_acq": "3273",
+    "acq_cost": "255000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-04-20",
+    "ticker": "MSTR",
+    "btc_holding": "815061",
+    "btc_acq": "34164",
+    "acq_cost": "2540000000",
+    "avg_btc_cost": 0.09
+   },
+   {
+    "date": "2026-04-13",
+    "ticker": "MSTR",
+    "btc_holding": "780897",
+    "btc_acq": "13927",
+    "acq_cost": "1000000000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-04-06",
+    "ticker": "MSTR",
+    "btc_holding": "766970",
+    "btc_acq": "4871",
+    "acq_cost": "329900000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-03-23",
+    "ticker": "MSTR",
+    "btc_holding": "762099",
+    "btc_acq": "1031",
+    "acq_cost": "76600000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-03-16",
+    "ticker": "MSTR",
+    "btc_holding": "761068",
+    "btc_acq": "22337",
+    "acq_cost": "1570000000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-03-09",
+    "ticker": "MSTR",
+    "btc_holding": "738731",
+    "btc_acq": "17994",
+    "acq_cost": "1280000000",
+    "avg_btc_cost": 0.1
+   },
+   {
+    "date": "2026-03-02",
+    "ticker": "MSTR",
+    "btc_holding": "720737",
+    "btc_acq": "3015",
+    "acq_cost": "204100000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-02-23",
+    "ticker": "MSTR",
+    "btc_holding": "717722",
+    "btc_acq": "592",
+    "acq_cost": "39800000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-02-16",
+    "ticker": "MSTR",
+    "btc_holding": "717131",
+    "btc_acq": "2486",
+    "acq_cost": "168400000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-02-09",
+    "ticker": "MSTR",
+    "btc_holding": "714644",
+    "btc_acq": "1142",
+    "acq_cost": "90000000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-02-02",
+    "ticker": "MSTR",
+    "btc_holding": "713502",
+    "btc_acq": "855",
+    "acq_cost": "75300000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-01-26",
+    "ticker": "MSTR",
+    "btc_holding": "712647",
+    "btc_acq": "2932",
+    "acq_cost": "264100000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-01-19",
+    "ticker": "MSTR",
+    "btc_holding": "709715",
+    "btc_acq": "22305",
+    "acq_cost": "2130000000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-01-12",
+    "ticker": "MSTR",
+    "btc_holding": "687410",
+    "btc_acq": "13627",
+    "acq_cost": "1250000000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2026-01-05",
+    "ticker": "MSTR",
+    "btc_holding": "673783",
+    "btc_acq": "1283",
+    "acq_cost": "116000000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-12-29",
+    "ticker": "MSTR",
+    "btc_holding": "672497",
+    "btc_acq": "1229",
+    "acq_cost": "108800000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-12-15",
+    "ticker": "MSTR",
+    "btc_holding": "671268",
+    "btc_acq": "10645",
+    "acq_cost": "980300000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-12-08",
+    "ticker": "MSTR",
+    "btc_holding": "660624",
+    "btc_acq": "10624",
+    "acq_cost": "962700000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-12-01",
+    "ticker": "MSTR",
+    "btc_holding": "650000",
+    "btc_acq": "130",
+    "acq_cost": "12000000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-11-17",
+    "ticker": "MSTR",
+    "btc_holding": "649870",
+    "btc_acq": "8178",
+    "acq_cost": "835600000",
+    "avg_btc_cost": 0.11
+   },
+   {
+    "date": "2025-11-10",
+    "ticker": "MSTR",
+    "btc_holding": "641692",
+    "btc_acq": "487",
+    "acq_cost": "49900000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-11-03",
+    "ticker": "MSTR",
+    "btc_holding": "641205",
+    "btc_acq": "397",
+    "acq_cost": "45600000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-10-27",
+    "ticker": "MSTR",
+    "btc_holding": "640808",
+    "btc_acq": "390",
+    "acq_cost": "43400000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-10-20",
+    "ticker": "MSTR",
+    "btc_holding": "640418",
+    "btc_acq": "168",
+    "acq_cost": "18800000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-10-13",
+    "ticker": "MSTR",
+    "btc_holding": "640250",
+    "btc_acq": "220",
+    "acq_cost": "27200000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-09-29",
+    "ticker": "MSTR",
+    "btc_holding": "640031",
+    "btc_acq": "196",
+    "acq_cost": "22100000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-09-22",
+    "ticker": "MSTR",
+    "btc_holding": "639835",
+    "btc_acq": "850",
+    "acq_cost": "99700000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-09-15",
+    "ticker": "MSTR",
+    "btc_holding": "638985",
+    "btc_acq": "525",
+    "acq_cost": "60200000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-09-08",
+    "ticker": "MSTR",
+    "btc_holding": "638460",
+    "btc_acq": "1955",
+    "acq_cost": "217400000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-09-02",
+    "ticker": "MSTR",
+    "btc_holding": "636505",
+    "btc_acq": "4048",
+    "acq_cost": "449000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-08-25",
+    "ticker": "MSTR",
+    "btc_holding": "632457",
+    "btc_acq": "3081",
+    "acq_cost": "356900000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-08-18",
+    "ticker": "MSTR",
+    "btc_holding": "629376",
+    "btc_acq": "430",
+    "acq_cost": "51400000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-08-11",
+    "ticker": "MSTR",
+    "btc_holding": "628946",
+    "btc_acq": "155",
+    "acq_cost": "18000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-07-29",
+    "ticker": "MSTR",
+    "btc_holding": "628791",
+    "btc_acq": "21021",
+    "acq_cost": "2460000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-07-21",
+    "ticker": "MSTR",
+    "btc_holding": "607770",
+    "btc_acq": "6220",
+    "acq_cost": "739800000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-07-14",
+    "ticker": "MSTR",
+    "btc_holding": "601550",
+    "btc_acq": "4225",
+    "acq_cost": "472500000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "MSTR",
+    "btc_holding": "597325",
+    "btc_acq": "4980",
+    "acq_cost": "531900000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-06-23",
+    "ticker": "MSTR",
+    "btc_holding": "592345",
+    "btc_acq": "245",
+    "acq_cost": "26000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-06-16",
+    "ticker": "MSTR",
+    "btc_holding": "592100",
+    "btc_acq": "10100",
+    "acq_cost": "1050000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-06-09",
+    "ticker": "MSTR",
+    "btc_holding": "582000",
+    "btc_acq": "1045",
+    "acq_cost": "110200000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-06-02",
+    "ticker": "MSTR",
+    "btc_holding": "580955",
+    "btc_acq": "705",
+    "acq_cost": "75000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-05-19",
+    "ticker": "MSTR",
+    "btc_holding": "576230",
+    "btc_acq": "7390",
+    "acq_cost": "765000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-05-12",
+    "ticker": "MSTR",
+    "btc_holding": "568840",
+    "btc_acq": "13390",
+    "acq_cost": "1337000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-05-05",
+    "ticker": "MSTR",
+    "btc_holding": "555450",
+    "btc_acq": "1895",
+    "acq_cost": "180000000",
+    "avg_btc_cost": 0.12
+   },
+   {
+    "date": "2025-04-28",
+    "ticker": "MSTR",
+    "btc_holding": "553555",
+    "btc_acq": "15355",
+    "acq_cost": "1424000000",
+    "avg_btc_cost": 0.13
+   },
+   {
+    "date": "2025-04-21",
+    "ticker": "MSTR",
+    "btc_holding": "538200",
+    "btc_acq": "6556",
+    "acq_cost": "556000000",
+    "avg_btc_cost": 0.13
+   },
+   {
+    "date": "2025-04-14",
+    "ticker": "MSTR",
+    "btc_holding": "531644",
+    "btc_acq": "3459",
+    "acq_cost": "286000000",
+    "avg_btc_cost": 0.13
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "MSTR",
+    "btc_holding": "528185",
+    "btc_acq": "22048",
+    "acq_cost": "1918000000",
+    "avg_btc_cost": 0.13
+   },
+   {
+    "date": "2025-03-24",
+    "ticker": "MSTR",
+    "btc_holding": "506137",
+    "btc_acq": "6911",
+    "acq_cost": "584000000",
+    "avg_btc_cost": 0.14
+   },
+   {
+    "date": "2025-03-17",
+    "ticker": "MSTR",
+    "btc_holding": "499226",
+    "btc_acq": "130",
+    "acq_cost": "11000000",
+    "avg_btc_cost": 0.14
+   },
+   {
+    "date": "2025-02-24",
+    "ticker": "MSTR",
+    "btc_holding": "499096",
+    "btc_acq": "20356",
+    "acq_cost": "1985000000",
+    "avg_btc_cost": 0.14
+   },
+   {
+    "date": "2025-02-10",
+    "ticker": "MSTR",
+    "btc_holding": "478740",
+    "btc_acq": "7633",
+    "acq_cost": "742000000",
+    "avg_btc_cost": 0.14
+   },
+   {
+    "date": "2025-01-27",
+    "ticker": "MSTR",
+    "btc_holding": "471107",
+    "btc_acq": "10107",
+    "acq_cost": "1100000000",
+    "avg_btc_cost": 0.15
+   },
+   {
+    "date": "2025-01-21",
+    "ticker": "MSTR",
+    "btc_holding": "461000",
+    "btc_acq": "11000",
+    "acq_cost": "1100000000",
+    "avg_btc_cost": 0.15
+   },
+   {
+    "date": "2025-01-13",
+    "ticker": "MSTR",
+    "btc_holding": "450000",
+    "btc_acq": "2530",
+    "acq_cost": "243000000",
+    "avg_btc_cost": 0.15
+   },
+   {
+    "date": "2025-01-06",
+    "ticker": "MSTR",
+    "btc_holding": "447470",
+    "btc_acq": "1070",
+    "acq_cost": "101000000",
+    "avg_btc_cost": 0.15
+   }
+  ],
+  "details": null
+ }
+}

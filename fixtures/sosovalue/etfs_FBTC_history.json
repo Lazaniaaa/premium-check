@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:44.500Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "FBTC",
+    "net_inflow": 13287729,
+    "cum_inflow": 9968666005.125,
+    "net_assets": 10397832907.687681,
+    "currency_share": 53.150916,
+    "prem_dsc": -0.000017233945695416253,
+    "value_traded": 374858594,
+    "volume": "6927213"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "FBTC",
+    "net_inflow": -72384154.65,
+    "cum_inflow": 9955378276.125,
+    "net_assets": 9924425341.47504,
+    "currency_share": 50.795898,
+    "prem_dsc": -0.004250303833589153,
+    "value_traded": 432004995,
+    "volume": "8399935"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "FBTC",
+    "net_inflow": -45872235.6,
+    "cum_inflow": 10027762430.775,
+    "net_assets": 10620959531.12928,
+    "currency_share": 53.967336,
+    "prem_dsc": -0.0012477176935323797,
+    "value_traded": 267925254,
+    "volume": "4906466"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "FBTC",
+    "net_inflow": -69310806.675,
+    "cum_inflow": 10073634666.375,
+    "net_assets": 10744723247.78116,
+    "currency_share": 54.361417,
+    "prem_dsc": -0.00021002027964067693,
+    "value_traded": 263931082,
+    "volume": "4825821"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "FBTC",
+    "net_inflow": 0,
+    "cum_inflow": 10142945473.05,
+    "net_assets": 11044100610.50208,
+    "currency_share": 55.517946,
+    "prem_dsc": 0.0005773628584888613,
+    "value_traded": 249421833,
+    "volume": "4480523"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "FBTC",
+    "net_inflow": -11299966,
+    "cum_inflow": 10142945473.05,
+    "net_assets": 11239425302.158401,
+    "currency_share": 56.49983,
+    "prem_dsc": 0.0000030088586107090975,
+    "value_traded": 309725122.18,
+    "volume": "5497287"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "FBTC",
+    "net_inflow": -41919193.4,
+    "cum_inflow": 10154245439.05,
+    "net_assets": 11924721806.52576,
+    "currency_share": 59.884562,
+    "prem_dsc": -0.0004101557927400634,
+    "value_traded": 230290666,
+    "volume": "3850568"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "FBTC",
+    "net_inflow": -32604047.7,
+    "cum_inflow": 10196164632.45,
+    "net_assets": 12409937702.35904,
+    "currency_share": 62.102948,
+    "prem_dsc": -0.0011746302285037258,
+    "value_traded": 317787635,
+    "volume": "5105410"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "FBTC",
+    "net_inflow": 0,
+    "cum_inflow": 10228768680.15,
+    "net_assets": 12978986790.28468,
+    "currency_share": 64.780441,
+    "prem_dsc": 0.0015368682037839587,
+    "value_traded": 229133718,
+    "volume": "3551457"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "FBTC",
+    "net_inflow": -36790172.1,
+    "cum_inflow": 10228768680.15,
+    "net_assets": 12819198278.31984,
+    "currency_share": 63.982908,
+    "prem_dsc": 0.0010485925397449858,
+    "value_traded": 192492340,
+    "volume": "3015691"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "FBTC",
+    "net_inflow": 0,
+    "cum_inflow": 10265558852.25,
+    "net_assets": 13065312726.95664,
+    "currency_share": 65.024693,
+    "prem_dsc": -0.00007217258219127665,
+    "value_traded": 171957822,
+    "volume": "2647821"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "FBTC",
+    "net_inflow": 42823453.400000006,
+    "cum_inflow": 10265558852.25,
+    "net_assets": 13237617538.481281,
+    "currency_share": 65.882236,
+    "prem_dsc": 0.00026966297865160804,
+    "value_traded": 232342857,
+    "volume": "3535108"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "FBTC",
+    "net_inflow": -199868235.6,
+    "cum_inflow": 10222735398.85,
+    "net_assets": 13232828570.66112,
+    "currency_share": 66.072144,
+    "prem_dsc": 0.0014810174768964401,
+    "value_traded": 423180427,
+    "volume": "6356536"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "FBTC",
+    "net_inflow": 236723568.6,
+    "cum_inflow": 10422603634.45,
+    "net_assets": 14154919204.234919,
+    "currency_share": 69.624579,
+    "prem_dsc": -0.0003530506087512375,
+    "value_traded": 399757164.921,
+    "volume": "5736039"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "FBTC",
+    "net_inflow": 6756766.600000001,
+    "cum_inflow": 10185880065.85,
+    "net_assets": 13507011568.87768,
+    "currency_share": 67.567666,
+    "prem_dsc": 0.001662540778010646,
+    "value_traded": 179079047,
+    "volume": "2657629"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "FBTC",
+    "net_inflow": 6681486.6,
+    "cum_inflow": 10179123299.25,
+    "net_assets": 13349842742.533678,
+    "currency_share": 66.814866,
+    "prem_dsc": -0.0032158711505908544,
+    "value_traded": 211955271,
+    "volume": "3159873"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "FBTC",
+    "net_inflow": -201039905.82500002,
+    "cum_inflow": 10172441812.65,
+    "net_assets": 13272188037.06604,
+    "currency_share": 66.459473,
+    "prem_dsc": 0.003769605576017687,
+    "value_traded": 529468962,
+    "volume": "7928823"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "FBTC",
+    "net_inflow": 10533886.950000001,
+    "cum_inflow": 10373481718.475,
+    "net_assets": 14236792599.102242,
+    "currency_share": 70.225913,
+    "prem_dsc": 0.00005824060984416235,
+    "value_traded": 228803252,
+    "volume": "3255230"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "FBTC",
+    "net_inflow": 0,
+    "cum_inflow": 10362947831.525,
+    "net_assets": 14307034450.11048,
+    "currency_share": 70.624651,
+    "prem_dsc": 0.00319076974978616,
+    "value_traded": 178054061,
+    "volume": "2535120"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "FBTC",
+    "net_inflow": 24538297,
+    "cum_inflow": 10362947831.525,
+    "net_assets": 14202659737.2816,
+    "currency_share": 70.10942,
+    "prem_dsc": 0.0011493462647387265,
+    "value_traded": 212298394,
+    "volume": "3036170"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "FBTC",
+    "net_inflow": 0,
+    "cum_inflow": 10338409534.525,
+    "net_assets": 14051151682.42816,
+    "currency_share": 69.481567,
+    "prem_dsc": -0.000598216214668712,
+    "value_traded": 217401969,
+    "volume": "3129247"
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:41.454Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "IBIT",
+   "sponsor_fee": 0.0025,
+   "net_inflow": -509341439.99999994,
+   "cum_inflow": 62315635623.659996,
+   "net_assets": 46012355519.99999,
+   "mkt_price": 33.76,
+   "prem_dsc": null,
+   "value_traded": 1903209695.846,
+   "volume": "56280069"
+  },
+  "details": null
+ }
+}

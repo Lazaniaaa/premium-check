@@ -1,0 +1,281 @@
+{
+ "recordedAt": "2026-11-24T21:55:20.704Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "ticker": "MSTR",
+    "name": "Strategy",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "3350",
+    "name": "Metaplanet",
+    "list_location": "Japan"
+   },
+   {
+    "ticker": "CEP",
+    "name": "XXI",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "ASST",
+    "name": "Strive Inc.",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "MARA",
+    "name": "MARA Holdings",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "BSTR",
+    "name": "Bitcoin Standard Treasury Company",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "BLSH",
+    "name": "Bullish",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "SPCX",
+    "name": "SpaceX",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "GLXY",
+    "name": "Galaxy Digital Holdings",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "COIN",
+    "name": "Coinbase",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "HUT",
+    "name": "Hut8",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "RIOT",
+    "name": "Riot Platforms",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "CLSK",
+    "name": "CleanSpark",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "TSLA",
+    "name": "Tesla",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "XYZ",
+    "name": "Block",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "ABTC",
+    "name": "American Bitcoin",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "NXTT",
+    "name": "Next technology ",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "CCCM",
+    "name": "Procap",
+    "list_location": "United Kingdom"
+   },
+   {
+    "ticker": "0434.HK",
+    "name": "Boyaa",
+    "list_location": "Hong Kong"
+   },
+   {
+    "ticker": "NAKA",
+    "name": "KindlyMD",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "OBTC3",
+    "name": "OrangeBTC",
+    "list_location": "Brazil"
+   },
+   {
+    "ticker": "ADE.DE",
+    "name": "Bitcoin group SE",
+    "list_location": "Germany"
+   },
+   {
+    "ticker": "ALCPB.PA",
+    "name": "Capital B",
+    "list_location": "France"
+   },
+   {
+    "ticker": "GS9.F",
+    "name": "H100",
+    "list_location": "Sweden"
+   },
+   {
+    "ticker": "SWC.AQ",
+    "name": "The Smarter Web",
+    "list_location": "United Kingdom"
+   },
+   {
+    "ticker": "HIVE",
+    "name": "Hive Blockchain",
+    "list_location": "Canada"
+   },
+   {
+    "ticker": "DDC",
+    "name": "DayDayCook",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "CAN",
+    "name": "Cannna",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "FUFU",
+    "name": "BitFuFu",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "3825",
+    "name": "RemixPoint",
+    "list_location": "Japan"
+   },
+   {
+    "ticker": "CIFR",
+    "name": "Cipher Mining",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "3189",
+    "name": "ANAP Holdings",
+    "list_location": "Japan"
+   },
+   {
+    "ticker": "IMG",
+    "name": "CIMG Inc",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "EMPD",
+    "name": "Empery Digital",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "ZOOZ",
+    "name": "Zooz Power",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "CANG",
+    "name": "Cango",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "BITF",
+    "name": "Bitfarms",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "NA",
+    "name": "Nano Labs Ltd",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "PMA",
+    "name": "Ming Shing Group",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "BTCT",
+    "name": "Bitcoin Treasury Corporation",
+    "list_location": "Canada"
+   },
+   {
+    "ticker": "CASH3",
+    "name": "Méliuz S.A. ",
+    "list_location": "Brazil"
+   },
+   {
+    "ticker": "NDA.V",
+    "name": "Neptune",
+    "list_location": "Canada"
+   },
+   {
+    "ticker": "LMFA",
+    "name": "Lm Funding America",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "DMGGF",
+    "name": "DMG Blockchain",
+    "list_location": "Canada"
+   },
+   {
+    "ticker": "FLD",
+    "name": "Fold Holdings",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "CORZ",
+    "name": "Core Scientific",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "BMNR",
+    "name": "Bitmine",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "HODL",
+    "name": "B HODL",
+    "list_location": "United Kingdom"
+   },
+   {
+    "ticker": "7603",
+    "name": "Mac House",
+    "list_location": "Japan"
+   },
+   {
+    "ticker": "BTDR",
+    "name": "Bitdeer Technology",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "8105",
+    "name": "Bitcoin Japan",
+    "list_location": "Japan"
+   },
+   {
+    "ticker": "GME",
+    "name": "GameStop",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "KULR",
+    "name": "KULR Technology",
+    "list_location": "United States"
+   },
+   {
+    "ticker": "LVO",
+    "name": "LiveOne",
+    "list_location": "United States"
+   }
+  ],
+  "details": null
+ }
+}

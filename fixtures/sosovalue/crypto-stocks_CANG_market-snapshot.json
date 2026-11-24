@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:13.546Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795555980000",
+   "ticker": "CANG",
+   "mkt_price": "1.33",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "463254",
+   "turnover": "657682.9797596341",
+   "circulating_marketcap": "22029115.85",
+   "total_marketcap": "54559216.11",
+   "total_shares": "39321967",
+   "circulating_shares": "16563245",
+   "pe_ttm": "0.005677502350113094",
+   "pb": "0.061477413847825284"
+  },
+  "details": null
+ }
+}

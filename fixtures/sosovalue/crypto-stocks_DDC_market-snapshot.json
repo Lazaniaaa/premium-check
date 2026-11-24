@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:59.080Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1794862800000",
+   "ticker": "DDC",
+   "mkt_price": "0.0865",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "6551644",
+   "turnover": "566717.2732071264",
+   "circulating_marketcap": "3007814.2435",
+   "total_marketcap": "5896705",
+   "total_shares": "68169083",
+   "circulating_shares": "34772419",
+   "pe_ttm": "-0.011175710594315245",
+   "pb": "0.004806518862044157"
+  },
+  "details": null
+ }
+}

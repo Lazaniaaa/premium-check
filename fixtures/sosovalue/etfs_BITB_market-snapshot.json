@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:53.821Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "BITB",
+   "sponsor_fee": 0.002,
+   "net_inflow": -12603549.299999753,
+   "cum_inflow": 1947644548.97,
+   "net_assets": 2188042492.95,
+   "mkt_price": 32.38,
+   "prem_dsc": null,
+   "value_traded": 71319191.753,
+   "volume": "2198407"
+  },
+  "details": null
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:09.433Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553940000",
+   "ticker": "EMPD",
+   "mkt_price": "2.141",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "272187",
+   "turnover": "555724.5606549642",
+   "circulating_marketcap": "28534877.607",
+   "total_marketcap": "59411662.372",
+   "total_shares": "29177481",
+   "circulating_shares": "13327827",
+   "pe_ttm": "-0.27815914227673183",
+   "pb": "0.4324727118960095"
+  },
+  "details": null
+ }
+}

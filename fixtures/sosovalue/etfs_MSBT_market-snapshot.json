@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:04.086Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "MSBT",
+   "sponsor_fee": 0.0014,
+   "net_inflow": 0,
+   "cum_inflow": 890778556.61,
+   "net_assets": 763640699.6700001,
+   "mkt_price": 17.11,
+   "prem_dsc": null,
+   "value_traded": 15521316.009,
+   "volume": "905857"
+  },
+  "details": null
+ }
+}

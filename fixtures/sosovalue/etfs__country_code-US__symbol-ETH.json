@@ -1,0 +1,66 @@
+{
+ "recordedAt": "2026-11-24T21:57:06.077Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "ticker": "ETHE",
+    "name": "Grayscale Ethereum Trust",
+    "exchange": "NYSE"
+   },
+   {
+    "ticker": "ETHW",
+    "name": "Bitwise Ethereum ETF",
+    "exchange": "NYSE"
+   },
+   {
+    "ticker": "ETHA",
+    "name": "iShares Ethereum Trust",
+    "exchange": "NASDAQ"
+   },
+   {
+    "ticker": "ETHV",
+    "name": "VanEck Ethereum Trust",
+    "exchange": "CBOE"
+   },
+   {
+    "ticker": "TETH",
+    "name": "21Shares Ethereum ETF",
+    "exchange": "CBOE"
+   },
+   {
+    "ticker": "QETH",
+    "name": "Invesco Galaxy Ethereum ETF",
+    "exchange": "CBOE"
+   },
+   {
+    "ticker": "FETH",
+    "name": "Fidelity Ethereum Fund",
+    "exchange": "CBOE"
+   },
+   {
+    "ticker": "EZET",
+    "name": "Franklin Ethereum Trust",
+    "exchange": "CBOE"
+   },
+   {
+    "ticker": "ETH",
+    "name": "Grayscale Ethereum Mini Trust",
+    "exchange": "NYSE"
+   },
+   {
+    "ticker": "ETHB",
+    "name": "iShares Staked Ethereum Trust ETF",
+    "exchange": "NASDAQ"
+   },
+   {
+    "ticker": "MSSE",
+    "name": "Morgan Stanley Ethereum Trust",
+    "exchange": "NYSE"
+   }
+  ],
+  "details": null
+ }
+}

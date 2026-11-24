@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:25.657Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ETHB",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 0,
+   "cum_inflow": 742587384.56,
+   "net_assets": 648526627.2,
+   "mkt_price": 21.53,
+   "prem_dsc": null,
+   "value_traded": 14100599.257,
+   "volume": "653510"
+  },
+  "details": null
+ }
+}

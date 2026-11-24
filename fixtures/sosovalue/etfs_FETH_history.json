@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:20.510Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "FETH",
+    "net_inflow": 5581190.225,
+    "cum_inflow": 2411721793.95,
+    "net_assets": 1023075100.4749999,
+    "currency_share": 17.172893,
+    "prem_dsc": 0.00041384989704429387,
+    "value_traded": 26408917,
+    "volume": "1498567"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "FETH",
+    "net_inflow": -15941314,
+    "cum_inflow": 2406140603.725,
+    "net_assets": 944522854.5,
+    "currency_share": 15.941314,
+    "prem_dsc": -0.00008242733315466655,
+    "value_traded": 48202561,
+    "volume": "2942111"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2422081917.725,
+    "net_assets": 1056989066.75,
+    "currency_share": 17.543387,
+    "prem_dsc": -0.0007630795581262673,
+    "value_traded": 45381735,
+    "volume": "2576298"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2422081917.725,
+    "net_assets": 1050426154.75,
+    "currency_share": 17.434459,
+    "prem_dsc": 0.00031781886664794534,
+    "value_traded": 15630407,
+    "volume": "890578"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2422081917.725,
+    "net_assets": 1077612099.5,
+    "currency_share": 17.885678,
+    "prem_dsc": 0.0008007524232516161,
+    "value_traded": 27674869,
+    "volume": "1553904"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "FETH",
+    "net_inflow": -4985425.225,
+    "cum_inflow": 2422081917.725,
+    "net_assets": 1092261344.75,
+    "currency_share": 18.128819,
+    "prem_dsc": -0.00048646301780597145,
+    "value_traded": 26015642,
+    "volume": "1431731"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "FETH",
+    "net_inflow": 11641223.399999999,
+    "cum_inflow": 2427067342.95,
+    "net_assets": 1174308410.475,
+    "currency_share": 19.402039,
+    "prem_dsc": 0.0004103176990830626,
+    "value_traded": 52106947.851,
+    "volume": "2692405"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "FETH",
+    "net_inflow": -502221.7,
+    "cum_inflow": 2415426119.5499997,
+    "net_assets": 1203825414.9,
+    "currency_share": 20.088868,
+    "prem_dsc": -0.0014370147685774937,
+    "value_traded": 16310421.954,
+    "volume": "815843"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "FETH",
+    "net_inflow": -4142860.1999999997,
+    "cum_inflow": 2415928341.25,
+    "net_assets": 1241822344.95,
+    "currency_share": 20.714301,
+    "prem_dsc": 0.0007578821993559082,
+    "value_traded": 25801799.059,
+    "volume": "1249831"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2420071201.45,
+    "net_assets": 1229111957.1000001,
+    "currency_share": 20.434114,
+    "prem_dsc": 0.0022455585791485433,
+    "value_traded": 40792149,
+    "volume": "2009826"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "FETH",
+    "net_inflow": -19066896,
+    "cum_inflow": 2420071201.45,
+    "net_assets": 1274304216,
+    "currency_share": 21.18544,
+    "prem_dsc": -0.0007288024227959378,
+    "value_traded": 29505753,
+    "volume": "1394175"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "FETH",
+    "net_inflow": -1665249.975,
+    "cum_inflow": 2439138097.45,
+    "net_assets": 1355513479.65,
+    "currency_share": 22.203333,
+    "prem_dsc": -0.0015012610944491467,
+    "value_traded": 39871008,
+    "volume": "1800013"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "FETH",
+    "net_inflow": -2237315.9,
+    "cum_inflow": 2440803347.4249997,
+    "net_assets": 1367559343.875,
+    "currency_share": 22.373159,
+    "prem_dsc": -0.0001411512786371194,
+    "value_traded": 60640401.535,
+    "volume": "2671052"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "FETH",
+    "net_inflow": 19238242.4,
+    "cum_inflow": 2443040663.325,
+    "net_assets": 1472326738.675,
+    "currency_share": 24.047803,
+    "prem_dsc": 0.001754713309985112,
+    "value_traded": 78489351.754,
+    "volume": "3262837"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2423802420.9249997,
+    "net_assets": 1375215898.375,
+    "currency_share": 22.759055,
+    "prem_dsc": 0.0009203369823571617,
+    "value_traded": 20667479,
+    "volume": "906251"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "FETH",
+    "net_inflow": 0,
+    "cum_inflow": 2423802420.9249997,
+    "net_assets": 1353301563.625,
+    "currency_share": 22.396385,
+    "prem_dsc": -0.002071093169723426,
+    "value_traded": 42543358,
+    "volume": "1890275"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "FETH",
+    "net_inflow": -3327857.1,
+    "cum_inflow": 2423802420.9249997,
+    "net_assets": 1340571768.45,
+    "currency_share": 22.185714,
+    "prem_dsc": 0.0019961494139877356,
+    "value_traded": 36773414,
+    "volume": "1660130"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "FETH",
+    "net_inflow": 2901831.5,
+    "cum_inflow": 2427130278.025,
+    "net_assets": 1406227544.9,
+    "currency_share": 23.214652,
+    "prem_dsc": 0.001522659051705677,
+    "value_traded": 48045712,
+    "volume": "2077995"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "FETH",
+    "net_inflow": 18779856,
+    "cum_inflow": 2424228446.525,
+    "net_assets": 1419052869,
+    "currency_share": 23.47482,
+    "prem_dsc": 0.0049065338946154835,
+    "value_traded": 52311424,
+    "volume": "2242743"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "FETH",
+    "net_inflow": 28583952.775000002,
+    "cum_inflow": 2405448590.525,
+    "net_assets": 1391863496.3500001,
+    "currency_share": 23.333839,
+    "prem_dsc": 0.0015497235581336533,
+    "value_traded": 36906914,
+    "volume": "1581853"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "FETH",
+    "net_inflow": 16129484,
+    "cum_inflow": 2376864637.75,
+    "net_assets": 1346235861,
+    "currency_share": 23.04212,
+    "prem_dsc": -0.00009196202432759648,
+    "value_traded": 53088165,
+    "volume": "2302336"
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:23.787Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553880000",
+   "ticker": "FLD",
+   "mkt_price": "0.33",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "75791",
+   "turnover": "24321.4252462801",
+   "circulating_marketcap": "3470121.93",
+   "total_marketcap": "18170611.14",
+   "total_shares": "55062458",
+   "circulating_shares": "10515521",
+   "pe_ttm": "-0.2385840030741766",
+   "pb": "0.5967141663197889"
+  },
+  "details": null
+ }
+}

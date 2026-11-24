@@ -1,0 +1,29 @@
+{
+ "recordedAt": "2026-11-24T21:57:29.779Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "price": 59876,
+   "change_pct_24h": -0.0225,
+   "turnover_24h": 30468398444,
+   "turnover_rate": 0.0252951,
+   "high_24h": 61682.01,
+   "low_24h": 59260,
+   "marketcap": 1204517767996,
+   "fdv": 1204517767996,
+   "max_supply": "21000000",
+   "total_supply": "20116887",
+   "circulating_supply": "20116871",
+   "ath": 126199.63,
+   "ath_date": "1759708800000",
+   "down_from_ath": 0.53,
+   "cycle_low": 55130,
+   "cycle_low_date": "1795219200000",
+   "up_from_cycle_low": 0.09,
+   "marketcap_rank": 1
+  },
+  "details": null
+ }
+}

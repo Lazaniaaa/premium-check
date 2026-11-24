@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:26.698Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553940000",
+   "ticker": "CORZ",
+   "mkt_price": "10.985",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "10593888",
+   "turnover": "117118612.66259061",
+   "circulating_marketcap": "3041239937.71",
+   "total_marketcap": "3539764657",
+   "total_shares": "322236200",
+   "circulating_shares": "276853886",
+   "pe_ttm": "-33.562452192219325",
+   "pb": null
+  },
+  "details": null
+ }
+}

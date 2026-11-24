@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:48.584Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 302756729.52000004,
+    "currency_share": 60.794524,
+    "prem_dsc": 0.00009007390205062471,
+    "value_traded": 2401617,
+    "volume": "38584"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 288856648.14,
+    "currency_share": 58.003343,
+    "prem_dsc": -0.0005748461774005564,
+    "value_traded": 2814872,
+    "volume": "47789"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 307159766.64,
+    "currency_share": 61.678668,
+    "prem_dsc": -0.00030266542072543423,
+    "value_traded": 1485974,
+    "volume": "23854"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 309564628.56,
+    "currency_share": 62.161572,
+    "prem_dsc": -0.000507902213283784,
+    "value_traded": 2862265,
+    "volume": "45862"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 316403010.18,
+    "currency_share": 63.534741,
+    "prem_dsc": 0.00008277361199926503,
+    "value_traded": 1033173.309,
+    "volume": "16219"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "BTCO",
+    "net_inflow": -6461695.600000001,
+    "cum_inflow": 132682942.25500001,
+    "net_assets": 321792440.88,
+    "currency_share": 64.616956,
+    "prem_dsc": 0.0006661409429438159,
+    "value_traded": 3147147.38,
+    "volume": "48873"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 347633772.59999996,
+    "currency_share": 68.431845,
+    "prem_dsc": 0.00011916966435721044,
+    "value_traded": 1577315,
+    "volume": "23067"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 360276673.4,
+    "currency_share": 70.920605,
+    "prem_dsc": -0.00043153890184655097,
+    "value_traded": 2016783,
+    "volume": "28322"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 376756315.32000005,
+    "currency_share": 74.164629,
+    "prem_dsc": -0.00046692069342124665,
+    "value_traded": 1096753,
+    "volume": "14863"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 372120226.04,
+    "currency_share": 73.252013,
+    "prem_dsc": -0.000573540552394225,
+    "value_traded": 2975755,
+    "volume": "40798"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 377547555.8,
+    "currency_share": 74.320385,
+    "prem_dsc": 0.0002639248975904174,
+    "value_traded": 1395019,
+    "volume": "18777"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 382635622.84,
+    "currency_share": 75.321973,
+    "prem_dsc": -0.0004244843666003639,
+    "value_traded": 1782913.814,
+    "volume": "23700"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 384250966.32,
+    "currency_share": 75.639954,
+    "prem_dsc": 5.949236827618165e-7,
+    "value_traded": 3675781,
+    "volume": "48237"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "BTCO",
+    "net_inflow": 3978821.5,
+    "cum_inflow": 139144637.85500002,
+    "net_assets": 404248264.40000004,
+    "currency_share": 79.57643,
+    "prem_dsc": 0.0005475616335137712,
+    "value_traded": 5343432,
+    "volume": "66956"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 388971615.23,
+    "currency_share": 77.330341,
+    "prem_dsc": -0.00013372500193697956,
+    "value_traded": 2202368,
+    "volume": "28588"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 383258978.84,
+    "currency_share": 76.194628,
+    "prem_dsc": -0.0005856843345962703,
+    "value_traded": 1194048,
+    "volume": "15611"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 383637199.63,
+    "currency_share": 76.269821,
+    "prem_dsc": -0.0007843469306162421,
+    "value_traded": 5620903,
+    "volume": "73543"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 403787052.68,
+    "currency_share": 80.275756,
+    "prem_dsc": 0.0003020463612950497,
+    "value_traded": 848083,
+    "volume": "10547"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 407585286.16,
+    "currency_share": 81.030872,
+    "prem_dsc": -0.0002575808390657963,
+    "value_traded": 713543,
+    "volume": "8863"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 403609941.34999996,
+    "currency_share": 80.240545,
+    "prem_dsc": 0.00036708374799787613,
+    "value_traded": 742775,
+    "volume": "9295"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "BTCO",
+    "net_inflow": 0,
+    "cum_inflow": 135165816.35500002,
+    "net_assets": 399449899.97,
+    "currency_share": 79.413499,
+    "prem_dsc": 0.00033373419297388907,
+    "value_traded": 1179548,
+    "volume": "14823"
+   }
+  ],
+  "details": null
+ }
+}

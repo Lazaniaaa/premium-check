@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:00.021Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "GBTC",
+   "sponsor_fee": 0.015,
+   "net_inflow": 0,
+   "cum_inflow": -28268131168,
+   "net_assets": 7410915970.92,
+   "mkt_price": 46.03,
+   "prem_dsc": null,
+   "value_traded": 62964254.323,
+   "volume": "1364901"
+  },
+  "details": null
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:09.200Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ETHW",
+   "sponsor_fee": 0.002,
+   "net_inflow": 0,
+   "cum_inflow": 389657332.09,
+   "net_assets": 185871737.37,
+   "mkt_price": 11.95,
+   "prem_dsc": null,
+   "value_traded": 2921420.728,
+   "volume": "243705"
+  },
+  "details": null
+ }
+}

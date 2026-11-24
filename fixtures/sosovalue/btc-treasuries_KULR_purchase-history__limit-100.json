@@ -1,0 +1,86 @@
+{
+ "recordedAt": "2026-11-24T21:56:36.071Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-09-11",
+    "ticker": "KULR",
+    "btc_holding": "0",
+    "btc_acq": "-764",
+    "acq_cost": "-58500000"
+   },
+   {
+    "date": "2026-07-23",
+    "ticker": "KULR",
+    "btc_holding": "760",
+    "btc_acq": "-333",
+    "acq_cost": "-21500000",
+    "avg_btc_cost": 151.83
+   },
+   {
+    "date": "2025-07-10",
+    "ticker": "KULR",
+    "btc_holding": "1021",
+    "btc_acq": "90",
+    "acq_cost": "10000000",
+    "avg_btc_cost": 96.89
+   },
+   {
+    "date": "2025-06-09",
+    "ticker": "KULR",
+    "btc_holding": "931",
+    "btc_acq": "130",
+    "acq_cost": "13000000",
+    "avg_btc_cost": 104.99
+   },
+   {
+    "date": "2025-05-20",
+    "ticker": "KULR",
+    "btc_holding": "800",
+    "btc_acq": "84",
+    "acq_cost": "9000000",
+    "avg_btc_cost": 121.78
+   },
+   {
+    "date": "2025-05-06",
+    "ticker": "KULR",
+    "btc_holding": "716",
+    "btc_acq": "47",
+    "acq_cost": "4000000",
+    "avg_btc_cost": 134.52
+   },
+   {
+    "date": "2025-03-25",
+    "ticker": "KULR",
+    "btc_holding": "668",
+    "btc_acq": "58",
+    "acq_cost": "5000000"
+   },
+   {
+    "date": "2025-02-11",
+    "ticker": "KULR",
+    "btc_holding": "610",
+    "btc_acq": "100",
+    "acq_cost": "10000000"
+   },
+   {
+    "date": "2025-01-21",
+    "ticker": "KULR",
+    "btc_holding": "510",
+    "btc_acq": "79",
+    "acq_cost": "8000000"
+   },
+   {
+    "date": "2025-01-06",
+    "ticker": "KULR",
+    "btc_holding": "430",
+    "btc_acq": "213",
+    "acq_cost": "21000000"
+   }
+  ],
+  "details": null
+ }
+}

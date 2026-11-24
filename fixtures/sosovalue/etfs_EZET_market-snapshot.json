@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:21.541Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "EZET",
+   "sponsor_fee": 0.0019,
+   "net_inflow": 0,
+   "cum_inflow": 63789199.85,
+   "net_assets": 33973378.4,
+   "mkt_price": 12.66,
+   "prem_dsc": null,
+   "value_traded": 661867.418,
+   "volume": "52231"
+  },
+  "details": null
+ }
+}

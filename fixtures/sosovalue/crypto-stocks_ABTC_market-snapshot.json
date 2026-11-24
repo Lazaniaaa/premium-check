@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:52.811Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795556580000",
+   "ticker": "ABTC",
+   "mkt_price": "3.7",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "575121",
+   "turnover": "2175973.186844814",
+   "circulating_marketcap": "86371856.5",
+   "total_marketcap": "269442532.2",
+   "total_shares": "26810553",
+   "circulating_shares": "23343745",
+   "pe_ttm": "-3.721067979899274",
+   "pb": "0.33745994678771035"
+  },
+  "details": null
+ }
+}

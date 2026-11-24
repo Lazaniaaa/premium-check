@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:32.969Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557360000",
+   "ticker": "GME",
+   "mkt_price": "27.6",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "3831714",
+   "turnover": "105174433.83483048",
+   "circulating_marketcap": "12707358531.6",
+   "total_marketcap": "13924227324",
+   "total_shares": "504500990",
+   "circulating_shares": "460411541",
+   "pe_ttm": "15.587403243382814",
+   "pb": "2.267272499622438"
+  },
+  "details": null
+ }
+}

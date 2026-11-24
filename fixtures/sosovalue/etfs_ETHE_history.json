@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:08.157Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5546557392,
+    "net_assets": 1158272116.2,
+    "currency_share": 13.7892,
+    "prem_dsc": 0.0007832216517276169,
+    "value_traded": 22362796,
+    "volume": "1581856"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "ETHE",
+    "net_inflow": -4479020,
+    "cum_inflow": -5546557392,
+    "net_assets": 1074945604.2,
+    "currency_share": 12.7972,
+    "prem_dsc": -0.0013440440096271766,
+    "value_traded": 49459473,
+    "volume": "3746727"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "ETHE",
+    "net_inflow": -5209045,
+    "cum_inflow": -5542078372,
+    "net_assets": 1187500357.25,
+    "currency_share": 14.0785,
+    "prem_dsc": 0.00010654544163091195,
+    "value_traded": 24619891,
+    "volume": "1731607"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "ETHE",
+    "net_inflow": -1962618,
+    "cum_inflow": -5536869327,
+    "net_assets": 1187643235.95,
+    "currency_share": 14.0187,
+    "prem_dsc": -0.0013339325329738694,
+    "value_traded": 22428740,
+    "volume": "1590731"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5534906709,
+    "net_assets": 1221308989.55,
+    "currency_share": 14.3923,
+    "prem_dsc": -0.0008546236529255458,
+    "value_traded": 31983778,
+    "volume": "2230808"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "ETHE",
+    "net_inflow": -4368450,
+    "cum_inflow": -5534906709,
+    "net_assets": 1235667047.75,
+    "currency_share": 14.5615,
+    "prem_dsc": -0.00010301136558732438,
+    "value_traded": 46632446.803,
+    "volume": "3196021"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1326863104.35,
+    "currency_share": 15.5811,
+    "prem_dsc": 0.0005712048571666628,
+    "value_traded": 32295062,
+    "volume": "2077408"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1372865726.0500002,
+    "currency_share": 16.1213,
+    "prem_dsc": 0.0005396587123864816,
+    "value_traded": 36157274.408,
+    "volume": "2249652"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1417778318.95,
+    "currency_share": 16.6487,
+    "prem_dsc": 0.00007808417474008955,
+    "value_traded": 15826887,
+    "volume": "955154"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1402194313.4499998,
+    "currency_share": 16.4657,
+    "prem_dsc": 0.00026114893384443505,
+    "value_traded": 29265776,
+    "volume": "1783007"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1450317381.8,
+    "currency_share": 17.0308,
+    "prem_dsc": -0.00004697371820450158,
+    "value_traded": 37587362,
+    "volume": "2211034"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5530538259,
+    "net_assets": 1517805493.05,
+    "currency_share": 17.8233,
+    "prem_dsc": 0.0003759124292357363,
+    "value_traded": 36986617,
+    "volume": "2076389"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "ETHE",
+    "net_inflow": -539616,
+    "cum_inflow": -5530538259,
+    "net_assets": 1531762971.2,
+    "currency_share": 17.9872,
+    "prem_dsc": -0.0009562355452767957,
+    "value_traded": 54367512,
+    "volume": "2979029"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "ETHE",
+    "net_inflow": 9680800,
+    "cum_inflow": -5529998643,
+    "net_assets": 1649385661.6,
+    "currency_share": 19.3616,
+    "prem_dsc": 0.0004338484422776734,
+    "value_traded": 58938680.822,
+    "volume": "3055232"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5539679443,
+    "net_assets": 1551493320,
+    "currency_share": 18.32,
+    "prem_dsc": 0.0005458515283842669,
+    "value_traded": 17315178,
+    "volume": "946069"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5539679443,
+    "net_assets": 1523935682.1,
+    "currency_share": 17.9946,
+    "prem_dsc": -0.0008113545174662784,
+    "value_traded": 42510200,
+    "volume": "2332641"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "ETHE",
+    "net_inflow": -21506040,
+    "cum_inflow": -5539679443,
+    "net_assets": 1517761890.45,
+    "currency_share": 17.9217,
+    "prem_dsc": -0.002884770975967732,
+    "value_traded": 39418195,
+    "volume": "2209492"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "ETHE",
+    "net_inflow": -15535192.999999998,
+    "cum_inflow": -5518173403,
+    "net_assets": 1607583643.35,
+    "currency_share": 18.7171,
+    "prem_dsc": -0.00037933226835340506,
+    "value_traded": 21139171,
+    "volume": "1132524"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5502638210,
+    "net_assets": 1647556109.6499999,
+    "currency_share": 18.9989,
+    "prem_dsc": -0.00046844817331537225,
+    "value_traded": 34370160,
+    "volume": "1834994"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5502638210,
+    "net_assets": 1630672017.7,
+    "currency_share": 18.8042,
+    "prem_dsc": 0.00030844173110256,
+    "value_traded": 16612154,
+    "volume": "886570"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ETHE",
+    "net_inflow": 0,
+    "cum_inflow": -5502638210,
+    "net_assets": 1609330594.85,
+    "currency_share": 18.5581,
+    "prem_dsc": 0.00010238117048610995,
+    "value_traded": 19486837,
+    "volume": "1050872"
+   }
+  ],
+  "details": null
+ }
+}

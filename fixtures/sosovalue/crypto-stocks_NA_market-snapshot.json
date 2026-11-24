@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:17.645Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795550580000",
+   "ticker": "NA",
+   "mkt_price": "1.0034",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "22341",
+   "turnover": "22084.4435046135",
+   "circulating_marketcap": "8447174.0734",
+   "total_marketcap": "22081463.579400003",
+   "total_shares": "20355181",
+   "circulating_shares": "8418551",
+   "pe_ttm": "0.00016329086287846743",
+   "pb": "0.05518001457434298"
+  },
+  "details": null
+ }
+}

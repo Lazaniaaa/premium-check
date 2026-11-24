@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:56.934Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 298777722.5,
+    "net_assets": 319535372.79999995,
+    "currency_share": 35.307776,
+    "prem_dsc": 0.0006294364164993738,
+    "value_traded": 7705761,
+    "volume": "213498"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "EZBC",
+    "net_inflow": -1686393.15,
+    "cum_inflow": 298777722.5,
+    "net_assets": 305237160.15,
+    "currency_share": 33.727863,
+    "prem_dsc": -0.0014190937623294042,
+    "value_traded": 16566729,
+    "volume": "482025"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 300464115.65,
+    "net_assets": 326243153.59999996,
+    "currency_share": 35.850896,
+    "prem_dsc": -0.0008617915714016489,
+    "value_traded": 4637222,
+    "volume": "127944"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 300464115.65,
+    "net_assets": 328670059.90000004,
+    "currency_share": 36.117589,
+    "prem_dsc": 0.00006675417896784275,
+    "value_traded": 5614995,
+    "volume": "154868"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 300464115.65,
+    "net_assets": 335465976.3,
+    "currency_share": 36.864393,
+    "prem_dsc": 0.0009658913955261639,
+    "value_traded": 2856749,
+    "volume": "77362"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "EZBC",
+    "net_inflow": -3752265.7,
+    "cum_inflow": 300464115.65,
+    "net_assets": 341456178.70000005,
+    "currency_share": 37.522657,
+    "prem_dsc": 0.0012617176869964553,
+    "value_traded": 13757032.457,
+    "volume": "367278"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 366142934,
+    "currency_share": 39.798145,
+    "prem_dsc": -0.0014609977424826504,
+    "value_traded": 3601672,
+    "volume": "90636"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 379573250.4,
+    "currency_share": 41.257962,
+    "prem_dsc": -0.0014048682288281267,
+    "value_traded": 6462063,
+    "volume": "156201"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 395659505.59999996,
+    "currency_share": 43.006468,
+    "prem_dsc": 0.0017097893275030973,
+    "value_traded": 8836402,
+    "volume": "205912"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 390672562.8,
+    "currency_share": 42.464409,
+    "prem_dsc": 0.0017801024853540959,
+    "value_traded": 3766195,
+    "volume": "88929"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 397178103.59999996,
+    "currency_share": 43.171533,
+    "prem_dsc": 0.0006593928457441223,
+    "value_traded": 5372968,
+    "volume": "124423"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 304216381.35,
+    "net_assets": 402473218.8,
+    "currency_share": 43.747089,
+    "prem_dsc": 0.00006654157034313712,
+    "value_traded": 5487790.456,
+    "volume": "125638"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "EZBC",
+    "net_inflow": -32924514.75,
+    "cum_inflow": 304216381.35,
+    "net_assets": 403874047.59999996,
+    "currency_share": 43.899353,
+    "prem_dsc": 0.0006981196283235569,
+    "value_traded": 27232613,
+    "volume": "618644"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 460180345.95000005,
+    "currency_share": 46.249281,
+    "prem_dsc": 0.00001554618762611426,
+    "value_traded": 18422130.643,
+    "volume": "397668"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 446449405.65,
+    "currency_share": 44.869287,
+    "prem_dsc": 0.0009073689983083444,
+    "value_traded": 7843983,
+    "volume": "175203"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 441520772.65000004,
+    "currency_share": 44.373947,
+    "prem_dsc": -0.003243953033972957,
+    "value_traded": 3308702,
+    "volume": "74401"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 439394935.25,
+    "currency_share": 44.160295,
+    "prem_dsc": 0.002257752127788226,
+    "value_traded": 11311388,
+    "volume": "254736"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 464033354.1,
+    "currency_share": 46.636518,
+    "prem_dsc": -0.0003542074045923549,
+    "value_traded": 4588660,
+    "volume": "98200"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 466518267.09999996,
+    "currency_share": 46.886258,
+    "prem_dsc": 0.0037056060221314358,
+    "value_traded": 3917461,
+    "volume": "83988"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 463167047.40000004,
+    "currency_share": 46.549452,
+    "prem_dsc": 0.0013007242276450448,
+    "value_traded": 8600031,
+    "volume": "185080"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "EZBC",
+    "net_inflow": 0,
+    "cum_inflow": 337140896.1,
+    "net_assets": 459139078.45,
+    "currency_share": 46.144631,
+    "prem_dsc": -0.0001003800420463774,
+    "value_traded": 6662992,
+    "volume": "144545"
+   }
+  ],
+  "details": null
+ }
+}

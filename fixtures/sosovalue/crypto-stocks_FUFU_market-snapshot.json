@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:03.252Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553760000",
+   "ticker": "FUFU",
+   "mkt_price": "1.005",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "99347",
+   "turnover": "103073.129163025",
+   "circulating_marketcap": "17005297.47",
+   "total_marketcap": "167530117.17",
+   "total_shares": "31696634",
+   "circulating_shares": "16920694",
+   "pe_ttm": "-1.4329468763533237",
+   "pb": "1.7752476112718578"
+  },
+  "details": null
+ }
+}

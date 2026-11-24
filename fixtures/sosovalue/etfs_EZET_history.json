@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:22.576Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 33973378.4,
+    "currency_share": 13.066684,
+    "prem_dsc": -0.001276835040933122,
+    "value_traded": 352772,
+    "volume": "26249"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 31523281.400000002,
+    "currency_share": 12.124339,
+    "prem_dsc": -0.0020074496432342936,
+    "value_traded": 748213,
+    "volume": "60196"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 34658631.8,
+    "currency_share": 13.330243,
+    "prem_dsc": -0.00001822922507854763,
+    "value_traded": 434055,
+    "volume": "32099"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 34468561.4,
+    "currency_share": 13.257139,
+    "prem_dsc": -0.0012928128761416913,
+    "value_traded": 346000,
+    "volume": "26034"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 35334319.8,
+    "currency_share": 13.590123,
+    "prem_dsc": 0.0029342633617077674,
+    "value_traded": 365921,
+    "volume": "27017"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 35816430,
+    "currency_share": 13.77555,
+    "prem_dsc": -0.00003992581058476219,
+    "value_traded": 192384,
+    "volume": "13962"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 38374757.2,
+    "currency_share": 14.759522,
+    "prem_dsc": -0.0006451428440569229,
+    "value_traded": 522253.991,
+    "volume": "35607"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 63789199.85,
+    "net_assets": 39692133,
+    "currency_share": 15.266205,
+    "prem_dsc": -0.001716536624524534,
+    "value_traded": 993984.268,
+    "volume": "65383"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "EZET",
+    "net_inflow": -787152.35,
+    "cum_inflow": 63789199.85,
+    "net_assets": 40931922.2,
+    "currency_share": 15.743047,
+    "prem_dsc": -0.00019354576023311587,
+    "value_traded": 346041,
+    "volume": "22064"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 41125323.5,
+    "currency_share": 15.51899,
+    "prem_dsc": 0.002642568878515883,
+    "value_traded": 320732,
+    "volume": "20805"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 42674391.6,
+    "currency_share": 16.103544,
+    "prem_dsc": -0.0008410570989838551,
+    "value_traded": 572534,
+    "volume": "35538"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 44737607.4,
+    "currency_share": 16.882116,
+    "prem_dsc": -0.001902368162853385,
+    "value_traded": 61756,
+    "volume": "3662"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 45083501.3,
+    "currency_share": 17.012642,
+    "prem_dsc": 0.00043250190064547667,
+    "value_traded": 1989547,
+    "volume": "114778"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 48433361,
+    "currency_share": 18.27674,
+    "prem_dsc": 0.001819744659058431,
+    "value_traded": 2069916.279,
+    "volume": "113065"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 45864435.1,
+    "currency_share": 17.307334,
+    "prem_dsc": 0.0018874079624278117,
+    "value_traded": 509306,
+    "volume": "29409"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 45117145.7,
+    "currency_share": 17.025338,
+    "prem_dsc": -0.00031353268874911855,
+    "value_traded": 855441,
+    "volume": "49675"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 44734816.95,
+    "currency_share": 16.881063,
+    "prem_dsc": 0.0020104184197404784,
+    "value_traded": 960599,
+    "volume": "56948"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 46761889.4,
+    "currency_share": 17.645996,
+    "prem_dsc": 0.0007936077963521804,
+    "value_traded": 865793,
+    "volume": "49074"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 47346066,
+    "currency_share": 17.86644,
+    "prem_dsc": 0.004117216412447,
+    "value_traded": 307015,
+    "volume": "17280"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 47022328.74999999,
+    "currency_share": 17.744275,
+    "prem_dsc": 0.00032263927379405644,
+    "value_traded": 467513,
+    "volume": "26366"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "EZET",
+    "net_inflow": 0,
+    "cum_inflow": 64576352.2,
+    "net_assets": 46449282.15,
+    "currency_share": 17.528031,
+    "prem_dsc": 0.00011239140323282548,
+    "value_traded": 908772,
+    "volume": "51894"
+   }
+  ],
+  "details": null
+ }
+}

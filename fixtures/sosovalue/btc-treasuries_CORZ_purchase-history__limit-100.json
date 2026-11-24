@@ -1,0 +1,18 @@
+{
+ "recordedAt": "2026-11-24T21:56:27.706Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-03-31",
+    "ticker": "CORZ",
+    "btc_holding": "264",
+    "btc_acq": "247",
+    "avg_btc_cost": 0.07
+   }
+  ],
+  "details": null
+ }
+}

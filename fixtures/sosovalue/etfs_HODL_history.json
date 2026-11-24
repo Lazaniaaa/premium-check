@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:58.988Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 977142298.6,
+    "net_assets": 870552540,
+    "currency_share": 17.28144,
+    "prem_dsc": 0.0004953290929459175,
+    "value_traded": 14281345,
+    "volume": "812366"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 977142298.6,
+    "net_assets": 831761271.2499999,
+    "currency_share": 16.51139,
+    "prem_dsc": -0.0019011118991192344,
+    "value_traded": 28876331,
+    "volume": "1729889"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 977142298.6,
+    "net_assets": 884196105,
+    "currency_share": 17.55228,
+    "prem_dsc": -0.0006996242083650017,
+    "value_traded": 7320914,
+    "volume": "413519"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "HODL",
+    "net_inflow": -1767877,
+    "cum_inflow": 977142298.6,
+    "net_assets": 890568038.75,
+    "currency_share": 17.67877,
+    "prem_dsc": 0.0000695749760870612,
+    "value_traded": 9200673,
+    "volume": "517199"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 978910175.6,
+    "net_assets": 910771909.5,
+    "currency_share": 18.04402,
+    "prem_dsc": 0.0014398121926266771,
+    "value_traded": 11923100,
+    "volume": "658084"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 978910175.6,
+    "net_assets": 927152056.5,
+    "currency_share": 18.36854,
+    "prem_dsc": 0.0011683018900794373,
+    "value_traded": 16674668,
+    "volume": "909350"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 978910175.6,
+    "net_assets": 983289342.0000001,
+    "currency_share": 19.48072,
+    "prem_dsc": -0.0013202797432539937,
+    "value_traded": 11387715,
+    "volume": "585588"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "HODL",
+    "net_inflow": -6058346.999999999,
+    "cum_inflow": 978910175.6,
+    "net_assets": 1019316882.7499999,
+    "currency_share": 20.19449,
+    "prem_dsc": -0.0017078916080573991,
+    "value_traded": 9683083,
+    "volume": "478746"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 984968522.6,
+    "net_assets": 1068687827.9999999,
+    "currency_share": 21.04752,
+    "prem_dsc": 0.0015431746828129533,
+    "value_traded": 6985005.168,
+    "volume": "332915"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 984968522.6,
+    "net_assets": 1055343142.5,
+    "currency_share": 20.7847,
+    "prem_dsc": 0.0016983646624679771,
+    "value_traded": 5530422,
+    "volume": "265733"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 984968522.6,
+    "net_assets": 1072827513.75,
+    "currency_share": 21.12905,
+    "prem_dsc": 0.000518243839642718,
+    "value_traded": 9372157,
+    "volume": "443971"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 984968522.6,
+    "net_assets": 1087248629.25,
+    "currency_share": 21.41307,
+    "prem_dsc": -0.0001433703808001452,
+    "value_traded": 12945689,
+    "volume": "605845"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "HODL",
+    "net_inflow": -23635391.999999996,
+    "cum_inflow": 984968522.6,
+    "net_assets": 1090988208,
+    "currency_share": 21.48672,
+    "prem_dsc": 0.00015265242903517162,
+    "value_traded": 13633086.61,
+    "volume": "630818"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1174126818.75,
+    "currency_share": 22.63377,
+    "prem_dsc": -0.0006083387787363392,
+    "value_traded": 15211316.678,
+    "volume": "671730"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1139221687.5,
+    "currency_share": 21.9609,
+    "prem_dsc": 0.0008697275612565836,
+    "value_traded": 5898695,
+    "volume": "269379"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1126510756.25,
+    "currency_share": 21.71587,
+    "prem_dsc": -0.004414697638178922,
+    "value_traded": 12660582,
+    "volume": "583028"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1121185787.5,
+    "currency_share": 21.61322,
+    "prem_dsc": 0.0021644160379621358,
+    "value_traded": 22605111,
+    "volume": "1041016"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1184187456.25,
+    "currency_share": 22.82771,
+    "prem_dsc": 0.00010031667653032095,
+    "value_traded": 5732031,
+    "volume": "251608"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1190297293.75,
+    "currency_share": 22.94549,
+    "prem_dsc": 0.004554707700729077,
+    "value_traded": 8084216,
+    "volume": "353572"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1181895618.75,
+    "currency_share": 22.78353,
+    "prem_dsc": 0.0011618041629193332,
+    "value_traded": 9064974,
+    "volume": "398710"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "HODL",
+    "net_inflow": 0,
+    "cum_inflow": 1008603914.6,
+    "net_assets": 1171673131.25,
+    "currency_share": 22.58647,
+    "prem_dsc": 0.0001562882557566425,
+    "value_traded": 9355148,
+    "volume": "414091"
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "recordedAt": "2026-11-24T21:56:29.773Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-10-19",
+    "ticker": "BMNR",
+    "btc_holding": "215",
+    "btc_acq": "1"
+   },
+   {
+    "date": "2026-10-05",
+    "ticker": "BMNR",
+    "btc_holding": "214",
+    "btc_acq": "1"
+   },
+   {
+    "date": "2026-09-28",
+    "ticker": "BMNR",
+    "btc_holding": "213",
+    "btc_acq": "1"
+   },
+   {
+    "date": "2026-09-14",
+    "ticker": "BMNR",
+    "btc_holding": "212",
+    "btc_acq": "1"
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "recordedAt": "2026-11-24T21:55:53.840Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-09-30",
+    "ticker": "ABTC",
+    "btc_holding": "8427"
+   },
+   {
+    "date": "2026-05-06",
+    "ticker": "ABTC",
+    "btc_holding": "7021",
+    "btc_acq": "1600"
+   },
+   {
+    "date": "2026-01-27",
+    "ticker": "ABTC",
+    "btc_holding": "5843",
+    "btc_acq": "416"
+   },
+   {
+    "date": "2025-11-03",
+    "ticker": "ABTC",
+    "btc_holding": "3960"
+   }
+  ],
+  "details": null
+ }
+}

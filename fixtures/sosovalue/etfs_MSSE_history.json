@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:28.711Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 40842137.6,
+    "currency_share": 18.564608,
+    "prem_dsc": -0.0002482142364654827,
+    "value_traded": 339155,
+    "volume": "17893"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 37872584.2,
+    "currency_share": 17.214811,
+    "prem_dsc": -0.001168238210689565,
+    "value_traded": 544682,
+    "volume": "30424"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 41671955.599999994,
+    "currency_share": 18.941798,
+    "prem_dsc": -0.0002691402368455442,
+    "value_traded": 345047,
+    "volume": "18044"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 41447384,
+    "currency_share": 18.83972,
+    "prem_dsc": -0.001577518137212297,
+    "value_traded": 243949,
+    "volume": "12916"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 42500801.2,
+    "currency_share": 19.318546,
+    "prem_dsc": 0.001110539064378857,
+    "value_traded": 1194477,
+    "volume": "61887"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 43075106.8,
+    "currency_share": 19.579594,
+    "prem_dsc": -0.000489999945861963,
+    "value_traded": 458248,
+    "volume": "23361"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 46128625.4,
+    "currency_share": 20.967557,
+    "prem_dsc": -0.0008039563216638568,
+    "value_traded": 405633,
+    "volume": "19428"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 47727886.8,
+    "currency_share": 21.694494,
+    "prem_dsc": -0.00020714933475740605,
+    "value_traded": 860530,
+    "volume": "39798"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 49215980,
+    "currency_share": 22.3709,
+    "prem_dsc": -0.00007152148550126913,
+    "value_traded": 99914,
+    "volume": "4474"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 49842333.28,
+    "net_assets": 48548845.4,
+    "currency_share": 22.067657,
+    "prem_dsc": 0.0024535001608916307,
+    "value_traded": 376552,
+    "volume": "17176"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "MSSE",
+    "net_inflow": 1601792.92,
+    "cum_inflow": 49842333.28,
+    "net_assets": 50342063.2,
+    "currency_share": 22.882756,
+    "prem_dsc": 0.0007841712772709286,
+    "value_traded": 181319.79,
+    "volume": "7921"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 48240540.36,
+    "net_assets": 51089155.47,
+    "currency_share": 23.985519,
+    "prem_dsc": -0.0031485247411157102,
+    "value_traded": 125470,
+    "volume": "5242"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 48240540.36,
+    "net_assets": 51482063.79,
+    "currency_share": 24.169983,
+    "prem_dsc": -0.0006198597657267602,
+    "value_traded": 250431,
+    "volume": "10345"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 48240540.36,
+    "net_assets": 55285063.769999996,
+    "currency_share": 25.955429,
+    "prem_dsc": 0.003258354928366014,
+    "value_traded": 2468224,
+    "volume": "98678"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 48240540.36,
+    "net_assets": 52446069.84,
+    "currency_share": 24.622568,
+    "prem_dsc": 0.001926362839164586,
+    "value_traded": 67393,
+    "volume": "2730"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "MSSE",
+    "net_inflow": 3151107.31,
+    "cum_inflow": 48240540.36,
+    "net_assets": 51629681.31,
+    "currency_share": 24.239287,
+    "prem_dsc": -0.0024459052776594215,
+    "value_traded": 958432,
+    "volume": "39265"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "MSSE",
+    "net_inflow": -720136.1999999944,
+    "cum_inflow": 45089433.05,
+    "net_assets": 48009080,
+    "currency_share": 24.00454,
+    "prem_dsc": 0.0028686240186230894,
+    "value_traded": 848898,
+    "volume": "35367"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 45809569.24999999,
+    "net_assets": 50961182.92999999,
+    "currency_share": 25.104031,
+    "prem_dsc": 0.001831140186211444,
+    "value_traded": 177146,
+    "volume": "7147"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "MSSE",
+    "net_inflow": 1015800.799999994,
+    "cum_inflow": 45809569.24999999,
+    "net_assets": 51551890.599999994,
+    "currency_share": 25.39502,
+    "prem_dsc": 0.005968886813241481,
+    "value_traded": 1263537,
+    "volume": "49489"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 44793768.45,
+    "net_assets": 50216609.23,
+    "currency_share": 25.234477,
+    "prem_dsc": 0.0011144673218312917,
+    "value_traded": 149678,
+    "volume": "5949"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "MSSE",
+    "net_inflow": 0,
+    "cum_inflow": 44793768.45,
+    "net_assets": 49583626.050000004,
+    "currency_share": 24.916395,
+    "prem_dsc": 0.0005460260202168055,
+    "value_traded": 101769,
+    "volume": "4087"
+   }
+  ],
+  "details": null
+ }
+}

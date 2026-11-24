@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:35.078Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "SPCX",
+   "mkt_price": "126.81",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "79712830",
+   "turnover": "10123003380.373957",
+   "circulating_marketcap": "409937277887.28",
+   "total_marketcap": "1722214688938.29",
+   "total_shares": "8246541218",
+   "circulating_shares": "3232688888",
+   "pe_ttm": "-623.9908310105286",
+   "pb": "9.742796712690497"
+  },
+  "details": null
+ }
+}

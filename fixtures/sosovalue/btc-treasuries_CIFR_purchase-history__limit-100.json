@@ -1,0 +1,67 @@
+{
+ "recordedAt": "2026-11-24T21:56:06.345Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-09-30",
+    "ticker": "CIFR",
+    "btc_holding": "1500",
+    "btc_acq": "251",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "CIFR",
+    "btc_holding": "1414",
+    "btc_acq": "241",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "CIFR",
+    "btc_holding": "1219",
+    "btc_acq": "214",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "CIFR",
+    "btc_holding": "1063",
+    "btc_acq": "160",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "CIFR",
+    "btc_holding": "966",
+    "btc_acq": "179",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "CIFR",
+    "btc_holding": "855",
+    "btc_acq": "174",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "CIFR",
+    "btc_holding": "1034",
+    "btc_acq": "210",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "CIFR",
+    "btc_holding": "1032",
+    "btc_acq": "180",
+    "avg_btc_cost": 0.01
+   }
+  ],
+  "details": null
+ }
+}

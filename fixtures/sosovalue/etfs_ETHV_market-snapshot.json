@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:13.303Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ETHV",
+   "sponsor_fee": 0.002,
+   "net_inflow": 0,
+   "cum_inflow": 151641334.5,
+   "net_assets": 75613980,
+   "mkt_price": 24.43,
+   "prem_dsc": null,
+   "value_traded": 824709.266,
+   "volume": "33737"
+  },
+  "details": null
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "recordedAt": "2026-11-24T21:56:04.279Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-05-14",
+    "ticker": "FUFU",
+    "btc_holding": "1812",
+    "btc_acq": "145",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2026-02-28",
+    "ticker": "FUFU",
+    "btc_holding": "1830",
+    "btc_acq": "227",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2026-01-31",
+    "ticker": "FUFU",
+    "btc_holding": "1796",
+    "btc_acq": "229",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "FUFU",
+    "btc_holding": "1780",
+    "btc_acq": "188",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "FUFU",
+    "btc_holding": "1764",
+    "btc_acq": "231",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "FUFU",
+    "btc_holding": "1953",
+    "btc_acq": "253",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "FUFU",
+    "btc_holding": "1959",
+    "btc_acq": "329",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "FUFU",
+    "btc_holding": "1899",
+    "btc_acq": "408",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "FUFU",
+    "btc_holding": "1784",
+    "btc_acq": "467",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "FUFU",
+    "btc_holding": "1709",
+    "btc_acq": "400",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "FUFU",
+    "btc_holding": "1908",
+    "btc_acq": "209",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "FUFU",
+    "btc_holding": "1847",
+    "btc_acq": "234",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "FUFU",
+    "btc_holding": "1800",
+    "btc_acq": "219",
+    "avg_btc_cost": 0.01
+   }
+  ],
+  "details": null
+ }
+}

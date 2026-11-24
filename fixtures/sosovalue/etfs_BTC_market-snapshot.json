@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:02.065Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "BTC",
+   "sponsor_fee": 0.0015,
+   "net_inflow": -61082376,
+   "cum_inflow": 2810536878.888,
+   "net_assets": 3717375022.896,
+   "mkt_price": 26.38,
+   "prem_dsc": null,
+   "value_traded": 44341407.904,
+   "volume": "1676656"
+  },
+  "details": null
+ }
+}

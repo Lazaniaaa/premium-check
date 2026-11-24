@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:54.909Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795546080000",
+   "ticker": "NXTT",
+   "mkt_price": "3.45",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "31277",
+   "turnover": "105239.5525928936",
+   "circulating_marketcap": "9658778.700000001",
+   "total_marketcap": "9732267.15",
+   "total_shares": "2820947",
+   "circulating_shares": "2799646",
+   "pe_ttm": "-0.05283983514266726",
+   "pb": "0.016314979215516622"
+  },
+  "details": null
+ }
+}

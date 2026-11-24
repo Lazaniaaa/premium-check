@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:54.832Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "BITB",
+    "net_inflow": -12603549.299999753,
+    "cum_inflow": 1947644548.97,
+    "net_assets": 2188042492.95,
+    "currency_share": 33.167235,
+    "prem_dsc": 0.00008336540564823913,
+    "value_traded": 75141643,
+    "volume": "2223728"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "BITB",
+    "net_inflow": -6970288.6,
+    "cum_inflow": 1960248098.2699997,
+    "net_assets": 2102175675.4999998,
+    "currency_share": 31.68313,
+    "prem_dsc": -0.0007300415078939082,
+    "value_traded": 93518024,
+    "volume": "2908330"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 1967218386.8699996,
+    "net_assets": 2241900523.7999997,
+    "currency_share": 33.67734,
+    "prem_dsc": -0.001405692967437422,
+    "value_traded": 81297052,
+    "volume": "2380519"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "BITB",
+    "net_inflow": -36642041.280000255,
+    "cum_inflow": 1967218386.8699996,
+    "net_assets": 2258574711.12,
+    "currency_share": 33.927816,
+    "prem_dsc": -0.00023037144507032092,
+    "value_traded": 54886950,
+    "volume": "1607271"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2003860428.15,
+    "net_assets": 2342664568.2,
+    "currency_share": 34.629188,
+    "prem_dsc": 0.0006009958997594822,
+    "value_traded": 44986444,
+    "volume": "1293697"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2003860428.15,
+    "net_assets": 2384486407.05,
+    "currency_share": 35.247397,
+    "prem_dsc": 0.0003575583184198816,
+    "value_traded": 45301013.376,
+    "volume": "1287633"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2003860428.15,
+    "net_assets": 2529031253.1,
+    "currency_share": 37.384054,
+    "prem_dsc": -0.0011784168726055588,
+    "value_traded": 49891092,
+    "volume": "1337184"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "BITB",
+    "net_inflow": -26353719.6,
+    "cum_inflow": 2003860428.15,
+    "net_assets": 2621807545.5,
+    "currency_share": 38.75547,
+    "prem_dsc": -0.0011732537368274176,
+    "value_traded": 45538290,
+    "volume": "1171837"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2030214147.75,
+    "net_assets": 2760367734.68,
+    "currency_share": 40.397596,
+    "prem_dsc": 0.002039824349943986,
+    "value_traded": 56462278,
+    "volume": "1402286"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2030214147.75,
+    "net_assets": 2725583323.23,
+    "currency_share": 39.888531,
+    "prem_dsc": 0.001541019397280019,
+    "value_traded": 33511565,
+    "volume": "840807"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2030214147.75,
+    "net_assets": 2770961891.2,
+    "currency_share": 40.55264,
+    "prem_dsc": 0.00042808556976825507,
+    "value_traded": 33994682,
+    "volume": "838789"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "BITB",
+    "net_inflow": -20546396.5,
+    "cum_inflow": 2030214147.75,
+    "net_assets": 2807870545.69,
+    "currency_share": 41.092793,
+    "prem_dsc": 0.00041875956204773246,
+    "value_traded": 44466528,
+    "volume": "1085049"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2050760544.25,
+    "net_assets": 2838287852.4900002,
+    "currency_share": 41.236203,
+    "prem_dsc": 0.0003345846367086569,
+    "value_traded": 72547110,
+    "volume": "1745563"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "BITB",
+    "net_inflow": 15205118.250000002,
+    "cum_inflow": 2050760544.25,
+    "net_assets": 2990195111.8500004,
+    "currency_share": 43.443195,
+    "prem_dsc": -0.000533961648078729,
+    "value_traded": 97931002,
+    "volume": "2255479"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "BITB",
+    "net_inflow": 21916522.68,
+    "cum_inflow": 2035555426,
+    "net_assets": 2886237448.32,
+    "currency_share": 42.147159,
+    "prem_dsc": 0.0017282778182037273,
+    "value_traded": 30626114,
+    "volume": "728516"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2013638903.32,
+    "net_assets": 2832706137.52,
+    "currency_share": 41.681962,
+    "prem_dsc": -0.003165949817813263,
+    "value_traded": 38361121,
+    "volume": "915597"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "BITB",
+    "net_inflow": -25718285.72,
+    "cum_inflow": 2013638903.32,
+    "net_assets": 2819055963.7599998,
+    "currency_share": 41.481106,
+    "prem_dsc": 0.0021429997551174473,
+    "value_traded": 102967729,
+    "volume": "2469604"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "BITB",
+    "net_inflow": 8761472.4,
+    "cum_inflow": 2039357189.04,
+    "net_assets": 3004308885.96,
+    "currency_share": 43.807362,
+    "prem_dsc": 0.0002884903226996194,
+    "value_traded": 32907881,
+    "volume": "752898"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "BITB",
+    "net_inflow": 1321258.95,
+    "cum_inflow": 2030595716.64,
+    "net_assets": 3011589566.7,
+    "currency_share": 44.041965,
+    "prem_dsc": 0.00426945073863072,
+    "value_traded": 32510832,
+    "volume": "742587"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2029274457.69,
+    "net_assets": 2988644828.35,
+    "currency_share": 43.725601,
+    "prem_dsc": 0.0012440995379343622,
+    "value_traded": 21882670,
+    "volume": "502353"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "BITB",
+    "net_inflow": 0,
+    "cum_inflow": 2029274457.69,
+    "net_assets": 2962654535.8,
+    "currency_share": 43.345348,
+    "prem_dsc": -0.0005847917059058627,
+    "value_traded": 39102230,
+    "volume": "902422"
+   }
+  ],
+  "details": null
+ }
+}

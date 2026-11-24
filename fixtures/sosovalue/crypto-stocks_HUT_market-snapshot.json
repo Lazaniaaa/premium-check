@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:41.526Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795554840000",
+   "ticker": "HUT",
+   "mkt_price": "48.695",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "4885813",
+   "turnover": "234427196.69425306",
+   "circulating_marketcap": "4786574995.835",
+   "total_marketcap": "5845228789.42",
+   "total_shares": "120037556",
+   "circulating_shares": "98297053",
+   "pe_ttm": "-14.407725847774689",
+   "pb": "3.746024237046832"
+  },
+  "details": null
+ }
+}

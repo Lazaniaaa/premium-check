@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:35.042Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795556460000",
+   "ticker": "KULR",
+   "mkt_price": "1.31",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "355370",
+   "turnover": "472962.99430224876",
+   "circulating_marketcap": "56612314.17",
+   "total_marketcap": "60627511.330000006",
+   "total_shares": "46280543",
+   "circulating_shares": "43215507",
+   "pe_ttm": "-0.6745067000398165",
+   "pb": "0.7749268226545065"
+  },
+  "details": null
+ }
+}

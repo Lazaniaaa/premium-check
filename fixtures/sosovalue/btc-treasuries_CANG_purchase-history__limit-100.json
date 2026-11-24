@@ -1,0 +1,81 @@
+{
+ "recordedAt": "2026-11-24T21:56:14.572Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-03-31",
+    "ticker": "CANG",
+    "btc_holding": "1026",
+    "btc_acq": "1266",
+    "avg_btc_cost": 0.04
+   },
+   {
+    "date": "2026-01-31",
+    "ticker": "CANG",
+    "btc_holding": "7474",
+    "btc_acq": "496",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "CANG",
+    "btc_holding": "7528",
+    "btc_acq": "569",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "CANG",
+    "btc_holding": "6959",
+    "btc_acq": "546",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "CANG",
+    "btc_holding": "6412",
+    "btc_acq": "602",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "CANG",
+    "btc_holding": "5810",
+    "btc_acq": "616",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "CANG",
+    "btc_holding": "5193",
+    "btc_acq": "663",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "CANG",
+    "btc_holding": "2944",
+    "btc_acq": "470",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "CANG",
+    "btc_holding": "2474",
+    "btc_acq": "530",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "CANG",
+    "btc_holding": "1944",
+    "btc_acq": "472",
+    "avg_btc_cost": 0.02
+   }
+  ],
+  "details": null
+ }
+}

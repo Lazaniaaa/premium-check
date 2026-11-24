@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:46.558Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 849004074.555,
+    "net_assets": 1672515486.1299999,
+    "currency_share": 20.264318,
+    "prem_dsc": 0.0007738725774044664,
+    "value_traded": 116878855,
+    "volume": "5685465"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 849004074.555,
+    "net_assets": 1598448577.1299999,
+    "currency_share": 19.366918,
+    "prem_dsc": -0.0008735514860959137,
+    "value_traded": 89928130,
+    "volume": "4594211"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "ARKB",
+    "net_inflow": -31290014.720000003,
+    "cum_inflow": 849004074.555,
+    "net_assets": 1699027213.76,
+    "currency_share": 20.585536,
+    "prem_dsc": -0.0022120385886479355,
+    "value_traded": 88019504,
+    "volume": "4226121"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "ARKB",
+    "net_inflow": -19283053.380000003,
+    "cum_inflow": 880294089.275,
+    "net_assets": 1742835539.63,
+    "currency_share": 20.734466,
+    "prem_dsc": -0.0011799676924402203,
+    "value_traded": 56626024,
+    "volume": "2713418"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "ARKB",
+    "net_inflow": -13118333.86,
+    "cum_inflow": 899577142.655,
+    "net_assets": 1798163875.955,
+    "currency_share": 21.158603,
+    "prem_dsc": 0.0005386461478578131,
+    "value_traded": 45993595,
+    "volume": "2166882"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "ARKB",
+    "net_inflow": -4307488.2,
+    "cum_inflow": 912695476.515,
+    "net_assets": 1843712636.805,
+    "currency_share": 21.537441,
+    "prem_dsc": 0.0005831240582387931,
+    "value_traded": 39244630,
+    "volume": "1827777"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 917002964.715,
+    "net_assets": 1960169662.545,
+    "currency_share": 22.844469,
+    "prem_dsc": -0.0023843408222795626,
+    "value_traded": 75023418,
+    "volume": "3292611"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "ARKB",
+    "net_inflow": -18474071.46,
+    "cum_inflow": 917002964.715,
+    "net_assets": 2032266284.135,
+    "currency_share": 23.684707,
+    "prem_dsc": -0.001465375949130432,
+    "value_traded": 54554435,
+    "volume": "2298432"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 935477036.175,
+    "net_assets": 2137018844.695,
+    "currency_share": 24.681167,
+    "prem_dsc": 0.0015733858937869716,
+    "value_traded": 21520092,
+    "volume": "875607"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 935477036.175,
+    "net_assets": 2110458116.6799998,
+    "currency_share": 24.374408,
+    "prem_dsc": 0.001460220080011787,
+    "value_traded": 24376022,
+    "volume": "1001395"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ARKB",
+    "net_inflow": -9911461.2,
+    "cum_inflow": 935477036.175,
+    "net_assets": 2145459670.0049999,
+    "currency_share": 24.778653,
+    "prem_dsc": 0.000054361308502226535,
+    "value_traded": 29193700,
+    "volume": "1178366"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "ARKB",
+    "net_inflow": -20090060,
+    "cum_inflow": 945388497.375,
+    "net_assets": 2184417336.375,
+    "currency_share": 25.112575,
+    "prem_dsc": -0.0005007451446137345,
+    "value_traded": 33904585,
+    "volume": "1353711"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "ARKB",
+    "net_inflow": -18900823.5,
+    "cum_inflow": 965478557.375,
+    "net_assets": 2212278387.9300003,
+    "currency_share": 25.201098,
+    "prem_dsc": -0.00004352984937405768,
+    "value_traded": 57700921,
+    "volume": "2275592"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "ARKB",
+    "net_inflow": 19903230,
+    "cum_inflow": 984379380.875,
+    "net_assets": 2349509957.4,
+    "currency_share": 26.53764,
+    "prem_dsc": 0.00008896797153035152,
+    "value_traded": 62356432,
+    "volume": "2349833"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 964476150.875,
+    "net_assets": 2260098125.475,
+    "currency_share": 25.745835,
+    "prem_dsc": 0.0009385984179577367,
+    "value_traded": 25587421,
+    "volume": "996156"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 964476150.875,
+    "net_assets": 2235438265.555,
+    "currency_share": 25.464923,
+    "prem_dsc": -0.003334940380538276,
+    "value_traded": 37236189,
+    "volume": "1455452"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "ARKB",
+    "net_inflow": -129546134.33999999,
+    "cum_inflow": 964476150.875,
+    "net_assets": 2225480900.79,
+    "currency_share": 25.351494,
+    "prem_dsc": 0.0030967011253852927,
+    "value_traded": 96381004,
+    "volume": "3782626"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 1094022285.215,
+    "net_assets": 2486319811.8,
+    "currency_share": 26.76484,
+    "prem_dsc": -0.0005544587600747608,
+    "value_traded": 35709048,
+    "volume": "1335886"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 1094022285.215,
+    "net_assets": 2498979449.505,
+    "currency_share": 26.901119,
+    "prem_dsc": 0.004419184198248383,
+    "value_traded": 31238690,
+    "volume": "1166820"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 1094022285.215,
+    "net_assets": 2481447654.84,
+    "currency_share": 26.712392,
+    "prem_dsc": 0.0015950649421436758,
+    "value_traded": 29719865,
+    "volume": "1116289"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ARKB",
+    "net_inflow": 0,
+    "cum_inflow": 1094022285.215,
+    "net_assets": 2460096946.725,
+    "currency_share": 26.482555,
+    "prem_dsc": -0.00009647860638828387,
+    "value_traded": 71758642,
+    "volume": "2710567"
+   }
+  ],
+  "details": null
+ }
+}

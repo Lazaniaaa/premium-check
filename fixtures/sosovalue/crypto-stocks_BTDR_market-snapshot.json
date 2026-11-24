@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:30.870Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557360000",
+   "ticker": "BTDR",
+   "mkt_price": "2.835",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "11359506",
+   "turnover": "32078110.38142592",
+   "circulating_marketcap": "454535377.065",
+   "total_marketcap": "783012303.36",
+   "total_shares": "231794894",
+   "circulating_shares": "160329939",
+   "pe_ttm": "-2.55247421048934",
+   "pb": "0.7502208983756328"
+  },
+  "details": null
+ }
+}

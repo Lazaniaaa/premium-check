@@ -1,0 +1,179 @@
+{
+ "recordedAt": "2026-11-24T21:56:00.097Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-06-17",
+    "ticker": "DDC",
+    "btc_holding": "2899",
+    "btc_acq": "95",
+    "avg_btc_cost": 26.98
+   },
+   {
+    "date": "2026-05-27",
+    "ticker": "DDC",
+    "btc_holding": "2714",
+    "btc_acq": "131",
+    "acq_cost": "10370000",
+    "avg_btc_cost": 26.59
+   },
+   {
+    "date": "2026-05-21",
+    "ticker": "DDC",
+    "btc_holding": "2583",
+    "btc_acq": "200",
+    "acq_cost": "15900000",
+    "avg_btc_cost": 27.81
+   },
+   {
+    "date": "2026-03-19",
+    "ticker": "DDC",
+    "btc_holding": "2383",
+    "btc_acq": "200",
+    "acq_cost": "16000000",
+    "avg_btc_cost": 29.87
+   },
+   {
+    "date": "2026-03-04",
+    "ticker": "DDC",
+    "btc_holding": "2183",
+    "btc_acq": "65"
+   },
+   {
+    "date": "2026-02-25",
+    "ticker": "DDC",
+    "btc_holding": "2118",
+    "btc_acq": "50",
+    "acq_cost": "4220000",
+    "avg_btc_cost": 46.43
+   },
+   {
+    "date": "2026-02-17",
+    "ticker": "DDC",
+    "btc_holding": "2068",
+    "btc_acq": "80",
+    "acq_cost": "6800000",
+    "avg_btc_cost": 47.72
+   },
+   {
+    "date": "2026-02-11",
+    "ticker": "DDC",
+    "btc_holding": "1988",
+    "btc_acq": "100",
+    "acq_cost": "8580000",
+    "avg_btc_cost": 49.91
+   },
+   {
+    "date": "2026-02-05",
+    "ticker": "DDC",
+    "btc_holding": "1888",
+    "btc_acq": "105",
+    "acq_cost": "9120000",
+    "avg_btc_cost": 52.94
+   },
+   {
+    "date": "2026-01-29",
+    "ticker": "DDC",
+    "btc_holding": "1783",
+    "btc_acq": "200",
+    "acq_cost": "17630000",
+    "avg_btc_cost": 56.48
+   },
+   {
+    "date": "2026-01-22",
+    "ticker": "DDC",
+    "btc_holding": "1583",
+    "btc_acq": "200",
+    "acq_cost": "17620000",
+    "avg_btc_cost": 64.62
+   },
+   {
+    "date": "2026-01-15",
+    "ticker": "DDC",
+    "btc_holding": "1383",
+    "btc_acq": "200",
+    "acq_cost": "17800000",
+    "avg_btc_cost": 75.46
+   },
+   {
+    "date": "2025-11-26",
+    "ticker": "DDC",
+    "btc_holding": "1183",
+    "btc_acq": "100",
+    "acq_cost": "8770000",
+    "avg_btc_cost": 90.41
+   },
+   {
+    "date": "2025-10-16",
+    "ticker": "DDC",
+    "btc_holding": "1083",
+    "btc_acq": "25",
+    "acq_cost": "3900000",
+    "avg_btc_cost": 100.39
+   },
+   {
+    "date": "2025-09-25",
+    "ticker": "DDC",
+    "btc_holding": "1058",
+    "btc_acq": "50",
+    "acq_cost": "5443300",
+    "avg_btc_cost": 85.79
+   },
+   {
+    "date": "2025-08-25",
+    "ticker": "DDC",
+    "btc_holding": "788",
+    "btc_acq": "200",
+    "acq_cost": "23200000",
+    "avg_btc_cost": 136.35
+   },
+   {
+    "date": "2025-08-21",
+    "ticker": "DDC",
+    "btc_holding": "588",
+    "btc_acq": "100",
+    "acq_cost": "13280000",
+    "avg_btc_cost": 177.79
+   },
+   {
+    "date": "2025-08-14",
+    "ticker": "DDC",
+    "btc_holding": "488",
+    "btc_acq": "120",
+    "acq_cost": "14780000",
+    "avg_btc_cost": 202.33
+   },
+   {
+    "date": "2025-07-07",
+    "ticker": "DDC",
+    "btc_holding": "368",
+    "btc_acq": "230",
+    "acq_cost": "22560000",
+    "avg_btc_cost": 246.64
+   },
+   {
+    "date": "2025-06-12",
+    "ticker": "DDC",
+    "btc_holding": "138",
+    "btc_acq": "38",
+    "avg_btc_cost": 569.43
+   },
+   {
+    "date": "2025-05-29",
+    "ticker": "DDC",
+    "btc_holding": "100",
+    "btc_acq": "79"
+   },
+   {
+    "date": "2025-05-23",
+    "ticker": "DDC",
+    "btc_holding": "21",
+    "btc_acq": "21"
+   }
+  ],
+  "details": null
+ }
+}

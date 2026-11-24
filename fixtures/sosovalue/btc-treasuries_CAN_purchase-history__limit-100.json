@@ -1,0 +1,109 @@
+{
+ "recordedAt": "2026-11-24T21:56:02.190Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-06-30",
+    "ticker": "CAN",
+    "btc_holding": "1915",
+    "btc_acq": "64",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2026-05-31",
+    "ticker": "CAN",
+    "btc_holding": "1867",
+    "btc_acq": "90",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2026-04-30",
+    "ticker": "CAN",
+    "btc_holding": "1826",
+    "btc_acq": "90",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2026-02-28",
+    "ticker": "CAN",
+    "btc_holding": "1793",
+    "btc_acq": "86",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "CAN",
+    "btc_holding": "1750",
+    "btc_acq": "86",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "CAN",
+    "btc_holding": "1730",
+    "btc_acq": "89",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "CAN",
+    "btc_holding": "1610",
+    "btc_acq": "92",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "CAN",
+    "btc_holding": "1582",
+    "btc_acq": "92",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "CAN",
+    "btc_holding": "1547",
+    "btc_acq": "98",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "CAN",
+    "btc_holding": "1511",
+    "btc_acq": "89",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "CAN",
+    "btc_holding": "1484",
+    "btc_acq": "88",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "CAN",
+    "btc_holding": "1466",
+    "btc_acq": "109",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "CAN",
+    "btc_holding": "1424",
+    "btc_acq": "87",
+    "avg_btc_cost": 0.01
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "CAN",
+    "btc_holding": "1408",
+    "btc_acq": "90",
+    "avg_btc_cost": 0
+   }
+  ],
+  "details": null
+ }
+}

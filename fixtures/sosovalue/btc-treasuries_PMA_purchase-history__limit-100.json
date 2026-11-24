@@ -1,0 +1,26 @@
+{
+ "recordedAt": "2026-11-24T21:56:20.687Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-03-11",
+    "ticker": "PMA",
+    "btc_holding": "833",
+    "btc_acq": "333",
+    "acq_cost": "27000000",
+    "avg_btc_cost": 106.65
+   },
+   {
+    "date": "2025-01-09",
+    "ticker": "PMA",
+    "btc_holding": "500",
+    "btc_acq": "500",
+    "acq_cost": "47000000"
+   }
+  ],
+  "details": null
+ }
+}

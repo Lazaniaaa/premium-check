@@ -1,0 +1,48 @@
+{
+ "recordedAt": "2026-11-24T21:55:51.759Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-06-30",
+    "ticker": "XYZ",
+    "btc_holding": "9117",
+    "avg_btc_cost": 3.73
+   },
+   {
+    "date": "2026-05-07",
+    "ticker": "XYZ",
+    "btc_holding": "9032",
+    "btc_acq": "149",
+    "avg_btc_cost": 3.74
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "XYZ",
+    "btc_holding": "8692",
+    "btc_acq": "108",
+    "acq_cost": "11000000",
+    "avg_btc_cost": 3.6
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "XYZ",
+    "btc_holding": "8584",
+    "btc_acq": "99",
+    "acq_cost": "9519000",
+    "avg_btc_cost": 3.54
+   },
+   {
+    "date": "2024-12-31",
+    "ticker": "XYZ",
+    "btc_holding": "8485",
+    "btc_acq": "122",
+    "acq_cost": "10400000",
+    "avg_btc_cost": 3.49
+   }
+  ],
+  "details": null
+ }
+}

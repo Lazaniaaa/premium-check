@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:50.752Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795554180000",
+   "ticker": "XYZ",
+   "mkt_price": "74.43",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "3086536",
+   "turnover": "229631823.32521576",
+   "circulating_marketcap": "40168303578.630005",
+   "total_marketcap": "44994572460.00001",
+   "total_shares": "544546000",
+   "circulating_shares": "539678941",
+   "pe_ttm": "97.55238151995891",
+   "pb": "1.9641977181732755"
+  },
+  "details": null
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "recordedAt": "2026-11-24T21:55:55.915Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2025-06-30",
+    "ticker": "NXTT",
+    "btc_holding": "5833",
+    "avg_btc_cost": 18.58
+   }
+  ],
+  "details": null
+ }
+}

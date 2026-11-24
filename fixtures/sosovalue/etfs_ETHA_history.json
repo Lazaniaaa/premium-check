@@ -1,0 +1,241 @@
+{
+ "recordedAt": "2026-11-24T21:57:12.267Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "ETHA",
+    "net_inflow": -90544502.96,
+    "cum_inflow": 10891777720.28485,
+    "net_assets": 4493398970.583839,
+    "currency_share": 39.027803,
+    "prem_dsc": -0.0009686171676124289,
+    "value_traded": 359592684,
+    "volume": "9049198"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "ETHA",
+    "net_inflow": -60839323.440000005,
+    "cum_inflow": 10982322223.24485,
+    "net_assets": 4253439339.8862405,
+    "currency_share": 36.213883,
+    "prem_dsc": -0.003144733195277638,
+    "value_traded": 592156675,
+    "volume": "15955636"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "ETHA",
+    "net_inflow": -124223168.16,
+    "cum_inflow": 11043161546.68485,
+    "net_assets": 4743305600.92704,
+    "currency_share": 39.815118,
+    "prem_dsc": -0.0018866702843878258,
+    "value_traded": 491985147,
+    "volume": "12278653"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "ETHA",
+    "net_inflow": -17422626.32,
+    "cum_inflow": 11167384714.84485,
+    "net_assets": 4840848213.25984,
+    "currency_share": 39.596878,
+    "prem_dsc": -0.00042624572573624064,
+    "value_traded": 404872814,
+    "volume": "10156504"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "ETHA",
+    "net_inflow": -27602099.64,
+    "cum_inflow": 11184807341.16485,
+    "net_assets": 4980282558.40944,
+    "currency_share": 40.591323,
+    "prem_dsc": 0.0014455552483469969,
+    "value_traded": 405361863,
+    "volume": "10007939"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "ETHA",
+    "net_inflow": 0,
+    "cum_inflow": 11212409440.80485,
+    "net_assets": 5440000000,
+    "prem_dsc": -0.0014,
+    "value_traded": 368220048,
+    "volume": "8939313"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "ETHA",
+    "net_inflow": 0,
+    "cum_inflow": 11212409440.80485,
+    "net_assets": 5438755228.34736,
+    "currency_share": 44.083737,
+    "prem_dsc": -0.0014458166284767593,
+    "value_traded": 324857508,
+    "volume": "7396656"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "ETHA",
+    "net_inflow": -62011788.08,
+    "cum_inflow": 11212409440.80485,
+    "net_assets": 5625439480.951839,
+    "currency_share": 45.596903,
+    "prem_dsc": -0.0012479575641354268,
+    "value_traded": 424212744,
+    "volume": "9347291"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "ETHA",
+    "net_inflow": -129777838.56,
+    "cum_inflow": 11274421228.88485,
+    "net_assets": 5865078070.61568,
+    "currency_share": 47.020956,
+    "prem_dsc": 0.000830353172742937,
+    "value_traded": 370737014,
+    "volume": "7909668"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "ETHA",
+    "net_inflow": 0,
+    "cum_inflow": 11404199067.444849,
+    "net_assets": 5909560737.46992,
+    "currency_share": 46.351939,
+    "prem_dsc": 0.0029785377479030206,
+    "value_traded": 547362217,
+    "volume": "11832874"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ETHA",
+    "net_inflow": -119282191.83999929,
+    "cum_inflow": 11404199067.444849,
+    "net_assets": 6132128178.73824,
+    "currency_share": 48.097658,
+    "prem_dsc": -0.000782948724863064,
+    "value_traded": 499585263,
+    "volume": "10395744"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "ETHA",
+    "net_inflow": -90761297.40000075,
+    "cum_inflow": 11523481259.28485,
+    "net_assets": 6553635288.963038,
+    "currency_share": 50.422943,
+    "prem_dsc": -0.0018432680535921397,
+    "value_traded": 563526303,
+    "volume": "11193879"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "ETHA",
+    "net_inflow": -75202973.59999925,
+    "cum_inflow": 11614242556.68485,
+    "net_assets": 6695771957.4496,
+    "currency_share": 50.81282,
+    "prem_dsc": -0.0008427007200151326,
+    "value_traded": 874345299,
+    "volume": "17007976"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "ETHA",
+    "net_inflow": 32753301.599999186,
+    "cum_inflow": 11689445530.28485,
+    "net_assets": 7274141448.382079,
+    "currency_share": 54.588836,
+    "prem_dsc": 0.0027691742685262977,
+    "value_traded": 626035773,
+    "volume": "11479788"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "ETHA",
+    "net_inflow": -74438288.64,
+    "cum_inflow": 11656692228.68485,
+    "net_assets": 6857279962.279679,
+    "currency_share": 51.693256,
+    "prem_dsc": 0.0016780332041765877,
+    "value_traded": 261036567,
+    "volume": "5043559"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ETHA",
+    "net_inflow": -138314749.92,
+    "cum_inflow": 11731130517.32485,
+    "net_assets": 6818778856.30608,
+    "currency_share": 50.851011,
+    "prem_dsc": -0.0021830244437028856,
+    "value_traded": 404854193,
+    "volume": "7895135"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "ETHA",
+    "net_inflow": -76639278.56,
+    "cum_inflow": 11869445267.24485,
+    "net_assets": 6898204655.675839,
+    "currency_share": 50.420578,
+    "prem_dsc": -0.000011503239808141608,
+    "value_traded": 637874450,
+    "volume": "12672957"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "ETHA",
+    "net_inflow": -71679164.47999999,
+    "cum_inflow": 11946084545.80485,
+    "net_assets": 7290892595.71904,
+    "currency_share": 52.705268,
+    "prem_dsc": 0.0014179038042270165,
+    "value_traded": 517370003,
+    "volume": "9851772"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "ETHA",
+    "net_inflow": -44825613.84,
+    "cum_inflow": 12017763710.28485,
+    "net_assets": 7454567887.289281,
+    "currency_share": 53.363826,
+    "prem_dsc": 0.004425732142968819,
+    "value_traded": 317750695,
+    "volume": "5998204"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "ETHA",
+    "net_inflow": -93278257.6,
+    "cum_inflow": 12062589324.12485,
+    "net_assets": 7448124712.0528,
+    "currency_share": 52.99901,
+    "prem_dsc": 0.0005847279034081332,
+    "value_traded": 266668537,
+    "volume": "5045218"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ETHA",
+    "net_inflow": -104706356,
+    "cum_inflow": 12155867581.72485,
+    "net_assets": 7449505416.04384,
+    "currency_share": 52.353178,
+    "prem_dsc": -0.00025171346809160777,
+    "value_traded": 367996782,
+    "volume": "7035496"
+   }
+  ],
+  "details": null
+ }
+}

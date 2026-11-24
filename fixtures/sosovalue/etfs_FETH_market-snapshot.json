@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:19.483Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "FETH",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 5581190.225,
+   "cum_inflow": 2411721793.95,
+   "net_assets": 1023075100.4749999,
+   "mkt_price": 16.68,
+   "prem_dsc": null,
+   "value_traded": 38087708.278,
+   "volume": "2277059"
+  },
+  "details": null
+ }
+}

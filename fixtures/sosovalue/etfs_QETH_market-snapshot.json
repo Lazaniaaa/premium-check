@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:17.408Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "QETH",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 0,
+   "cum_inflow": 22485324.725,
+   "net_assets": 15209000.663999999,
+   "mkt_price": 16.62,
+   "prem_dsc": null,
+   "value_traded": 436207.385,
+   "volume": "26200"
+  },
+  "details": null
+ }
+}

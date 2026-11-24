@@ -1,0 +1,33 @@
+{
+ "recordedAt": "2026-11-24T21:55:57.986Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-06-30",
+    "ticker": "NAKA",
+    "btc_holding": "4467",
+    "avg_btc_cost": 26.47
+   },
+   {
+    "date": "2025-08-19",
+    "ticker": "NAKA",
+    "btc_holding": "5765",
+    "btc_acq": "5744",
+    "acq_cost": "679000000",
+    "avg_btc_cost": 20.5
+   },
+   {
+    "date": "2025-05-27",
+    "ticker": "NAKA",
+    "btc_holding": "21",
+    "btc_acq": "21",
+    "acq_cost": "2300000",
+    "avg_btc_cost": 5190.48
+   }
+  ],
+  "details": null
+ }
+}

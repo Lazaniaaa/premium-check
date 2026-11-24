@@ -1,0 +1,31 @@
+{
+ "recordedAt": "2026-11-24T21:55:42.567Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-03-31",
+    "ticker": "HUT",
+    "btc_holding": "16332",
+    "btc_acq": "817",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "HUT",
+    "btc_holding": "13696",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "HUT",
+    "btc_holding": "10667",
+    "btc_acq": "88",
+    "avg_btc_cost": 0
+   }
+  ],
+  "details": null
+ }
+}

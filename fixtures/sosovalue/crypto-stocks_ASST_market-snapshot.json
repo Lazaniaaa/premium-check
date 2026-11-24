@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:25.921Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "ASST",
+   "mkt_price": "14.3",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "4487221",
+   "turnover": "64762728.32019015",
+   "circulating_marketcap": "1675128755.3000002",
+   "total_marketcap": "1820834858.7",
+   "total_shares": "118133002",
+   "circulating_shares": "117141871",
+   "pe_ttm": "-8.438072830080534",
+   "pb": "0.6879772008319933"
+  },
+  "details": null
+ }
+}

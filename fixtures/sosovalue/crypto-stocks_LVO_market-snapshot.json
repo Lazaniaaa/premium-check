@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:37.120Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553940000",
+   "ticker": "LVO",
+   "mkt_price": "2.19",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "127690",
+   "turnover": "274317.9275402874",
+   "circulating_marketcap": "25417842.99",
+   "total_marketcap": "30339563.58",
+   "total_shares": "13853682",
+   "circulating_shares": "11606321",
+   "pe_ttm": "-1.5753447016057596",
+   "pb": null
+  },
+  "details": null
+ }
+}

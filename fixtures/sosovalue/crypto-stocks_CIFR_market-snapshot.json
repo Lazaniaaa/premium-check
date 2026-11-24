@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:05.347Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557300000",
+   "ticker": "CIFR",
+   "mkt_price": "5.495",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "35479041",
+   "turnover": "195532094.27306947",
+   "circulating_marketcap": "2024290274.125",
+   "total_marketcap": "2507726295.935",
+   "total_shares": "456365113",
+   "circulating_shares": "368387675",
+   "pe_ttm": "-5.398009536293594",
+   "pb": "4.177768290767564"
+  },
+  "details": null
+ }
+}

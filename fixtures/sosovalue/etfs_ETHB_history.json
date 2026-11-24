@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:26.667Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 742587384.56,
+    "net_assets": 648526627.2,
+    "currency_share": 22.209816,
+    "prem_dsc": -0.0008922181075250446,
+    "value_traded": 14330443,
+    "volume": "633953"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "ETHB",
+    "net_inflow": -7417835.64,
+    "cum_inflow": 742587384.56,
+    "net_assets": 601668890.8,
+    "currency_share": 20.605099,
+    "prem_dsc": -0.0012180965497909924,
+    "value_traded": 20084736,
+    "volume": "954351"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "ETHB",
+    "net_inflow": -1812210.96,
+    "cum_inflow": 750005220.1999999,
+    "net_assets": 669611949.7199999,
+    "currency_share": 22.652637,
+    "prem_dsc": -0.0009993097050908784,
+    "value_traded": 17418646,
+    "volume": "765189"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "ETHB",
+    "net_inflow": -5406500.399999999,
+    "cum_inflow": 751817431.16,
+    "net_assets": 667702799.4,
+    "currency_share": 22.527085,
+    "prem_dsc": -0.0003145102883927997,
+    "value_traded": 12273262,
+    "volume": "541699"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "ETHB",
+    "net_inflow": -2770983,
+    "cum_inflow": 757223931.56,
+    "net_assets": 689974767,
+    "currency_share": 23.091525,
+    "prem_dsc": 0.0012331363996098688,
+    "value_traded": 15511626,
+    "volume": "674154"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 759994914.56,
+    "net_assets": 752170000,
+    "currency_share": null,
+    "prem_dsc": -0.0009,
+    "value_traded": 25423030,
+    "volume": "1085835"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 759994914.56,
+    "net_assets": 752173020,
+    "currency_share": 25.072434,
+    "prem_dsc": -0.0008947675363309981,
+    "value_traded": 10351449,
+    "volume": "415216"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 759994914.56,
+    "net_assets": 777944820,
+    "currency_share": 25.931494,
+    "prem_dsc": -0.0012145077333377552,
+    "value_traded": 24860625,
+    "volume": "961270"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "ETHB",
+    "net_inflow": -5347979.2,
+    "cum_inflow": 759994914.56,
+    "net_assets": 802196880,
+    "currency_share": 26.739896,
+    "prem_dsc": 0.0003778623521946134,
+    "value_traded": 7375572,
+    "volume": "276628"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "ETHB",
+    "net_inflow": 1054319.16,
+    "cum_inflow": 765342893.76,
+    "net_assets": 796010965.8,
+    "currency_share": 26.357979,
+    "prem_dsc": 0.0031118091413608884,
+    "value_traded": 15174459,
+    "volume": "578172"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ETHB",
+    "net_inflow": -20785325.12,
+    "cum_inflow": 764288574.6,
+    "net_assets": 824849217.9200001,
+    "currency_share": 27.349112,
+    "prem_dsc": -0.0006988161078137489,
+    "value_traded": 8334630,
+    "volume": "305186"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "ETHB",
+    "net_inflow": 1148446.96,
+    "cum_inflow": 785073899.72,
+    "net_assets": 887749500.08,
+    "currency_share": 28.711174,
+    "prem_dsc": -0.0021306687075910435,
+    "value_traded": 6962967,
+    "volume": "242705"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "ETHB",
+    "net_inflow": -21987760.64,
+    "cum_inflow": 783925452.76,
+    "net_assets": 893397432.3199999,
+    "currency_share": 28.931264,
+    "prem_dsc": -0.00038933660140105797,
+    "value_traded": 25494114,
+    "volume": "869753"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "ETHB",
+    "net_inflow": -22376972.88,
+    "cum_inflow": 805913213.4,
+    "net_assets": 983343641.56,
+    "currency_share": 31.079129,
+    "prem_dsc": 0.0019585490957614304,
+    "value_traded": 33202926,
+    "volume": "1066628"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 828290186.28,
+    "net_assets": 952330950.68,
+    "currency_share": 29.429263,
+    "prem_dsc": 0.0017240323007750025,
+    "value_traded": 11133999,
+    "volume": "377890"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ETHB",
+    "net_inflow": -4631727.200000108,
+    "cum_inflow": 828290186.28,
+    "net_assets": 936766826.2,
+    "currency_share": 28.948295,
+    "prem_dsc": -0.001668319325887846,
+    "value_traded": 19974647,
+    "volume": "687148"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "ETHB",
+    "net_inflow": -19514941.240000002,
+    "cum_inflow": 832921913.4800001,
+    "net_assets": 933273366.3600001,
+    "currency_share": 28.698443,
+    "prem_dsc": 0.0017965086119828833,
+    "value_traded": 24043382,
+    "volume": "837580"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "ETHB",
+    "net_inflow": -15597846.679999888,
+    "cum_inflow": 852436854.7200001,
+    "net_assets": 995862518.8000001,
+    "currency_share": 29.995859,
+    "prem_dsc": 0.0011382237794890226,
+    "value_traded": 5984791,
+    "volume": "199564"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 868034701.4,
+    "net_assets": 1024042241.64,
+    "currency_share": 30.368987,
+    "prem_dsc": 0.004643322478948608,
+    "value_traded": 9877202,
+    "volume": "327902"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 868034701.4,
+    "net_assets": 1016987579.28,
+    "currency_share": 30.159774,
+    "prem_dsc": 0.001002195838735398,
+    "value_traded": 8752851,
+    "volume": "290683"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ETHB",
+    "net_inflow": 0,
+    "cum_inflow": 868034701.4,
+    "net_assets": 1004544798.12,
+    "currency_share": 29.790771,
+    "prem_dsc": -0.000025880498359720505,
+    "value_traded": 10144890,
+    "volume": "341191"
+   }
+  ],
+  "details": null
+ }
+}

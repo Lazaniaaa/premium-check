@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:33.009Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795556400000",
+   "ticker": "BLSH",
+   "mkt_price": "19.68",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "1110693",
+   "turnover": "22039498.224909134",
+   "circulating_marketcap": "761337449.28",
+   "total_marketcap": "2984439449.2799997",
+   "total_shares": "151648346",
+   "circulating_shares": "38685846",
+   "pe_ttm": "-3.5419661799822757",
+   "pb": "0.9802460399628976"
+  },
+  "details": null
+ }
+}

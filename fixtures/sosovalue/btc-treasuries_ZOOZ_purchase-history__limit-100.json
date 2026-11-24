@@ -1,0 +1,48 @@
+{
+ "recordedAt": "2026-11-24T21:56:12.497Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-06-30",
+    "ticker": "ZOOZ",
+    "btc_holding": "1047"
+   },
+   {
+    "date": "2025-10-28",
+    "ticker": "ZOOZ",
+    "btc_holding": "1036",
+    "btc_acq": "94",
+    "acq_cost": "10530000",
+    "avg_btc_cost": 112.1
+   },
+   {
+    "date": "2025-10-16",
+    "ticker": "ZOOZ",
+    "btc_holding": "942",
+    "btc_acq": "88",
+    "acq_cost": "10000000",
+    "avg_btc_cost": 123.73
+   },
+   {
+    "date": "2025-10-06",
+    "ticker": "ZOOZ",
+    "btc_holding": "845",
+    "btc_acq": "329",
+    "acq_cost": "40000000",
+    "avg_btc_cost": 138.58
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "ZOOZ",
+    "btc_holding": "525",
+    "btc_acq": "525",
+    "acq_cost": "60000000",
+    "avg_btc_cost": 217.69
+   }
+  ],
+  "details": null
+ }
+}

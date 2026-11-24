@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:56:52.704Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 297170262.49999994,
+    "net_assets": 346286509.5,
+    "currency_share": 17.2239,
+    "prem_dsc": 0.0003541590464413158,
+    "value_traded": 696547,
+    "volume": "39629"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 297170262.49999994,
+    "net_assets": 330797617.49999994,
+    "currency_share": 16.4535,
+    "prem_dsc": -0.0027592913361896843,
+    "value_traded": 510401,
+    "volume": "30235"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 297170262.49999994,
+    "net_assets": 351612324,
+    "currency_share": 17.4888,
+    "prem_dsc": -0.0005031791775308436,
+    "value_traded": 352394,
+    "volume": "19919"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 297170262.49999994,
+    "net_assets": 354227984.5,
+    "currency_share": 17.6189,
+    "prem_dsc": -0.0010727116902871092,
+    "value_traded": 684056,
+    "volume": "38739"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "BRRR",
+    "net_inflow": -3596620,
+    "cum_inflow": 297170262.49999994,
+    "net_assets": 361550225.5,
+    "currency_share": 17.9831,
+    "prem_dsc": 0.0014958488803378245,
+    "value_traded": 203022,
+    "volume": "11195"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 371666781.00000006,
+    "currency_share": 18.3042,
+    "prem_dsc": 0.0008631898689916984,
+    "value_traded": 1073921.136,
+    "volume": "58837"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 394199239.50000006,
+    "currency_share": 19.4139,
+    "prem_dsc": -0.001689511123473486,
+    "value_traded": 232539,
+    "volume": "12056"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 408656399.5,
+    "currency_share": 20.1259,
+    "prem_dsc": -0.0017837711605444007,
+    "value_traded": 1111252,
+    "volume": "54954"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 425970473,
+    "currency_share": 20.9786,
+    "prem_dsc": 0.001973439600354565,
+    "value_traded": 1572014,
+    "volume": "75164"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 420603861.50000006,
+    "currency_share": 20.7143,
+    "prem_dsc": 0.0012406887995248805,
+    "value_traded": 475578,
+    "volume": "22987"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 427607056,
+    "currency_share": 21.0592,
+    "prem_dsc": 0.0005128399939218209,
+    "value_traded": 603795,
+    "volume": "28659"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 433308700,
+    "currency_share": 21.34,
+    "prem_dsc": 0,
+    "value_traded": 235106,
+    "volume": "11051"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 434817361.5,
+    "currency_share": 21.4143,
+    "prem_dsc": 0.0002661772740646384,
+    "value_traded": 3746756,
+    "volume": "173999"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 458088922,
+    "currency_share": 22.5604,
+    "prem_dsc": -0.00001777450754414378,
+    "value_traded": 3130025,
+    "volume": "138715"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 444423657,
+    "currency_share": 21.8874,
+    "prem_dsc": 0.0010325575445233603,
+    "value_traded": 593000,
+    "volume": "27199"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 439517969,
+    "currency_share": 21.6458,
+    "prem_dsc": -0.0030398506869694364,
+    "value_traded": 386390,
+    "volume": "17853"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 437406248.99999994,
+    "currency_share": 21.5418,
+    "prem_dsc": 0.0033609540521220005,
+    "value_traded": 2172696,
+    "volume": "100013"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 461928597.5,
+    "currency_share": 22.7495,
+    "prem_dsc": 0.0004615486054637685,
+    "value_traded": 1218698,
+    "volume": "53522"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 464401746.50000006,
+    "currency_share": 22.8713,
+    "prem_dsc": 0.003878179202756238,
+    "value_traded": 457081,
+    "volume": "19987"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 461067665.5,
+    "currency_share": 22.7071,
+    "prem_dsc": 0.001572195480708638,
+    "value_traded": 279937,
+    "volume": "12339"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "BRRR",
+    "net_inflow": 0,
+    "cum_inflow": 300766882.49999994,
+    "net_assets": 457059458.5,
+    "currency_share": 22.5097,
+    "prem_dsc": 0.000013327587662370632,
+    "value_traded": 944761,
+    "volume": "41909"
+   }
+  ],
+  "details": null
+ }
+}

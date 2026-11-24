@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:45.532Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ARKB",
+   "sponsor_fee": 0.0021,
+   "net_inflow": 0,
+   "cum_inflow": 849004074.555,
+   "net_assets": 1672515486.1299999,
+   "mkt_price": 19.79,
+   "prem_dsc": null,
+   "value_traded": 72323823.936,
+   "volume": "3648345"
+  },
+  "details": null
+ }
+}

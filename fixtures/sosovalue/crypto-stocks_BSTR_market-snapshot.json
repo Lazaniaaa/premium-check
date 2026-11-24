@@ -1,0 +1,10 @@
+{
+ "recordedAt": "2026-11-24T21:55:30.836Z",
+ "status": 404,
+ "body": {
+  "code": 400401,
+  "message": "Market data not found for ticker: BSTR",
+  "data": null,
+  "details": null
+ }
+}

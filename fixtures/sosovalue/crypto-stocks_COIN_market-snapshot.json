@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:39.417Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795556760000",
+   "ticker": "COIN",
+   "mkt_price": "103.56",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "4557815",
+   "turnover": "472606769.05391395",
+   "circulating_marketcap": "23342501773.56",
+   "total_marketcap": "27418899568.08",
+   "total_shares": "223729527",
+   "circulating_shares": "225400751",
+   "pe_ttm": "-39.07935986665138",
+   "pb": "1.9664741832137542"
+  },
+  "details": null
+ }
+}

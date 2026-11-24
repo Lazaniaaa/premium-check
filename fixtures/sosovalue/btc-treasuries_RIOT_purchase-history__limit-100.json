@@ -1,0 +1,94 @@
+{
+ "recordedAt": "2026-11-24T21:55:44.666Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-03-31",
+    "ticker": "RIOT",
+    "btc_holding": "15679",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "RIOT",
+    "btc_holding": "18005",
+    "btc_acq": "460",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "RIOT",
+    "btc_holding": "19368",
+    "btc_acq": "428",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "RIOT",
+    "btc_holding": "19324",
+    "btc_acq": "437",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "RIOT",
+    "btc_holding": "19287",
+    "btc_acq": "445",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "RIOT",
+    "btc_holding": "19309",
+    "btc_acq": "477",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-07-31",
+    "ticker": "RIOT",
+    "btc_holding": "19287",
+    "btc_acq": "484",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "RIOT",
+    "btc_holding": "19273",
+    "btc_acq": "450",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "RIOT",
+    "btc_holding": "19225",
+    "btc_acq": "514",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "RIOT",
+    "btc_holding": "19211",
+    "btc_acq": "463",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "RIOT",
+    "btc_holding": "19223",
+    "btc_acq": "533",
+    "avg_btc_cost": 0
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "RIOT",
+    "btc_holding": "18692",
+    "btc_acq": "470",
+    "avg_btc_cost": 0
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "recordedAt": "2026-11-24T21:55:31.859Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-09-04",
+    "ticker": "BSTR",
+    "btc_holding": "30021"
+   },
+   {
+    "date": "2025-07-17",
+    "ticker": "BSTR",
+    "btc_holding": "30021",
+    "avg_btc_cost": 3.96
+   }
+  ],
+  "details": null
+ }
+}

@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+node_modules/
+.venv/
+# private notes (stay local)
+LESSONS.md
+PLAN.md
+# next.js
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+.claude/

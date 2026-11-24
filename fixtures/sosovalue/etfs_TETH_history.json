@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:16.365Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 18366649.2,
+    "currency_share": 8.62284,
+    "prem_dsc": -0.0014890685667368064,
+    "value_traded": 538828,
+    "volume": "61908"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 17046277.110000003,
+    "currency_share": 8.002947,
+    "prem_dsc": -0.0028673187514549614,
+    "value_traded": 2075963,
+    "volume": "252585"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 18732951.689999998,
+    "currency_share": 8.794813,
+    "prem_dsc": -0.000547254387330387,
+    "value_traded": 2147018,
+    "volume": "242882"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 18629248.38,
+    "currency_share": 8.746126,
+    "prem_dsc": -0.0007004243936115095,
+    "value_traded": 18216162,
+    "volume": "2070789"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 19093013.28,
+    "currency_share": 8.963856,
+    "prem_dsc": 0.002916601962369869,
+    "value_traded": 2643417,
+    "volume": "296079"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 19356864.900000002,
+    "currency_share": 9.08773,
+    "prem_dsc": -0.0008505974539296801,
+    "value_traded": 3556732,
+    "volume": "390222"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 20735846.07,
+    "currency_share": 9.735139,
+    "prem_dsc": -0.0010414848724811243,
+    "value_traded": 1594671,
+    "volume": "164787"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "TETH",
+    "net_inflow": 1208181.2400000023,
+    "cum_inflow": 24283926.529999997,
+    "net_assets": 21445217.01,
+    "currency_share": 10.068177,
+    "prem_dsc": -0.0008121629168815758,
+    "value_traded": 1666508,
+    "volume": "166258"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 23075745.289999995,
+    "net_assets": 20864871.33,
+    "currency_share": 10.380533,
+    "prem_dsc": -0.00005134611103296827,
+    "value_traded": 1156709,
+    "volume": "111755"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "TETH",
+    "net_inflow": -409347.56,
+    "cum_inflow": 23075745.289999995,
+    "net_assets": 20569714.889999997,
+    "currency_share": 10.233689,
+    "prem_dsc": 0.0025710181343208127,
+    "value_traded": 2587076,
+    "volume": "250749"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "TETH",
+    "net_inflow": -2017990.0000000026,
+    "cum_inflow": 23485092.849999994,
+    "net_assets": 21773050,
+    "currency_share": 10.621,
+    "prem_dsc": -0.0010356840222202068,
+    "value_traded": 4187385,
+    "volume": "394385"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25503082.849999998,
+    "net_assets": 24947612.48,
+    "currency_share": 11.137327,
+    "prem_dsc": -0.002004700050559749,
+    "value_traded": 3362574,
+    "volume": "302834"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25503082.849999998,
+    "net_assets": 25137759.36,
+    "currency_share": 11.222214,
+    "prem_dsc": -0.00019728727325984963,
+    "value_traded": 5191959,
+    "volume": "456769"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "TETH",
+    "net_inflow": 120485.33,
+    "cum_inflow": 25503082.849999998,
+    "net_assets": 26988713.92,
+    "currency_share": 12.048533,
+    "prem_dsc": 0.0030266755297096992,
+    "value_traded": 16657399,
+    "volume": "1379839"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 25446920.25,
+    "currency_share": 11.411175,
+    "prem_dsc": 0.001649698650664888,
+    "value_traded": 8865242,
+    "volume": "775068"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 25033426.96,
+    "currency_share": 11.225752,
+    "prem_dsc": -0.0014032022086358786,
+    "value_traded": 13414551,
+    "volume": "1193038"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 24820736.25,
+    "currency_share": 11.130375,
+    "prem_dsc": -0.0004829127500197705,
+    "value_traded": 9179867,
+    "volume": "825958"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 25942912.389999997,
+    "currency_share": 11.633593,
+    "prem_dsc": 0.0005507326928146927,
+    "value_traded": 13391634,
+    "volume": "1144120"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 26264360.2,
+    "currency_share": 11.77774,
+    "prem_dsc": 0.0035881247166265062,
+    "value_traded": 12563984,
+    "volume": "1072532"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 26082673.18,
+    "currency_share": 11.696266,
+    "prem_dsc": 0.00031924718538367536,
+    "value_traded": 7079508,
+    "volume": "604971"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "TETH",
+    "net_inflow": 0,
+    "cum_inflow": 25382597.52,
+    "net_assets": 25767215.15,
+    "currency_share": 11.554805,
+    "prem_dsc": 0.0004495965098503252,
+    "value_traded": 11421291,
+    "volume": "987753"
+   }
+  ],
+  "details": null
+ }
+}

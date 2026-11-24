@@ -1,0 +1,31 @@
+{
+ "recordedAt": "2026-11-24T21:55:24.825Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-20",
+    "ticker": "CEP",
+    "btc_holding": "43841",
+    "btc_acq": "172",
+    "acq_cost": "10000000",
+    "avg_btc_cost": 1.32
+   },
+   {
+    "date": "2026-03-31",
+    "ticker": "CEP",
+    "btc_holding": "43514",
+    "avg_btc_cost": 1.95
+   },
+   {
+    "date": "2025-07-29",
+    "ticker": "CEP",
+    "btc_holding": "43500",
+    "avg_btc_cost": 2
+   }
+  ],
+  "details": null
+ }
+}

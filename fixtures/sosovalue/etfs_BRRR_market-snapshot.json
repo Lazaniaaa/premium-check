@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:51.672Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "BRRR",
+   "sponsor_fee": 0.0025,
+   "net_inflow": 0,
+   "cum_inflow": 297170262.49999994,
+   "net_assets": 346286509.5,
+   "mkt_price": 16.81,
+   "prem_dsc": null,
+   "value_traded": 803950.435,
+   "volume": "47880"
+  },
+  "details": null
+ }
+}

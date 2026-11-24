@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:23.611Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ETH",
+   "sponsor_fee": 0.0015,
+   "net_inflow": 0,
+   "cum_inflow": 1931527458.776,
+   "net_assets": 1522875552.024,
+   "mkt_price": 15.98,
+   "prem_dsc": null,
+   "value_traded": 32062157.244,
+   "volume": "2003928"
+  },
+  "details": null
+ }
+}

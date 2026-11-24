@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:57:07.134Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "ETHE",
+   "sponsor_fee": 0.025,
+   "net_inflow": 0,
+   "cum_inflow": -5546557392,
+   "net_assets": 1158272116.2,
+   "mkt_price": 13.4,
+   "prem_dsc": null,
+   "value_traded": 23717198.595,
+   "volume": "1764867"
+  },
+  "details": null
+ }
+}

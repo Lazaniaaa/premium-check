@@ -1,0 +1,21 @@
+{
+ "recordedAt": "2026-11-24T21:56:43.490Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "date": "2026-11-24",
+   "ticker": "FBTC",
+   "sponsor_fee": 0,
+   "net_inflow": 13287729,
+   "cum_inflow": 9968666005.125,
+   "net_assets": 10397832907.687681,
+   "mkt_price": 51.9,
+   "prem_dsc": null,
+   "value_traded": 261680877.333,
+   "volume": "5032136"
+  },
+  "details": null
+ }
+}

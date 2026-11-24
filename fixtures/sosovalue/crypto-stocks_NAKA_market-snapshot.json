@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:56.966Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795553940000",
+   "ticker": "NAKA",
+   "mkt_price": "3.36",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "124510",
+   "turnover": "423110.78816741024",
+   "circulating_marketcap": "39978825.6",
+   "total_marketcap": "61644149.28",
+   "total_shares": "18346473",
+   "circulating_shares": "11898460",
+   "pe_ttm": "-0.24759936370824898",
+   "pb": "0.19009661237132505"
+  },
+  "details": null
+ }
+}

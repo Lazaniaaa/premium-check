@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:56:01.164Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557240000",
+   "ticker": "CAN",
+   "mkt_price": "0.1242",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "3354739",
+   "turnover": "409278.209926128",
+   "circulating_marketcap": "73887453.87120001",
+   "total_marketcap": "88809206.3982",
+   "total_shares": "724729417",
+   "circulating_shares": "594907036",
+   "pe_ttm": "-0.32779512646240966",
+   "pb": "0.2946303546694736"
+  },
+  "details": null
+ }
+}

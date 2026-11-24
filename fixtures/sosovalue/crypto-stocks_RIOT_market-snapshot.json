@@ -1,0 +1,23 @@
+{
+ "recordedAt": "2026-11-24T21:55:43.653Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": {
+   "timestamp": "1795557240000",
+   "ticker": "RIOT",
+   "mkt_price": "16.295",
+   "mkt_status": "AFTER_HOURS",
+   "volume": "12874140",
+   "turnover": "206489622.89192286",
+   "circulating_marketcap": "5688019356.81",
+   "total_marketcap": "6113622709.675",
+   "total_shares": "375183965",
+   "circulating_shares": "349065318",
+   "pe_ttm": "-4.2921862583782815",
+   "pb": "2.864286878030168"
+  },
+  "details": null
+ }
+}

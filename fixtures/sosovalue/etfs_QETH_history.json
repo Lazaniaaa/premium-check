@@ -1,0 +1,242 @@
+{
+ "recordedAt": "2026-11-24T21:57:18.433Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 15209000.663999999,
+    "currency_share": 17.127253,
+    "prem_dsc": 0.00016038765819592626,
+    "value_traded": 317951,
+    "volume": "18234"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 14114545.104,
+    "currency_share": 15.894758,
+    "prem_dsc": -0.0012430513254746423,
+    "value_traded": 1099941,
+    "volume": "66220"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 15524640.264,
+    "currency_share": 17.482703,
+    "prem_dsc": 0.00041738397088808554,
+    "value_traded": 656805,
+    "volume": "37047"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 15464275.8,
+    "currency_share": 17.414725,
+    "prem_dsc": -0.0014197755060731954,
+    "value_traded": 255820,
+    "volume": "14597"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 15873733.488,
+    "currency_share": 17.875826,
+    "prem_dsc": 0.00023349969953834204,
+    "value_traded": 187364,
+    "volume": "10528"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 16061524.176,
+    "currency_share": 18.087302,
+    "prem_dsc": -0.00040370863493088827,
+    "value_traded": 1044437,
+    "volume": "57658"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22485324.725,
+    "net_assets": 17183636.496,
+    "currency_share": 19.350942,
+    "prem_dsc": -0.000565450508817622,
+    "value_traded": 566698,
+    "volume": "29152"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "QETH",
+    "net_inflow": 400428.33999999997,
+    "cum_inflow": 22485324.725,
+    "net_assets": 17779018.296,
+    "currency_share": 20.021417,
+    "prem_dsc": -0.0005702393591821009,
+    "value_traded": 930505,
+    "volume": "46560"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 17946678.596,
+    "currency_share": 20.675897,
+    "prem_dsc": -0.00028521132601877497,
+    "value_traded": 305731,
+    "volume": "14841"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 17753077.272,
+    "currency_share": 20.452854,
+    "prem_dsc": -0.0011173990681202506,
+    "value_traded": 803182,
+    "volume": "38892"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 18350939.18,
+    "currency_share": 21.141635,
+    "prem_dsc": -0.0005503358656983037,
+    "value_traded": 322242,
+    "volume": "15241"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19206216.036,
+    "currency_share": 22.126977,
+    "prem_dsc": -0.0007672082815469716,
+    "value_traded": 354825,
+    "volume": "16071"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19380310.796,
+    "currency_share": 22.327547,
+    "prem_dsc": 0.0010056187542681894,
+    "value_traded": 2132828,
+    "volume": "94278"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 20871125.968000002,
+    "currency_share": 24.045076,
+    "prem_dsc": -0.0006269474881261949,
+    "value_traded": 1784435.025,
+    "volume": "74648"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19743528,
+    "currency_share": 22.746,
+    "prem_dsc": 0.0006154928339050514,
+    "value_traded": 409623,
+    "volume": "17996"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19365795.232,
+    "currency_share": 22.310824,
+    "prem_dsc": 0.00041128019296832186,
+    "value_traded": 845714,
+    "volume": "37403"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19286354.136,
+    "currency_share": 22.219302,
+    "prem_dsc": -0.00041869002005545664,
+    "value_traded": 938210,
+    "volume": "42455"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 20139076.468,
+    "currency_share": 23.201701,
+    "prem_dsc": -0.000504273372025632,
+    "value_traded": 953265,
+    "volume": "41218"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 20447607.935999997,
+    "currency_share": 23.557152,
+    "prem_dsc": -0.0003036445152622136,
+    "value_traded": 425796,
+    "volume": "18304"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 20230758.968,
+    "currency_share": 23.307326,
+    "prem_dsc": 0.00011472787569011267,
+    "value_traded": 463596,
+    "volume": "19914"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "QETH",
+    "net_inflow": 0,
+    "cum_inflow": 22084896.385,
+    "net_assets": 19972738.156,
+    "currency_share": 23.010067,
+    "prem_dsc": -0.0000029117690095725735,
+    "value_traded": 1587931,
+    "volume": "69039"
+   }
+  ],
+  "details": null
+ }
+}

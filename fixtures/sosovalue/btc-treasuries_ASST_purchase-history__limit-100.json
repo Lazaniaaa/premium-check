@@ -1,0 +1,220 @@
+{
+ "recordedAt": "2026-11-24T21:55:26.923Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-16",
+    "ticker": "ASST",
+    "btc_holding": "43404",
+    "btc_acq": "251",
+    "acq_cost": "17530000",
+    "avg_btc_cost": 1.76
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "ASST",
+    "btc_holding": "43153",
+    "btc_acq": "29",
+    "acq_cost": "2200000",
+    "avg_btc_cost": 1.77
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "ASST",
+    "btc_holding": "43124",
+    "btc_acq": "124",
+    "acq_cost": "9990000",
+    "avg_btc_cost": 1.77
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "ASST",
+    "btc_holding": "43000",
+    "btc_acq": "6182",
+    "acq_cost": "511450000",
+    "avg_btc_cost": 1.78
+   },
+   {
+    "date": "2026-10-19",
+    "ticker": "ASST",
+    "btc_holding": "36818",
+    "btc_acq": "4045",
+    "acq_cost": "330610000",
+    "avg_btc_cost": 2.05
+   },
+   {
+    "date": "2026-10-09",
+    "ticker": "ASST",
+    "btc_holding": "32773",
+    "btc_acq": "3311",
+    "acq_cost": "279780000",
+    "avg_btc_cost": 2.28
+   },
+   {
+    "date": "2026-10-05",
+    "ticker": "ASST",
+    "btc_holding": "29462",
+    "btc_acq": "2000",
+    "acq_cost": "168840000",
+    "avg_btc_cost": 2.49
+   },
+   {
+    "date": "2026-09-28",
+    "ticker": "ASST",
+    "btc_holding": "27462",
+    "btc_acq": "1107",
+    "acq_cost": "94530000",
+    "avg_btc_cost": 2.64
+   },
+   {
+    "date": "2026-09-21",
+    "ticker": "ASST",
+    "btc_holding": "26355",
+    "btc_acq": "1355",
+    "acq_cost": "107690000",
+    "avg_btc_cost": 2.73
+   },
+   {
+    "date": "2026-09-14",
+    "ticker": "ASST",
+    "btc_holding": "25000",
+    "btc_acq": "469",
+    "acq_cost": "36560000",
+    "avg_btc_cost": 2.87
+   },
+   {
+    "date": "2026-09-07",
+    "ticker": "ASST",
+    "btc_holding": "24531",
+    "btc_acq": "1375",
+    "acq_cost": "109010000",
+    "avg_btc_cost": 2.92
+   },
+   {
+    "date": "2026-08-31",
+    "ticker": "ASST",
+    "btc_holding": "23156",
+    "btc_acq": "1800",
+    "acq_cost": "142980000",
+    "avg_btc_cost": 3.07
+   },
+   {
+    "date": "2026-08-24",
+    "ticker": "ASST",
+    "btc_holding": "21356",
+    "btc_acq": "1110",
+    "acq_cost": "81480000",
+    "avg_btc_cost": 3.29
+   },
+   {
+    "date": "2026-08-17",
+    "ticker": "ASST",
+    "btc_holding": "20246",
+    "btc_acq": "79",
+    "acq_cost": "5000000",
+    "avg_btc_cost": 3.47
+   },
+   {
+    "date": "2026-08-10",
+    "ticker": "ASST",
+    "btc_holding": "20167",
+    "btc_acq": "147",
+    "acq_cost": "9530000",
+    "avg_btc_cost": 3.48
+   },
+   {
+    "date": "2026-08-03",
+    "ticker": "ASST",
+    "btc_holding": "20020",
+    "btc_acq": "20",
+    "acq_cost": "1260000",
+    "avg_btc_cost": 3.51
+   },
+   {
+    "date": "2026-07-27",
+    "ticker": "ASST",
+    "btc_holding": "20000",
+    "btc_acq": "79",
+    "acq_cost": "5190000",
+    "avg_btc_cost": 3.51
+   },
+   {
+    "date": "2026-07-20",
+    "ticker": "ASST",
+    "btc_holding": "19921",
+    "btc_acq": "21",
+    "acq_cost": "1330000"
+   },
+   {
+    "date": "2026-07-13",
+    "ticker": "ASST",
+    "btc_holding": "19900",
+    "btc_acq": "18",
+    "acq_cost": "1150000",
+    "avg_btc_cost": 3.53
+   },
+   {
+    "date": "2026-07-06",
+    "ticker": "ASST",
+    "btc_holding": "19882",
+    "btc_acq": "17",
+    "acq_cost": "1680000",
+    "avg_btc_cost": 3.54
+   },
+   {
+    "date": "2026-06-21",
+    "ticker": "ASST",
+    "btc_holding": "19864",
+    "btc_acq": "759",
+    "acq_cost": "49980000",
+    "avg_btc_cost": 3.54
+   },
+   {
+    "date": "2026-06-07",
+    "ticker": "ASST",
+    "btc_holding": "19032",
+    "btc_acq": "32",
+    "acq_cost": "2050000",
+    "avg_btc_cost": 3.7
+   },
+   {
+    "date": "2026-05-12",
+    "ticker": "ASST",
+    "btc_holding": "15009",
+    "btc_acq": "9"
+   },
+   {
+    "date": "2026-04-20",
+    "ticker": "ASST",
+    "btc_holding": "13768",
+    "btc_acq": "27"
+   },
+   {
+    "date": "2026-03-19",
+    "ticker": "ASST",
+    "btc_holding": "13628",
+    "btc_acq": "317"
+   },
+   {
+    "date": "2026-01-28",
+    "ticker": "ASST",
+    "btc_holding": "13131",
+    "btc_acq": "333",
+    "acq_cost": "30000000",
+    "avg_btc_cost": 5.24
+   },
+   {
+    "date": "2025-10-28",
+    "ticker": "ASST",
+    "btc_holding": "5958",
+    "btc_acq": "72",
+    "acq_cost": "8260000",
+    "avg_btc_cost": 19.47
+   }
+  ],
+  "details": null
+ }
+}

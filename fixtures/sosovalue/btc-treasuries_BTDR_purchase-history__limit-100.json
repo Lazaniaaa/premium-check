@@ -1,0 +1,88 @@
+{
+ "recordedAt": "2026-11-24T21:56:31.880Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-02-28",
+    "ticker": "BTDR",
+    "btc_holding": "51",
+    "btc_acq": "705",
+    "avg_btc_cost": 1.55
+   },
+   {
+    "date": "2025-12-31",
+    "ticker": "BTDR",
+    "btc_holding": "2017",
+    "btc_acq": "636",
+    "avg_btc_cost": 0.04
+   },
+   {
+    "date": "2025-11-30",
+    "ticker": "BTDR",
+    "btc_holding": "2179",
+    "btc_acq": "526",
+    "avg_btc_cost": 0.03
+   },
+   {
+    "date": "2025-10-31",
+    "ticker": "BTDR",
+    "btc_holding": "2233",
+    "btc_acq": "511",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-09-30",
+    "ticker": "BTDR",
+    "btc_holding": "2029",
+    "btc_acq": "452",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-08-31",
+    "ticker": "BTDR",
+    "btc_holding": "1934",
+    "btc_acq": "375",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-06-30",
+    "ticker": "BTDR",
+    "btc_holding": "1502",
+    "btc_acq": "203",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-05-31",
+    "ticker": "BTDR",
+    "btc_holding": "1351",
+    "btc_acq": "196",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-04-30",
+    "ticker": "BTDR",
+    "btc_holding": "1246",
+    "btc_acq": "166",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-03-31",
+    "ticker": "BTDR",
+    "btc_holding": "1156",
+    "btc_acq": "114",
+    "avg_btc_cost": 0.02
+   },
+   {
+    "date": "2025-02-28",
+    "ticker": "BTDR",
+    "btc_holding": "1039",
+    "btc_acq": "110",
+    "avg_btc_cost": 0.02
+   }
+  ],
+  "details": null
+ }
+}

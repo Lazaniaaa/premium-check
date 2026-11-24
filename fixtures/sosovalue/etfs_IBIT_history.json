@@ -1,0 +1,241 @@
+{
+ "recordedAt": "2026-11-24T21:56:42.448Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-11-23",
+    "ticker": "IBIT",
+    "net_inflow": -509341439.99999994,
+    "cum_inflow": 62315635623.659996,
+    "net_assets": 46012355519.99999,
+    "currency_share": 34.602,
+    "prem_dsc": 0.0005202011444425114,
+    "value_traded": 2694464598,
+    "volume": "76522966"
+   },
+   {
+    "date": "2026-11-20",
+    "ticker": "IBIT",
+    "net_inflow": -544729920,
+    "cum_inflow": 62824977063.659996,
+    "net_assets": 44440441920,
+    "currency_share": 33.054,
+    "prem_dsc": -0.0010286198342106534,
+    "value_traded": 3674086706,
+    "volume": "109185425"
+   },
+   {
+    "date": "2026-11-19",
+    "ticker": "IBIT",
+    "net_inflow": -541079000,
+    "cum_inflow": 63369706983.659996,
+    "net_assets": 47817329600,
+    "currency_share": 35.135,
+    "prem_dsc": -0.001565390636117825,
+    "value_traded": 2589434937,
+    "volume": "72936991"
+   },
+   {
+    "date": "2026-11-18",
+    "ticker": "IBIT",
+    "net_inflow": -148663200,
+    "cum_inflow": 63910785983.659996,
+    "net_assets": 48717638560,
+    "currency_share": 35.396,
+    "prem_dsc": -0.0010170640750367665,
+    "value_traded": 2010413846,
+    "volume": "56407184"
+   },
+   {
+    "date": "2026-11-17",
+    "ticker": "IBIT",
+    "net_inflow": -209542400,
+    "cum_inflow": 64059449183.659996,
+    "net_assets": 49876871680,
+    "currency_share": 36.128,
+    "prem_dsc": 0.00033215234720995745,
+    "value_traded": 1739240714,
+    "volume": "47956057"
+   },
+   {
+    "date": "2026-11-16",
+    "ticker": "IBIT",
+    "net_inflow": 76500000,
+    "cum_inflow": 64268991583.659996,
+    "net_assets": 53990000000,
+    "prem_dsc": -0.0016,
+    "value_traded": 2250779041,
+    "volume": "61451496"
+   },
+   {
+    "date": "2026-11-13",
+    "ticker": "IBIT",
+    "net_inflow": -143531040,
+    "cum_inflow": 64192491583.659996,
+    "net_assets": 53991072840,
+    "currency_share": 39.003,
+    "prem_dsc": -0.0016152603645873675,
+    "value_traded": 2064290186,
+    "volume": "53025104"
+   },
+   {
+    "date": "2026-11-12",
+    "ticker": "IBIT",
+    "net_inflow": -203782320,
+    "cum_inflow": 64336022623.659996,
+    "net_assets": 56119386680,
+    "currency_share": 40.433,
+    "prem_dsc": -0.0018054559394553582,
+    "value_traded": 2285765661,
+    "volume": "56400295"
+   },
+   {
+    "date": "2026-11-11",
+    "ticker": "IBIT",
+    "net_inflow": -269734400,
+    "cum_inflow": 64539804943.659996,
+    "net_assets": 58709378000,
+    "currency_share": 42.146,
+    "prem_dsc": 0.002230342143975772,
+    "value_traded": 1791656697,
+    "volume": "42695242"
+   },
+   {
+    "date": "2026-11-10",
+    "ticker": "IBIT",
+    "net_inflow": -78236200,
+    "cum_inflow": 64809539343.659996,
+    "net_assets": 58236031000,
+    "currency_share": 41.615,
+    "prem_dsc": 0.0015619368016339674,
+    "value_traded": 1642132388,
+    "volume": "39448284"
+   },
+   {
+    "date": "2026-11-09",
+    "ticker": "IBIT",
+    "net_inflow": -213232320,
+    "cum_inflow": 64887775543.659996,
+    "net_assets": 59285354240,
+    "currency_share": 42.308,
+    "prem_dsc": 0.0002836343008414399,
+    "value_traded": 1337154051,
+    "volume": "31636013"
+   },
+   {
+    "date": "2026-11-06",
+    "ticker": "IBIT",
+    "net_inflow": -402996800,
+    "cum_inflow": 65101007863.659996,
+    "net_assets": 60291751040,
+    "currency_share": 42.872,
+    "prem_dsc": 0.00018660197798103795,
+    "value_traded": 1831131079,
+    "volume": "42813681"
+   },
+   {
+    "date": "2026-11-05",
+    "ticker": "IBIT",
+    "net_inflow": -104973680,
+    "cum_inflow": 65504004663.659996,
+    "net_assets": 60907105840,
+    "currency_share": 43.022,
+    "prem_dsc": 0.00018595137371590909,
+    "value_traded": 2976257130,
+    "volume": "68671956"
+   },
+   {
+    "date": "2026-11-04",
+    "ticker": "IBIT",
+    "net_inflow": -201243000,
+    "cum_inflow": 65608978343.659996,
+    "net_assets": 64278102000.00001,
+    "currency_share": 45.325,
+    "prem_dsc": 0.00011031439602859905,
+    "value_traded": 2720195977,
+    "volume": "60035563"
+   },
+   {
+    "date": "2026-11-03",
+    "ticker": "IBIT",
+    "net_inflow": -94979520,
+    "cum_inflow": 65810221343.659996,
+    "net_assets": 62554567200,
+    "currency_share": 43.972,
+    "prem_dsc": 0.0017738560902391676,
+    "value_traded": 1080677585,
+    "volume": "24657874"
+   },
+   {
+    "date": "2026-11-02",
+    "ticker": "IBIT",
+    "net_inflow": -405298840,
+    "cum_inflow": 65905200863.659996,
+    "net_assets": 61958538120,
+    "currency_share": 43.487,
+    "prem_dsc": -0.003150366776278002,
+    "value_traded": 1539315910,
+    "volume": "35211109"
+   },
+   {
+    "date": "2026-10-30",
+    "ticker": "IBIT",
+    "net_inflow": -233701200,
+    "cum_inflow": 66310499703.659996,
+    "net_assets": 62064114240,
+    "currency_share": 43.278,
+    "prem_dsc": 0.0018947271130829169,
+    "value_traded": 5214610152,
+    "volume": "119909667"
+   },
+   {
+    "date": "2026-10-29",
+    "ticker": "IBIT",
+    "net_inflow": 12797400,
+    "cum_inflow": 66544200903.659996,
+    "net_assets": 65791433400,
+    "currency_share": 45.705,
+    "prem_dsc": 0.00010939722131064755,
+    "value_traded": 1659186922,
+    "volume": "36404486"
+   },
+   {
+    "date": "2026-10-28",
+    "ticker": "IBIT",
+    "net_inflow": 136009040,
+    "cum_inflow": 66531403503.659996,
+    "net_assets": 66129800800,
+    "currency_share": 45.949,
+    "prem_dsc": 0.004156782519750157,
+    "value_traded": 930463513,
+    "volume": "20332140"
+   },
+   {
+    "date": "2026-10-27",
+    "ticker": "IBIT",
+    "net_inflow": 151455080,
+    "cum_inflow": 66395394463.659996,
+    "net_assets": 65519832560,
+    "currency_share": 45.619,
+    "prem_dsc": 0.00177557596615463,
+    "value_traded": 1185512181,
+    "volume": "26079266"
+   },
+   {
+    "date": "2026-10-26",
+    "ticker": "IBIT",
+    "net_inflow": 110344120,
+    "cum_inflow": 66243939383.659996,
+    "net_assets": 64800941160,
+    "currency_share": 45.223,
+    "prem_dsc": -0.00006633792539190164,
+    "value_traded": 1375151821,
+    "volume": "30413973"
+   }
+  ],
+  "details": null
+ }
+}

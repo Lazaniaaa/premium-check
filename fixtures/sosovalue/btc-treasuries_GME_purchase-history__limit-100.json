@@ -1,0 +1,22 @@
+{
+ "recordedAt": "2026-11-24T21:56:33.982Z",
+ "status": 200,
+ "body": {
+  "code": 0,
+  "message": "success",
+  "data": [
+   {
+    "date": "2026-05-02",
+    "ticker": "GME",
+    "btc_holding": "1"
+   },
+   {
+    "date": "2025-05-28",
+    "ticker": "GME",
+    "btc_holding": "4710",
+    "btc_acq": "4710"
+   }
+  ],
+  "details": null
+ }
+}

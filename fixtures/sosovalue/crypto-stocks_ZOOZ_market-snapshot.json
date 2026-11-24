@@ -1,0 +1,10 @@
+{
+ "recordedAt": "2026-11-24T21:56:11.471Z",
+ "status": 404,
+ "body": {
+  "code": 400401,
+  "message": "Market data not found for ticker: ZOOZ",
+  "data": null,
+  "details": null
+ }
+}
