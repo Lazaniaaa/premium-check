@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "record": "node scripts/record-fixtures.mjs",
-    "dev:fixture": "node scripts/dev-fixture.mjs"
+    "dev:fixture": "node scripts/dev-fixture.mjs",
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "next": "15.5.29",

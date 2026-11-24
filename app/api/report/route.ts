@@ -32,9 +32,19 @@ export async function GET(req: Request) {
   const report = await unstable_cache(
     async (): Promise<Report> => {
       const { note, author } = await writeNote(facts);
-      return { schema: 1, day, generatedAt: new Date().toISOString(), by: takenBy, facts, note, author, snapshot };
+      return {
+        schema: 1,
+        day,
+        generatedAt: new Date().toISOString(),
+        by: takenBy,
+        snapshotTakenAt: snapshot.takenAt,
+        facts,
+        note,
+        author,
+        snapshot,
+      };
     },
-    ["report-v2", day],
+    ["report-v3", day],
     { revalidate: 86400 },
   )();
 

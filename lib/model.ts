@@ -4,7 +4,7 @@ import {
   daysBetween,
   effectiveUnits,
   holdingCost,
-  maxSizeWithin,
+  maxSizeVwapWithin,
   mnav,
   roundTrip,
   SODEX_FEES,
@@ -13,6 +13,12 @@ import {
 } from "./calc";
 
 const signedBps = (x: number) => `${x > 0 ? "+" : ""}${x.toFixed(1)} bps`;
+const pctStr = (x: number | null, d = 2) => (x == null ? "n/a" : `${(x * 100).toFixed(d)}%`);
+const signedPctStr = (x: number | null, d = 2) => (x == null ? "n/a" : `${x > 0 ? "+" : ""}${(x * 100).toFixed(d)}%`);
+const usdStr = (x: number) => x.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+/** ETFs whose economics we do not model (staking yield, temporary fee waivers). */
+const STAKING_ETFS = new Set(["ETHB"]);
 import { maybe } from "./http";
 import {
   etfData,
@@ -28,7 +34,15 @@ import {
   type PerpTicker,
 } from "./sources";
 import { buildTicket, sodexTradeUrl, type OrderTicket } from "./trade";
-import { COMPANY_KIND, LISTING, MIN_BTC_HOLDING, STALE_HOLDINGS_DAYS, type CompanyKind } from "./universe";
+import {
+  CANDIDATES,
+  COMPANY_KIND,
+  LISTING,
+  MIN_BTC_HOLDING,
+  NO_STOCK_DATA,
+  STALE_HOLDINGS_DAYS,
+  type CompanyKind,
+} from "./universe";
 
 export type Asset = "BTC" | "ETH";
 export type RouteKind = "sodex_spot" | "sodex_perp" | "etf";
@@ -38,16 +52,19 @@ export type DirectRoute = {
   kind: RouteKind;
   name: string;
   provider: string;
-  entryPremium: number | null; // fraction paid above reference on entry
-  annualCarry: number | null; // fraction per year
-  cost: number | null; // holdingCost over the chosen horizon
-  units: number | null; // asset held per `usd` after cost
+  tradingCost: number | null; // round-trip friction as a fraction of money spent (ETFs: not known, see notes)
+  annualCarry: number | null; // fraction per year (ETF fee, perp funding at the current rate)
+  cost: number | null; // tradingCost + annualCarry x horizon; null when it can't be computed honestly
+  units: number | null; // asset-equivalent kept at a constant price: usd / ref x (1 - cost)
   ranked: boolean; // false when the cost can't be trusted for a ranking (see flags)
+  premiumNow: number | null; // ETF premium to NAV / SoDEX market vs index, assumed unchanged at exit
+  costAtZeroFunding?: number | null; // perps only: the same route if funding were zero
+  fillableUsd?: number; // when the visible book can't absorb the whole amount
   notes: string[];
-  flags: ("fee_unverified" | "book_too_thin" | "funding_varies" | "small_fund")[];
+  flags: ("fee_unverified" | "book_too_thin" | "funding_varies" | "funding_unavailable" | "small_fund" | "staking_unmodeled")[];
   source: string;
   asOf: string | null;
-  fill?: Fill & { maxUsdWithin10bps: number; feeRate: number };
+  fill?: Fill & { maxUsdVwapWithin10bps: number; feeRate: number };
   ticket?: OrderTicket | null;
 };
 
@@ -80,7 +97,16 @@ export type Comparison = {
   reference: { price: number; source: string; sosoPrice: number | null; deviationBps: number | null };
   direct: DirectRoute[];
   companies: CompanyRow[];
+  coverage: Coverage | null;
   errors: string[];
+};
+
+export type Coverage = {
+  listed: number; // US-listed companies in SoSoValue's BTC treasury list
+  queried: number; // candidates we query (held >= 1,000 BTC when checked)
+  shown: number;
+  noStockData: string[]; // no SoSoValue stock snapshot -> can't price them
+  missing: string[]; // queried but holdings or snapshot unavailable right now
 };
 
 /** Below this, spreads in the fund can easily exceed its fee advantage: shown, not ranked. */
@@ -103,10 +129,11 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
   const ref = refTicker.indexPrice || refTicker.markPrice;
   const soso = await maybe(sosoPrice(asset));
 
-  const [direct, companies] = await Promise.all([
+  const [direct, comp] = await Promise.all([
     directRoutes(asset, usd, months, ref, refTicker, note),
-    asset === "BTC" ? companyRows(ref, tickers, note) : Promise.resolve([]),
+    asset === "BTC" ? companyRows(ref, tickers, note) : Promise.resolve({ rows: [] as CompanyRow[], coverage: null }),
   ]);
+  const companies = comp.rows;
 
   // Trusted rows first (cheapest first), then unranked rows, still by cost.
   direct.sort((a, b) => Number(b.ranked) - Number(a.ranked) || (a.cost ?? Infinity) - (b.cost ?? Infinity));
@@ -125,6 +152,7 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
     },
     direct,
     companies,
+    coverage: comp.coverage,
     errors,
   };
 }
@@ -139,8 +167,12 @@ async function directRoutes(
 ): Promise<DirectRoute[]> {
   const rows: DirectRoute[] = [];
   const finish = (r: Omit<DirectRoute, "cost" | "units" | "ranked">): DirectRoute => {
-    const cost = r.entryPremium != null && r.annualCarry != null ? holdingCost(r.entryPremium, r.annualCarry, months) : null;
-    const untrusted = r.flags.some((f) => f === "fee_unverified" || f === "small_fund" || f === "book_too_thin");
+    const thin = r.flags.includes("book_too_thin");
+    // A partial fill has no honest full-size cost or quantity: show what is fillable instead.
+    const cost = !thin && r.tradingCost != null && r.annualCarry != null ? holdingCost(r.tradingCost, r.annualCarry, months) : null;
+    const untrusted = r.flags.some((f) =>
+      ["fee_unverified", "small_fund", "book_too_thin", "funding_unavailable", "staking_unmodeled"].includes(f),
+    );
     return { ...r, cost, units: cost != null ? effectiveUnits(usd, ref, cost) : null, ranked: cost != null && !untrusted };
   };
 
@@ -152,59 +184,58 @@ async function directRoutes(
     symbolInfo("perps", PERP[asset]),
   ]);
   const now = Date.now();
+  const basisNote = (mid: number) =>
+    `Market trades ${signedBps((mid / ref - 1) * 1e4)} vs the ${asset} index; assumed unchanged when you sell`;
+  const partialNote = (f: Fill) => `Visible book fills only ${usdStr(f.filledUsd)} of ${usdStr(usd)}; no full-size cost shown`;
 
-  const basisNote = (mid: number) => `Trades ${signedBps((mid / ref - 1) * 1e4)} vs ${asset} index (you get it back on exit)`;
-
-  if (spotBook) {
-    const fee = SODEX_FEES.spotTaker;
-    const rt = roundTrip(spotBook, usd, fee);
-    const f = walkAsks(spotBook.asks, usd);
+  const sodexRow = (market: "spot" | "perps") => {
+    const book = market === "spot" ? spotBook : perpBook;
+    if (!book) return;
+    const fee = market === "spot" ? SODEX_FEES.spotTaker : SODEX_FEES.perpTaker;
+    const symbol = market === "spot" ? SPOT[asset] : PERP[asset];
+    const info = market === "spot" ? spotInfo : perpInfo;
+    const rt = roundTrip(book, usd, fee);
+    const f = walkAsks(book.asks, usd);
+    const thin = rt?.complete === false || !f.complete;
+    const funding = market === "perps" ? perp.fundingRate : 0;
+    const carry = funding == null ? null : annualFunding(funding);
+    const notes =
+      market === "spot"
+        ? [`Buy + sell into today's book, taker fee ${pctStr(fee, 3)} each way`, "No recurring cost; asset held on SoDEX / ValueChain"]
+        : [
+            funding == null
+              ? "SoDEX did not report a funding rate; not ranked"
+              : `Funding now ${(funding * 100).toFixed(4)}%/hour (${pctStr(carry)} a year if it stayed the same); paid by longs when positive`,
+            `Open + close into today's book, taker fee ${pctStr(fee, 3)} each way; needs USDC margin`,
+          ];
+    if (rt) notes.push(basisNote(rt.mid));
+    if (thin) notes.unshift(partialNote(f));
     rows.push(
       finish({
-        id: "sodex-spot",
-        kind: "sodex_spot",
-        name: `SoDEX spot ${SPOT[asset].replace("_", "/")}`,
+        id: market === "spot" ? "sodex-spot" : "sodex-perp",
+        kind: market === "spot" ? "sodex_spot" : "sodex_perp",
+        name: market === "spot" ? `SoDEX spot ${symbol.replace("_", "/")}` : `SoDEX perp ${symbol} (1x long)`,
         provider: "SoDEX",
-        entryPremium: rt ? rt.total : null,
-        annualCarry: 0,
-        notes: [
-          "Buy + sell at today's book, taker fee 0.065% each way",
-          "No recurring cost; asset held on SoDEX / ValueChain",
-          ...(rt ? [basisNote(rt.mid)] : []),
+        tradingCost: rt ? rt.total : null,
+        annualCarry: carry,
+        premiumNow: rt ? rt.mid / ref - 1 : null,
+        costAtZeroFunding: market === "perps" && rt && !thin ? holdingCost(rt.total, 0, months) : undefined,
+        fillableUsd: thin ? f.filledUsd : undefined,
+        notes,
+        flags: [
+          ...(market === "perps" ? (["funding_varies"] as const) : []),
+          ...(market === "perps" && funding == null ? (["funding_unavailable"] as const) : []),
+          ...(thin ? (["book_too_thin"] as const) : []),
         ],
-        flags: rt?.complete === false || !f.complete ? ["book_too_thin"] : [],
-        source: `SoDEX /spot/markets/${SPOT[asset]}/orderbook`,
-        asOf: spotBook.blockTime ? new Date(spotBook.blockTime).toISOString() : null,
-        fill: { ...f, maxUsdWithin10bps: maxSizeWithin(spotBook.asks, 10), feeRate: fee },
-        ticket: spotInfo ? buildTicket("spot", spotInfo, f, now) : null,
+        source: `SoDEX /${market}/markets/${symbol}/orderbook${market === "perps" ? " + tickers" : ""}`,
+        asOf: book.blockTime ? new Date(book.blockTime).toISOString() : null,
+        fill: { ...f, maxUsdVwapWithin10bps: maxSizeVwapWithin(book.asks, 10), feeRate: fee },
+        ticket: info ? buildTicket(market, info, book.asks, usd, fee, now) : null,
       }),
     );
-  }
-
-  if (perpBook) {
-    const fee = SODEX_FEES.perpTaker;
-    const rt = roundTrip(perpBook, usd, fee);
-    const f = walkAsks(perpBook.asks, usd);
-    rows.push(
-      finish({
-        id: "sodex-perp",
-        kind: "sodex_perp",
-        name: `SoDEX perp ${PERP[asset]} (1x long)`,
-        provider: "SoDEX",
-        entryPremium: rt ? rt.total : null,
-        annualCarry: annualFunding(perp.fundingRate),
-        notes: [
-          `Funding now ${(perp.fundingRate * 100).toFixed(4)}%/hour, paid hourly by longs when positive`,
-          "Open + close at today's book, taker fee 0.04% each way; needs USDC margin",
-        ],
-        flags: ["funding_varies", ...(rt?.complete === false || !f.complete ? (["book_too_thin"] as const) : [])],
-        source: `SoDEX /perps/markets/${PERP[asset]}/orderbook + tickers`,
-        asOf: perpBook.blockTime ? new Date(perpBook.blockTime).toISOString() : null,
-        fill: { ...f, maxUsdWithin10bps: maxSizeWithin(perpBook.asks, 10), feeRate: fee },
-        ticket: perpInfo ? buildTicket("perps", perpInfo, f, now) : null,
-      }),
-    );
-  }
+  };
+  sodexRow("spot");
+  sodexRow("perps");
 
   const etfRows = await Promise.all(
     (etfs ?? []).map(async (e) => {
@@ -212,19 +243,33 @@ async function directRoutes(
       if (!d) return null;
       const feeUnverified = d.fee === null || d.fee === 0;
       const small = d.netAssets != null && d.netAssets < SMALL_FUND_USD;
+      const staking = STAKING_ETFS.has(e.ticker);
+      const range = d.premiumRange
+        ? `; ${d.premiumRange.days}-day range ${signedPctStr(d.premiumRange.min)} to ${signedPctStr(d.premiumRange.max)}`
+        : "";
       return finish({
         id: `etf-${e.ticker}`,
         kind: "etf",
         name: `${e.ticker} — ${e.name}`,
         provider: e.exchange,
-        entryPremium: d.premium,
+        // Same rule as SoDEX: today's gap to NAV is assumed unchanged when you sell, so it
+        // is shown as entry-timing risk, not counted as a cost or a gain.
+        tradingCost: 0,
         annualCarry: feeUnverified ? null : d.fee,
+        premiumNow: d.premium,
         notes: [
-          d.premiumDate ? `Premium/discount to NAV as of ${d.premiumDate}` : "No premium/discount data",
-          "Assumes you sell at NAV; brokerage commission and bid/ask spread not included",
+          d.premiumDate
+            ? `Premium to NAV ${signedPctStr(d.premium, 3)} on ${d.premiumDate}${range}; assumed unchanged when you sell`
+            : "No premium/discount data",
+          "Your broker's commission and the ETF's bid/ask spread are not included",
+          ...(staking ? ["Staking ETF: fee waiver and staking distributions are not modelled; not ranked"] : []),
           ...(d.netAssets != null ? [`Net assets ${(d.netAssets / 1e9).toFixed(2)}B USD`] : []),
         ],
-        flags: [...(feeUnverified ? (["fee_unverified"] as const) : []), ...(small ? (["small_fund"] as const) : [])],
+        flags: [
+          ...(feeUnverified ? (["fee_unverified"] as const) : []),
+          ...(small ? (["small_fund"] as const) : []),
+          ...(staking ? (["staking_unmodeled"] as const) : []),
+        ],
         source: `SoSoValue /etfs/${e.ticker}/market-snapshot + /history`,
         asOf: d.date,
       });
@@ -238,18 +283,26 @@ async function companyRows(
   btcPrice: number,
   tickers: PerpTicker[],
   note: (w: string) => (e: unknown) => null,
-): Promise<CompanyRow[]> {
+): Promise<{ rows: CompanyRow[]; coverage: Coverage }> {
   const list = (await treasuryList().catch(note("SoSoValue treasury list"))) ?? [];
   const now = new Date();
+  const us = list.filter((t) => t.list_location === LISTING);
+  const queried = us.filter((t) => CANDIDATES.includes(t.ticker) && !NO_STOCK_DATA.has(t.ticker));
+  const missing: string[] = [];
   const rows = await Promise.all(
-    list
-      .filter((t) => t.list_location === LISTING)
-      .map(async (t): Promise<CompanyRow | null> => {
+    queried.map(async (t): Promise<CompanyRow | null> => {
         const hist = await purchaseHistory(t.ticker).catch(note(`SoSoValue holdings ${t.ticker}`));
         const latest = hist?.[0];
-        if (!latest || latest.btcHolding < MIN_BTC_HOLDING) return null;
+        if (!latest) {
+          missing.push(t.ticker);
+          return null;
+        }
+        if (latest.btcHolding < MIN_BTC_HOLDING) return null;
         const snap = await stockSnapshot(t.ticker);
-        if (!snap) return null;
+        if (!snap) {
+          missing.push(t.ticker);
+          return null;
+        }
         const kind = COMPANY_KIND[t.ticker] ?? "operating";
         const sodexSymbol = tickers.some((x) => x.symbol === `${t.ticker}-USD`) ? `${t.ticker}-USD` : null;
         const sodexMark = sodexSymbol ? tickers.find((x) => x.symbol === sodexSymbol)!.markPrice : null;
@@ -286,7 +339,17 @@ async function companyRows(
           btcShareOfMcap: m.equity ? 1 / m.equity : null,
           lastBuy: buy ? { date: buy.date, btc: buy.btcAcq, usdPerBtc: buy.acqCost ? buy.acqCost / buy.btcAcq : null } : null,
         };
-      }),
+    }),
   );
-  return rows.filter((r): r is CompanyRow => r !== null);
+  const shown = rows.filter((r): r is CompanyRow => r !== null);
+  return {
+    rows: shown,
+    coverage: {
+      listed: us.length,
+      queried: queried.length,
+      shown: shown.length,
+      noStockData: us.filter((t) => NO_STOCK_DATA.has(t.ticker)).map((t) => t.ticker),
+      missing: missing.sort(),
+    },
+  };
 }

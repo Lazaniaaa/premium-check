@@ -14,3 +14,7 @@ out/
 next-env.d.ts
 .vercel
 .claude/
+# notes for ChatGPT review (stay local)
+judge-feedback-digest.md
+CHATGPT_PROMPT.md
+ASTRA_PROMPT.md

@@ -1,5 +1,4 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { walkAsks } from "@/lib/calc";
 import { buildTicket, sodexTradeUrl } from "@/lib/trade";
 import { buildComparison, type Comparison } from "@/lib/model";
 import type { SymbolInfo } from "@/lib/sources";
@@ -23,15 +22,26 @@ describe("order ticket", () => {
     [60003, 0.05],
   ];
 
-  it("rounds quantity down to the step and the limit price up to the tick", () => {
-    const t = buildTicket("perps", btcPerp, walkAsks(asks, 1000), 0)!;
-    expect(t.quantity).toBe("0.01666"); // 0.01 + 400/60003 = 0.016666… -> floor to 0.00001
-    expect(t.limitPrice).toBe("60003"); // deepest level reached
+  it("limit = deepest level needed (on the tick); quantity sized so the order can't exceed the budget", () => {
+    const t = buildTicket("perps", btcPerp, asks, 1000, 0.0004, 0)!;
+    expect(t.limitPrice).toBe("60003");
+    expect(t.quantity).toBe("0.01665"); // floor(1000 / (60003 x 1.0004)) to 0.00001
+    expect(t.maxSpend).toBeLessThanOrEqual(1000);
     expect(t.warnings).toEqual([]);
   });
 
+  it("never bids more than 0.5% above the best ask, and says so", () => {
+    const thin: [number, number][] = [[100, 1], [200, 100]];
+    const info = { ...btcPerp, tickSize: 0.01, pricePrecision: 2, stepSize: 0.001, quantityPrecision: 3 };
+    const t = buildTicket("spot", info, thin, 1000, 0.00065, 0)!;
+    expect(Number(t.limitPrice)).toBeLessThanOrEqual(100.5);
+    expect(t.maxSpend).toBeLessThanOrEqual(1000);
+    expect(t.warnings.join()).toMatch(/0.5% above the best ask/);
+    expect(t.warnings.join()).toMatch(/IOC cancels the rest/);
+  });
+
   it("matches the SoDEX perps order schema (enum integers, accountID placeholder)", () => {
-    const t = buildTicket("perps", btcPerp, walkAsks(asks, 1000), 0)!;
+    const t = buildTicket("perps", btcPerp, asks, 1000, 0.0004, 0)!;
     expect(t.endpoint).toBe("POST https://mainnet-gw.sodex.dev/api/v1/perps/trade/orders");
     expect(t.body).toMatchObject({
       symbolID: 1,
@@ -41,7 +51,7 @@ describe("order ticket", () => {
   });
 
   it("warns below SoDEX' minimum order value", () => {
-    const t = buildTicket("perps", btcPerp, walkAsks(asks, 5), 0)!;
+    const t = buildTicket("perps", btcPerp, asks, 5, 0.0004, 0)!;
     expect(t.warnings.join()).toMatch(/minimum/);
   });
 
@@ -57,11 +67,11 @@ describe("tickets on recorded data", () => {
     process.env.DATA_SOURCE = "fixture";
     c = await buildComparison("BTC", 1000, 12);
   });
-  it("every SoDEX route carries a ticket whose order value stays within the requested amount", () => {
+  it("every SoDEX route carries a ticket that can never cost more than the amount", () => {
     for (const r of c.direct.filter((x) => x.kind !== "etf")) {
       expect(r.ticket).toBeTruthy();
-      expect(r.ticket!.notional).toBeLessThanOrEqual(1000 * 1.01);
-      expect(r.ticket!.notional).toBeGreaterThan(990);
+      expect(r.ticket!.maxSpend).toBeLessThanOrEqual(1000);
+      expect(r.ticket!.maxSpend).toBeGreaterThan(985);
     }
   });
   it("links MSTR to its SoDEX perp", () => {

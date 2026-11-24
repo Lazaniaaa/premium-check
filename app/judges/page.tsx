@@ -41,7 +41,7 @@ export default async function Judges() {
           )}
           {mstr && (
             <li>
-              Strategy (MSTR) — {ratio(mstr.mnavEquity)} mNAV on equity, {ratio(mstr.mnavWithDebt)} with debt, priced at{" "}
+              Strategy (MSTR) — market cap {ratio(mstr.mnavEquity)} its BTC value, {ratio(mstr.mnavWithDebt)} adding debt minus cash, priced at{" "}
               {usd(mstr.price, 2)} {mstr.priceSource === "sodex_24_7" ? "from SoDEX MSTR-USD (24/7)" : "on the exchange"}
             </li>
           )}
@@ -73,14 +73,15 @@ export default async function Judges() {
                 Scroll to <b>SoDEX execution check</b> — VWAP, slippage, fee and the largest size within 10 bps from the
                 live order book, a button that opens that market on SoDEX, and the exact order body you would sign (IOC
                 limit, rounded to the market&apos;s tick and step size; never sent). Then <b>companies holding BTC</b> for
-                mNAV with 24/7 SoDEX pricing.
+                market cap vs BTC value, with 24/7 SoDEX pricing when the US market is closed.
               </td>
             </tr>
             <tr>
               <td className="muted">4</td>
               <td>
                 Read today&apos;s <b>Premium Report</b> on the main page and open &ldquo;facts and checks&rdquo;: each
-                sentence cites numbered facts our code computed; a validator rejects any number not in them.
+                sentence cites numbered facts our code computed; a validator rejects any number whose value, sign, unit or
+                period does not match a cited fact.
                 {report ? (
                   <>
                     {" "}
@@ -92,7 +93,8 @@ export default async function Judges() {
             <tr>
               <td className="muted">5</td>
               <td>
-                Check it is real: <Link href="/diag">/diag</Link> probes every upstream endpoint live;{" "}
+                Check it is real: <Link href="/diag">/diag</Link> spot-checks one endpoint of each kind and shows the
+                deployed commit;{" "}
                 <Link href="/journal">/journal</Link> shows the snapshots a GitHub Action commits daily to{" "}
                 <a href={`${REPO_URL}/tree/main/data`}>data/</a>; <a href="/api/snapshot">/api/snapshot</a> and{" "}
                 <a href="/api/report">/api/report</a> return the raw JSON.
@@ -117,13 +119,14 @@ export default async function Judges() {
               <td>
                 All numbers are deterministic code (<a href={`${REPO_URL}/blob/main/lib/calc.ts`}>lib/calc.ts</a>). The LLM
                 parses questions and writes prose from facts; a <a href={`${REPO_URL}/blob/main/lib/report.ts`}>validator</a>{" "}
-                blocks any number it did not copy from a cited fact.
+                blocks any number whose value, sign, unit or period differs from a cited fact. It cannot tell two correct
+                numbers swapped between labels, so every point links to its facts.
               </td>
             </tr>
             <tr>
               <td>&ldquo;Needs proof / validation, not claims&rdquo;</td>
               <td>
-                35 tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
+                43 tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
                 and re-derive each figure from the raw JSON; a daily, git-committed journal shows what the site said each day.
               </td>
             </tr>
@@ -148,7 +151,8 @@ export default async function Judges() {
             <tr>
               <td>&ldquo;Breadth without depth&rdquo;</td>
               <td>
-                Narrow scope, done to the end: round-trip costing against each venue&apos;s own mid, two mNAV definitions,
+                Narrow scope, done to the end: round-trip costing on each venue&apos;s own book, one rule for every gap to a
+                reference (ETF premium, SoDEX basis), partial fills shown as partial,
                 explicit rules for what is not ranked, data quirks documented in the{" "}
                 <a href={`${REPO_URL}#data-quirks-found-on-real-responses-and-how-they-are-handled`}>README</a>.
               </td>
@@ -182,7 +186,8 @@ export default async function Judges() {
       <h2>Known limits</h2>
       <div className="card">
         <ul className="notes">
-          <li>mNAV &ldquo;with debt&rdquo; excludes preferred stock (not in the data), so the official EV-based figure is higher.</li>
+          <li>Company ratios exclude preferred stock and dilution (not in the data); they are not Strategy&apos;s own mNAV, which since 23 Jul 2026 is based on net bitcoin per share after senior claims.</li>
+          <li>ETF costs exclude your broker&apos;s commission and the bid/ask spread; differences under 0.1 pp are shown as a tie.</li>
           <li>SoSoValue history is limited to 90 days for this API key; company holdings can be months old (flagged as stale).</li>
           <li>Perp funding is the current hourly rate annualised, not a forecast. ETF costs exclude brokerage and spread.</li>
         </ul>

@@ -14,6 +14,7 @@ export type Report = {
   day: string;
   generatedAt: string;
   by: string;
+  snapshotTakenAt: string; // the snapshot this note's facts were computed from
   facts: Fact[];
   note: Note;
   author: { kind: "llm"; model: string; attempts: number; tokens: { input: number; output: number } } | { kind: "template"; reason: string };
@@ -32,7 +33,11 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
   const add = (text: string) => f.push({ id: `F${f.length + 1}`, text });
   const { btc, eth, params } = today;
   add(`Comparison basis: $${params.usd.toLocaleString("en-US")} held for ${params.months} months; costs include trading and recurring costs.`);
-  add(`BTC reference price ${usd(btc.reference.price)} (SoDEX BTC-USD index); SoSoValue price differs by ${Math.abs(btc.reference.deviationBps ?? 0).toFixed(1)} bps.`);
+  add(
+    btc.reference.deviationBps != null
+      ? `BTC reference price ${usd(btc.reference.price)} (SoDEX BTC-USD index); the SoSoValue price differs by ${Math.abs(btc.reference.deviationBps).toFixed(1)} bps.`
+      : `BTC reference price ${usd(btc.reference.price)} (SoDEX BTC-USD index); the SoSoValue cross-check was unavailable.`,
+  );
   const btcRanked = btc.routes.filter((r) => r.ranked);
   if (btcRanked[0]) add(`Cheapest way to hold BTC: ${name(btcRanked[0].name)} at ${pct(btcRanked[0].cost)} total cost.`);
   if (btcRanked[1]) add(`Second cheapest BTC route: ${name(btcRanked[1].name)} at ${pct(btcRanked[1].cost)}.`);
@@ -44,10 +49,11 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
   const mstr = btc.companies.find((c) => c.ticker === "MSTR");
   if (mstr)
     add(
-      `Strategy (MSTR) mNAV is ${ratio(mstr.mnavEquity)} on equity and ${ratio(mstr.mnavWithDebt)} with debt; price ${usd(mstr.price, 2)} from ${mstr.priceSource === "sodex_24_7" ? "SoDEX MSTR-USD (24/7)" : "the exchange"}.`,
+      `Strategy (MSTR): market cap is ${ratio(mstr.mnavEquity)} its BTC value; adding debt and subtracting cash it is ${ratio(mstr.mnavWithDebt)}. Price ${usd(mstr.price, 2)} from ${mstr.priceSource === "sodex_24_7" ? "the SoDEX MSTR-USD perp (24/7 proxy)" : "the exchange"}.`,
     );
   const pure = btc.companies.filter((c) => c.kind === "treasury" && c.mnavEquity != null);
-  if (pure.length) add(`${pure.filter((c) => c.mnavEquity! < 1).length} of ${pure.length} treasury companies trade below 1.00× mNAV on equity.`);
+  if (pure.length)
+    add(`${pure.filter((c) => c.mnavEquity! < 1).length} of ${pure.length} treasury companies have a market cap below the value of their BTC (before debt).`);
   const ethRanked = eth.routes.filter((r) => r.ranked);
   if (ethRanked[0]) add(`Cheapest way to hold ETH: ${name(ethRanked[0].name)} at ${pct(ethRanked[0].cost)} total cost.`);
   if (eth.perpAnnualFunding != null) add(`SoDEX ETH-USD perp funding is ${pct(eth.perpAnnualFunding)} per year at the current hourly rate.`);
@@ -56,7 +62,7 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
   if (prev) {
     const pm = prev.btc.companies.find((c) => c.ticker === "MSTR");
     if (pm?.mnavEquity != null && mstr?.mnavEquity != null)
-      add(`Previous snapshot (${prev.takenAt.slice(0, 10)}): MSTR mNAV on equity was ${ratio(pm.mnavEquity)}.`);
+      add(`Previous snapshot (${prev.takenAt.slice(0, 10)}): Strategy's market cap was ${ratio(pm.mnavEquity)} its BTC value.`);
     if (prev.btc.perpAnnualFunding != null)
       add(`Previous snapshot (${prev.takenAt.slice(0, 10)}): SoDEX BTC perp funding was ${pct(prev.btc.perpAnnualFunding)} per year.`);
   }
@@ -64,19 +70,53 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
 }
 
 // ---------- validator ----------
-const NUM = /\d[\d,]*(?:\.\d+)?/g;
+// A number token keeps its sign, unit and, if stated right after it, its period:
+// "+6.93% per year" and "-6.93% per hour" are different tokens.
+export type Token = { n: string; sign: "+" | "-"; unit: "" | "%" | "x" | "$" | "bps" | "pp"; per: "" | "year" | "hour" };
+const TOKEN = /(?<![\w.])([+\-−])?(\$)?(\d[\d,]*(?:\.\d+)?)(\s*(?:%|×|x\b|bps\b|pp\b))?/gi;
 const norm = (s: string) => s.replace(/,/g, "").replace(/\.0+$|(\.\d*?)0+$/, "$1");
-export const numbersIn = (s: string) => (s.match(NUM) ?? []).map(norm);
+const PERIOD = /^\s*(?:per|a|an|\/|each)?\s*(year|yr|annum|hour|hr)\b/i;
 
-/** Every number in `text` must appear in one of the cited facts. Returns error strings. */
+export function tokensIn(text: string): Token[] {
+  const out: Token[] = [];
+  for (const m of text.matchAll(TOKEN)) {
+    const after = text.slice((m.index ?? 0) + m[0].length, (m.index ?? 0) + m[0].length + 16);
+    const u = (m[4] ?? "").trim().toLowerCase();
+    const per = PERIOD.exec(after)?.[1].toLowerCase() ?? "";
+    out.push({
+      n: norm(m[3]),
+      sign: m[1] === "-" || m[1] === "−" ? "-" : "+",
+      unit: m[2] ? "$" : u === "%" ? "%" : u === "×" || u === "x" ? "x" : u === "bps" ? "bps" : u === "pp" ? "pp" : "",
+      per: per.startsWith("h") ? "hour" : per ? "year" : "",
+    });
+  }
+  return out;
+}
+/** Numbers only, for quick checks in tests. */
+export const numbersIn = (s: string) => tokensIn(s).map((t) => t.n);
+
+const matches = (t: Token, f: Token) =>
+  t.n === f.n &&
+  t.sign === f.sign &&
+  (t.unit === "" || t.unit === f.unit) && // a bare number may drop the unit, never change it
+  (t.per === "" || f.per === "" || t.per === f.per); // a stated period must agree
+
+/**
+ * Every number in a sentence must match a number in a fact that sentence cites —
+ * same value, same sign, same unit, and the same period if both state one.
+ * It cannot tell whether a correct number was put next to the wrong label
+ * (e.g. two ratios swapped); the note links every point to its facts so a reader can check.
+ */
 export function validate(note: Note, facts: Fact[]): string[] {
   const byId = new Map(facts.map((x) => [x.id, x.text]));
   const errors: string[] = [];
   const check = (text: string, cites: string[], where: string) => {
     const unknown = cites.filter((c) => !byId.has(c));
     if (unknown.length) errors.push(`${where}: cites unknown facts ${unknown.join(", ")}`);
-    const allowed = new Set(cites.flatMap((c) => numbersIn(byId.get(c) ?? "")));
-    for (const n of numbersIn(text)) if (!allowed.has(n)) errors.push(`${where}: number "${n}" is not in the cited facts`);
+    const allowed = cites.flatMap((c) => tokensIn(byId.get(c) ?? ""));
+    for (const t of tokensIn(text))
+      if (!allowed.some((f) => matches(t, f)))
+        errors.push(`${where}: "${t.sign === "-" ? "-" : ""}${t.unit === "$" ? "$" : ""}${t.n}${t.unit && t.unit !== "$" ? t.unit : ""}${t.per ? " per " + t.per : ""}" does not match the cited facts`);
   };
   check(note.headline, note.headlineFacts, "headline");
   if (note.points.length < 2 || note.points.length > 5) errors.push(`expected 2-5 points, got ${note.points.length}`);
@@ -110,7 +150,7 @@ const SCHEMA = {
 const SYSTEM = `You write the daily "Premium Check" note: what it costs today to hold BTC or ETH through SoDEX spot or perps, spot ETFs, or treasury stocks.
 Write for a retail investor, in plain English, neutral tone, no advice ("buy", "sell", "should").
 Rules:
-- Use ONLY the numbered facts given. Every number you write must be copied exactly as it appears in a fact you cite in that sentence's "facts" list (same digits, same decimals).
+- Use ONLY the numbered facts given. Every number you write must be copied exactly as it appears in a fact you cite in that sentence's "facts" list: same digits, decimals, sign, unit (%, ×, $, bps) and period (per year / per hour).
 - Do not compute new numbers (no differences, sums, ratios, rounding, bps conversions). Compare with words ("lower than", "about the same") instead.
 - Headline: one sentence, max 14 words, stating the single most useful finding of the day (it may contain a number from a fact it cites). Then 3 or 4 points, each one or two sentences.
 - Cite fact ids like "F3" in the facts arrays, never in the text itself.`;

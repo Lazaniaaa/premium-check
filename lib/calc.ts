@@ -63,31 +63,41 @@ export const midPrice = (bids: BookLevel[], asks: BookLevel[]) =>
   bids[0] && asks[0] ? (bids[0][0] + asks[0][0]) / 2 : null;
 
 /**
- * Round-trip trading cost of buying `usd` and later selling the same quantity into
- * today's book, measured against the book's own mid price, fees included.
- * Measuring against the venue's mid (not an external index) keeps a persistent
- * basis (e.g. a wrapped token trading slightly below the index) from looking like
- * a free discount — you get the same basis back when you sell.
+ * Round-trip trading cost: buy `usd` into today's asks, sell the same quantity into
+ * today's bids, fees both ways. Returned as the fraction of the money spent that is
+ * lost: 1 - sellProceeds / buySpend. Measuring the venue against itself (not an
+ * external index) means a persistent basis, e.g. a wrapped token trading a few bps
+ * under the index, is neither a gain nor a loss — it is paid and received alike, as
+ * long as it stays the same. Tomorrow's book may differ: this is today's friction.
  */
 export function roundTrip(book: { bids: BookLevel[]; asks: BookLevel[] }, usd: number, fee: number) {
   const mid = midPrice(book.bids, book.asks);
   const buy = walkAsks(book.asks, usd);
   const sell = walkBids(book.bids, buy.qty);
   if (!mid || !buy.vwap || !sell.vwap) return null;
-  const entry = (buy.vwap * (1 + fee)) / mid - 1;
-  const exit = 1 - (sell.vwap * (1 - fee)) / mid;
-  return { mid, buy, sell, entry, exit, total: entry + exit, complete: buy.complete && sell.complete };
+  const total = 1 - (sell.vwap * (1 - fee)) / (buy.vwap * (1 + fee));
+  return { mid, buy, sell, total, complete: buy.complete && sell.complete };
 }
 
-/** Largest USD size whose VWAP stays within `maxBps` of the best ask. */
-export function maxSizeWithin(asks: BookLevel[], maxBps: number): number {
+/**
+ * Largest USD order whose average fill price (VWAP) stays within `maxBps` of the
+ * best ask. Includes the part of the last level that keeps the average at the limit.
+ */
+export function maxSizeVwapWithin(asks: BookLevel[], maxBps: number): number {
   const best = asks[0]?.[0];
   if (!best) return 0;
   const limit = best * (1 + maxBps / 1e4);
+  let qty = 0;
   let spent = 0;
   for (const [px, sz] of asks) {
-    if (px > limit) break;
-    spent += px * sz;
+    if ((spent + px * sz) / (qty + sz) <= limit) {
+      qty += sz;
+      spent += px * sz;
+      continue;
+    }
+    // take x units of this level so that (spent + px*x) / (qty + x) == limit
+    if (px > limit) spent += px * Math.max(0, (limit * qty - spent) / (px - limit));
+    break;
   }
   return spent;
 }

@@ -14,7 +14,7 @@ type AssetSnapshot = {
   reference: Comparison["reference"];
   cheapest: { id: string; name: string; cost: number | null } | null;
   perpAnnualFunding: number | null;
-  routes: { id: string; name: string; entryPremium: number | null; annualCarry: number | null; cost: number | null; ranked: boolean; flags: string[] }[];
+  routes: { id: string; name: string; tradingCost: number | null; premiumNow: number | null; annualCarry: number | null; cost: number | null; ranked: boolean; flags: string[] }[];
   companies: {
     ticker: string;
     kind: string;
@@ -37,7 +37,8 @@ const compact = (c: Comparison): AssetSnapshot => {
     routes: c.direct.map((r) => ({
       id: r.id,
       name: r.name,
-      entryPremium: r.entryPremium,
+      tradingCost: r.tradingCost,
+      premiumNow: r.premiumNow,
       annualCarry: r.annualCarry,
       cost: r.cost,
       ranked: r.ranked,

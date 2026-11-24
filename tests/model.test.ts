@@ -34,12 +34,16 @@ describe("BTC comparison on recorded data", () => {
     expect(perp.annualCarry).toBeCloseTo(Number(t.fundingRate) * 8760, 10);
   });
 
-  it("IBIT cost = latest premium + 0.25% fee", () => {
+  it("IBIT cost = 0.25% fee over 12 months; today's premium is shown, assumed unchanged at exit", () => {
     const hist = raw("sosovalue/etfs_IBIT_history.json");
     const ibit = btc.direct.find((r) => r.id === "etf-IBIT")!;
     expect(ibit.annualCarry).toBe(0.0025);
-    expect(ibit.entryPremium).toBeCloseTo(hist[0].prem_dsc, 12);
-    expect(ibit.cost).toBeCloseTo(hist[0].prem_dsc + 0.0025, 12);
+    expect(ibit.premiumNow).toBeCloseTo(hist[0].prem_dsc, 12);
+    expect(ibit.cost).toBeCloseTo(0.0025, 12);
+  });
+
+  it("no route shows a negative cost (a discount is not a free gain)", () => {
+    for (const r of [...btc.direct, ...eth.direct]) if (r.cost != null) expect(r.cost).toBeGreaterThanOrEqual(0);
   });
 
   it("does not rank FBTC on a fee SoSoValue reports as 0", () => {
@@ -76,7 +80,7 @@ describe("BTC comparison on recorded data", () => {
   });
 
   it("SoDEX round trips are never cheaper than free", () => {
-    for (const r of btc.direct.filter((x) => x.kind !== "etf")) expect(r.entryPremium!).toBeGreaterThan(0);
+    for (const r of btc.direct.filter((x) => x.kind !== "etf")) expect(r.tradingCost!).toBeGreaterThan(0);
   });
 
   it("reports no upstream errors on the recorded set", () => {
@@ -93,8 +97,40 @@ describe("ETH comparison on recorded data", () => {
     expect(eth.direct.slice(firstUnranked).every((r) => !r.ranked)).toBe(true);
   });
 
+  it("keeps the staking ETF ETHB out of the ranking", () => {
+    const ethb = eth.direct.find((r) => r.id === "etf-ETHB")!;
+    expect(ethb.flags).toContain("staking_unmodeled");
+    expect(ethb.ranked).toBe(false);
+  });
+
   it("has 11 ETH ETFs and no treasury companies", () => {
     expect(eth.direct.filter((r) => r.kind === "etf")).toHaveLength(11);
     expect(eth.companies).toHaveLength(0);
+  });
+});
+
+describe("edge cases found in review", () => {
+  it("a partial fill shows what is fillable, never a full-size quantity", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const big = await buildComparison("ETH", 1_000_000, 24);
+    const spot = big.direct.find((r) => r.kind === "sodex_spot")!;
+    expect(spot.flags).toContain("book_too_thin");
+    expect(spot.units).toBeNull();
+    expect(spot.cost).toBeNull();
+    expect(spot.fillableUsd!).toBeLessThan(1_000_000);
+  });
+
+  it("a cold BTC render stays within one minute of the SoSoValue key limit", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const { recentCalls } = await import("@/lib/http");
+    const before = recentCalls().length;
+    await buildComparison("BTC", 1000, 12);
+    const soso = recentCalls().slice(before).filter((c) => c.source !== "sodex");
+    expect(soso.length).toBeLessThanOrEqual(85);
+  });
+
+  it("reports companies it could not value instead of dropping them silently", () => {
+    expect(btc.coverage!.noStockData).toEqual(expect.arrayContaining(["CEP", "BSTR"]));
+    expect(btc.coverage!.shown).toBe(btc.companies.length);
   });
 });

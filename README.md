@@ -7,7 +7,7 @@ yardstick, on live SoSoValue and SoDEX data.
 
 - **Live demo:** https://premium-check-iota.vercel.app
 - **For judges — the 60-second path:** https://premium-check-iota.vercel.app/judges
-- **Data status (every upstream endpoint, live):** https://premium-check-iota.vercel.app/diag
+- **Data status (spot checks of each upstream kind + deployed commit):** https://premium-check-iota.vercel.app/diag
 - **Daily journal (committed by GitHub Actions):** https://premium-check-iota.vercel.app/journal · raw files in [`data/snapshots`](data/snapshots)
 - **Snapshot API (JSON):** https://premium-check-iota.vercel.app/api/snapshot
 - **Today's report (facts + validated AI note, JSON):** https://premium-check-iota.vercel.app/api/report
@@ -32,7 +32,8 @@ Pick an asset, an amount and a holding period. You get:
    10 bps, from the live order book — plus a button that opens that market on SoDEX and the exact order body you
    would sign (IOC limit, quantity and price rounded to the market's step and tick size from
    `/markets/symbols`, SoDEX enum values). Nothing is signed or sent.
-3. **Indirect exposure** — US-listed companies holding ≥ 1,000 BTC: mNAV (equity, and with debt), BTC per $1,000
+3. **Indirect exposure** — US-listed companies holding ≥ 1,000 BTC: market cap ÷ BTC value, the same with debt
+   minus cash, gross BTC per $1,000
    of stock, last purchase. When the US market is closed, the price switches to the SoDEX 24/7 perp
    (e.g. `MSTR-USD`).
 
@@ -42,7 +43,7 @@ Pick an asset, an amount and a holding period. You get:
    code computed, with every number checked (see below).
 
 Example from the live data on 24 Nov 2026 ($1,000, 12 months): SoDEX spot ≈ 0.13 %, the cheapest ETFs ≈ 0.20 %,
-IBIT ≈ 0.30 %, SoDEX BTC perp ≈ 7–11 % a year because of funding; Strategy at ≈ 0.62× mNAV on equity and ≈ 0.70×
+IBIT ≈ 0.30 %, SoDEX BTC perp ≈ 7–11 % a year because of funding; Strategy's market cap ≈ 0.62× its BTC value, ≈ 0.70×
 with debt.
 
 ## How it works
@@ -71,15 +72,22 @@ SoSoValue OpenAPI (v1 + v3)          SoDEX mainnet (public REST)
 | SoDEX spot | Buy `$X` and sell the same quantity into today's book, measured against that book's mid; tier‑0 taker fee 0.065 % each way | none |
 | SoDEX perp (1x long) | Same round trip on the perp book; taker fee 0.04 % each way | current hourly funding × 8,760 (paid by longs when positive) |
 | Spot ETF | latest premium / discount to NAV (SoSoValue ETF history) | sponsor fee |
-| Treasury stock | not a 1:1 route — shown separately as mNAV | — |
+| Treasury stock | not a 1:1 route — shown separately as market cap ÷ BTC value | — |
 
 - **Reference price:** SoDEX `BTC-USD` / `ETH-USD` index price; the SoSoValue price is shown next to it as an
   independent cross-check.
 - **Why round trip against the venue's own mid:** a wrapped token can trade a few bps under the index. Counting
   that as a discount on entry would be wrong — you get the same gap back when you sell. It is shown as a note instead.
-- **mNAV (equity)** = share price × total shares ÷ (BTC held × BTC price).
-  **mNAV (with debt)** adds total debt and subtracts cash from the latest quarterly balance sheet (SoSoValue v3).
-  Preferred stock is not in that data, so the official enterprise-value mNAV is higher than our "with debt" figure.
+- **Market cap ÷ BTC value** = share price × total shares ÷ (BTC held × BTC price).
+  **With debt** adds total debt and subtracts cash from the latest quarterly balance sheet (SoSoValue v3).
+  Preferred stock and dilution are not in that data, so these are simple ratios — not Strategy's own mNAV, which
+  since 23 Jul 2026 is based on net bitcoin per share after senior claims. A ratio below 1× is not "cheap bitcoin":
+  debt and preferred rank ahead of shareholders, so read both columns.
+- **One rule for every gap to a reference:** an ETF's premium to NAV and a SoDEX market's gap to the index are shown,
+  and assumed unchanged when you sell, so they are neither a cost nor a gain. ETF cost is therefore the sponsor fee
+  (commission and spread not included); SoDEX cost is the round trip `1 − sell VWAP × (1 − fee) ÷ (buy VWAP × (1 + fee))`.
+- **Ties:** routes within 0.1 pp of the cheapest are shown as effectively tied — at that gap, your broker can decide.
+- **Partial fills:** if the visible book can't fill the amount, the route shows what is fillable and is not ranked.
 - **Operating companies** (Coinbase, Tesla, Block…) get no mNAV — it would be meaningless — only the share of
   market cap their BTC represents.
 - **Not ranked, but shown:** ETFs whose fee SoSoValue reports as 0 (FBTC), funds under $100M in net assets (trading
@@ -91,7 +99,7 @@ SoSoValue OpenAPI (v1 + v3)          SoDEX mainnet (public REST)
 |---|---|
 | History endpoints are limited to the last 90 days for this API key | only current values + short history are used |
 | `purchase-history.avg_btc_cost` returns 0.09 for every row | never used; cost per BTC = `acq_cost / btc_acq` |
-| `crypto-stocks/{t}/market-cap` history disagrees with price × shares by up to 20 % | never used; mNAV from snapshot price × `total_shares` |
+| `crypto-stocks/{t}/market-cap` history disagrees with price × shares by up to 20 % | never used; ratios from snapshot price × `total_shares` |
 | ETF `market-snapshot.prem_dsc` is always `null` | premium taken from `/etfs/{t}/history` |
 | FBTC `sponsor_fee` = 0 | flagged, not ranked |
 | Numbers arrive as strings | parsed once in `lib/sources.ts` |
@@ -105,7 +113,7 @@ places, and in neither can it introduce a number:
 | | Model | What it does | Guard |
 |---|---|---|---|
 | Ask box (`/ask`) | `gpt-6-luna` | turns a sentence into `{asset, usd, months, exclude}` | strict JSON schema; values snapped to supported options; the page shows the interpretation |
-| Premium Report (`/api/report`) | `gpt-6.1-terra` | writes 3–4 plain-English points from numbered facts | **validator**: every number in a sentence must appear in a fact that sentence cites; one retry with the validator's errors, then a template fallback |
+| Premium Report (`/api/report`) | `gpt-6.1-terra` | writes 3–4 plain-English points from numbered facts | **validator**: every number in a sentence must match a number in a fact that sentence cites — same value, sign, unit and period (it cannot detect two correct numbers swapped between labels); one retry with the validator's errors, then a template fallback |
 
 How the report works (`lib/report.ts`):
 
@@ -124,13 +132,16 @@ The model choice was tested on the actual task: on parsing requests into the sch
 
 ## Trust and verifiability
 
-- **/diag** checks every upstream endpoint the app depends on, live, and shows the SoSoValue quota left.
+- **/diag** spot-checks one endpoint of each upstream kind (through the same cache, up to 5 min old), shows the
+  SoSoValue quota left and the deployed commit. Each row on the comparison page names its own source and time.
 - **/journal** — a GitHub Action commits a dated snapshot and the day's validated note every day, with the change vs
   the previous day; the git history makes it tamper-evident. Below it, history straight from SoSoValue (clearly
   separated from what we recorded): 30 days of BTC ETF premium/discount and Strategy's BTC purchases.
 - **Tests on real data:** `fixtures/` holds responses recorded from the live APIs (key stripped).
   `tests/model.test.ts` runs the whole pipeline on them and re-derives each figure from the raw JSON
-  (e.g. IBIT cost = latest `prem_dsc` + 0.25 %, MSTR mNAV from the raw snapshot and holdings).
+  (e.g. IBIT cost = 0.25 % fee, MSTR ratio from the raw snapshot and holdings), plus the edge cases reviewers found:
+  partial fills, tickets that must never exceed the amount, sign/unit/period changes in the AI note, and a cold
+  render that must stay inside the API's per-minute limit.
 - **No orders, no keys in the browser:** all upstream calls run server-side; nothing on the site trades.
 
 ## Mapped to the judging criteria
@@ -139,7 +150,7 @@ The model choice was tested on the actual task: on parsing requests into the sch
 |---|---|
 | User value & practical impact (30 %) | One concrete decision — the cheapest way to hold BTC/ETH for your amount and horizon — with the cost in dollars and units kept |
 | Functionality & working demo (25 %) | Live site, no login; /diag shows every integration working right now |
-| Logic, workflow & product design (20 %) | Deterministic method above; round-trip costing; mNAV in two variants; explicit "not ranked" rules |
+| Logic, workflow & product design (20 %) | Deterministic method above; round-trip costing; one rule for gaps to a reference; ties; explicit "not ranked" rules |
 | Data / API integration (15 %) | SoSoValue: ETFs (list, snapshot, history), BTC treasuries, purchase history, crypto-stock snapshots, v3 balance sheets, currency price. SoDEX: perps + spot tickers, funding, order books for 4 markets, 24/7 equity perps |
 | UX & clarity (10 %) | Ask in plain words or use the form; one answer, then the full table with sources and timestamps on every row |
 
@@ -150,20 +161,21 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 35 tests: math, full pipeline on fixtures, note validator, order tickets
+npm test                    # 43 tests: math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
 
 Requires Node 20+. The SoSoValue key used here allows 100 requests/minute and 10,000/month; the HTTP layer
 (`lib/http.ts`) caches every response (`unstable_cache`), merges identical in-flight requests, paces SoSoValue
-to ~92 requests/minute and never caches 429/5xx — a cold start costs ~97 requests.
+to the key's per-minute limit (bursts of up to 85 per rolling minute) and never caches 429/5xx — a cold start costs ~80 requests and fits in one minute's limit.
 
 ## Project structure
 
 ```
 app/
   page.tsx              comparison page
-  diag/page.tsx         live status of every upstream endpoint
+  diag/page.tsx         spot checks of each upstream kind, quota, deployed commit
   journal/page.tsx      daily snapshots and notes read from this repo
   ask/route.ts          plain-language question -> form parameters
   api/snapshot/route.ts JSON snapshot
@@ -196,7 +208,7 @@ tests/                  vitest
 
 ## Wave 3 changelog
 
-New project in Wave 3: comparison engine, SoDEX execution check, treasury mNAV with 24/7 SoDEX pricing, ETF coverage
+New project in Wave 3: comparison engine, SoDEX execution check, treasury market-cap ratios with 24/7 SoDEX pricing, ETF coverage
 for BTC and ETH, plain-language ask box, daily AI note with a number validator, SoDEX order tickets and deep links,
 /diag, daily journal with day-over-day changes and SoSoValue history, /judges, tests on recorded real data.
 

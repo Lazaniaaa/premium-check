@@ -29,7 +29,7 @@ export type PerpTicker = {
   symbol: string;
   markPrice: number;
   indexPrice: number;
-  fundingRate: number; // per hour
+  fundingRate: number | null; // per hour; null if SoDEX did not report it
   nextFundingTime: number;
   openInterest: number;
   quoteVolume: number;
@@ -43,7 +43,7 @@ export async function perpTickers(): Promise<PerpTicker[]> {
     symbol: t.symbol,
     markPrice: num(t.markPrice) ?? 0,
     indexPrice: num(t.indexPrice) ?? 0,
-    fundingRate: num(t.fundingRate) ?? 0,
+    fundingRate: num(t.fundingRate),
     nextFundingTime: Number(t.nextFundingTime ?? 0),
     openInterest: num(t.openInterest) ?? 0,
     quoteVolume: num(t.quoteVolume) ?? 0,
@@ -144,6 +144,7 @@ export type EtfData = {
   price: number | null;
   premium: number | null; // latest premium(+)/discount(-) to NAV, fraction
   premiumDate: string | null;
+  premiumRange: { min: number; max: number; days: number } | null; // over SoSoValue's history window
   netInflow: number | null;
   date: string | null;
 };
@@ -154,6 +155,7 @@ export async function etfData(ticker: string): Promise<EtfData | null> {
   ]);
   if (!snap) return null;
   const lastPrem = (hist ?? []).find((h) => num(h.prem_dsc) !== null);
+  const prems = (hist ?? []).map((h) => num(h.prem_dsc)).filter((x): x is number => x !== null);
   return {
     ticker,
     fee: num(snap.sponsor_fee),
@@ -161,6 +163,7 @@ export async function etfData(ticker: string): Promise<EtfData | null> {
     price: num(snap.mkt_price),
     premium: lastPrem ? num(lastPrem.prem_dsc) : null,
     premiumDate: lastPrem?.date ?? null,
+    premiumRange: prems.length ? { min: Math.min(...prems), max: Math.max(...prems), days: prems.length } : null,
     netInflow: num(snap.net_inflow),
     date: snap.date ?? null,
   };

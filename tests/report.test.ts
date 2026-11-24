@@ -39,12 +39,26 @@ describe("note validator", () => {
     const diff = note("x", [], [["Perps cost 6.8 points more than spot.", ["F1", "F2"]], ["Spot 0.13%.", ["F1"]]]);
     expect(validate(diff, facts).join()).toMatch(/6\.8/);
     const bpsNote = note("x", [], [["Spot costs 13 bps.", ["F1"]], ["Perp 6.93%.", ["F2"]]]);
-    expect(validate(bpsNote, facts).join()).toMatch(/"13"/);
+    expect(validate(bpsNote, facts).join()).toMatch(/"13bps"/);
   });
 
   it("rejects a correct number attributed to the wrong fact", () => {
     const n = note("x", [], [["Spot costs 0.13%.", ["F2"]], ["Perp 6.93%.", ["F2"]]]);
     expect(validate(n, facts).join()).toMatch(/0\.13/);
+  });
+
+  it("rejects a flipped sign, a changed period or a changed unit (cases found in review)", () => {
+    const sign = note("x", [], [["Perp funding is -6.93% per year.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
+    expect(validate(sign, facts).join()).toMatch(/-6.93/);
+    const period = note("x", [], [["Perp funding is 6.93% per hour.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
+    expect(validate(period, facts).join()).toMatch(/per hour/);
+    const unit = note("x", [], [["Perp funding is 6.93x a year.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
+    expect(validate(unit, facts).join()).toMatch(/6.93x/);
+  });
+
+  it("accepts the same number with an agreeing period, or with no period", () => {
+    const ok = note("x", [], [["Funding runs at 6.93% a year.", ["F2"]], ["Spot costs 0.13% and the ratio is 0.62x.", ["F1", "F3"]]]);
+    expect(validate(ok, facts)).toEqual([]);
   });
 
   it("rejects unknown fact ids and too few points", () => {
@@ -67,8 +81,10 @@ describe("facts from a real (recorded) snapshot", () => {
     expect(f.map((x) => x.id)).toEqual(f.map((_, i) => `F${i + 1}`));
     expect(f.find((x) => x.text.startsWith("Cheapest way to hold BTC"))).toBeTruthy();
     expect(f.find((x) => x.text.startsWith("Strategy (MSTR)"))).toBeTruthy();
-    // ETF names are spelled out, so the "BTC" ticker can't be mistaken for the coin
-    expect(f.some((x) => /Grayscale Bitcoin Mini Trust \(BTC\)/.test(x.text))).toBe(true);
+    // ETF names are spelled out with the ticker in brackets, so e.g. the "BTC" ticker can't be mistaken for the coin
+    const etfFacts = f.filter((x) => /^(Cheapest|Second cheapest)/.test(x.text) && /Trust|ETF|Fund/.test(x.text));
+    expect(etfFacts.length).toBeGreaterThan(0);
+    for (const x of etfFacts) expect(x.text).toMatch(/[A-Za-z][A-Za-z ]+ \([A-Z]{2,5}\)/);
   });
 
   it("the template fallback always passes the validator", () => {

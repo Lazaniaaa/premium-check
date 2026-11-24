@@ -36,19 +36,26 @@ export class UpstreamError extends Error {
   }
 }
 
-// ---- SoSoValue pacing: the key allows 100 req/min. We start at most one request
-// every 650 ms (≈92/min) and never more than 4 at once, per server instance.
-const SOSO_GAP_MS = 650;
-let nextSlotAt = 0;
+// ---- SoSoValue pacing: the key allows 100 requests per minute. A cold cache needs
+// ~80 requests, so instead of spacing every call (which took > 60 s and timed the
+// page out) we allow a burst of up to WINDOW_MAX starts in any rolling 60 s window,
+// at most MAX_ACTIVE in flight, and only wait once the window is full.
+const WINDOW_MS = 60_000;
+const WINDOW_MAX = 85;
+const MAX_ACTIVE = 6;
+const starts: number[] = [];
 let active = 0;
 const waiters: (() => void)[] = [];
 async function paced<T>(fn: () => Promise<T>): Promise<T> {
-  if (active >= 4) await new Promise<void>((r) => waiters.push(r));
+  if (active >= MAX_ACTIVE) await new Promise<void>((r) => waiters.push(r));
   active++;
-  const now = Date.now();
-  const wait = Math.max(0, nextSlotAt - now);
-  nextSlotAt = Math.max(now, nextSlotAt) + SOSO_GAP_MS;
-  if (wait) await new Promise((r) => setTimeout(r, wait));
+  for (;;) {
+    const now = Date.now();
+    while (starts.length && starts[0] <= now - WINDOW_MS) starts.shift();
+    if (starts.length < WINDOW_MAX) break;
+    await new Promise((r) => setTimeout(r, starts[0] + WINDOW_MS - now + 5));
+  }
+  starts.push(Date.now());
   try {
     return await fn();
   } finally {

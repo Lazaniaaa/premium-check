@@ -1,5 +1,6 @@
 import { dataMode, getJson, recentCalls, sosoQuota, type Source } from "@/lib/http";
 import { timeUtc } from "@/lib/format";
+import build from "@/lib/build-info.json";
 
 export const dynamic = "force-dynamic";
 
@@ -9,10 +10,15 @@ const PROBES: { label: string; source: Source; path: string; query?: Record<stri
   { label: "SoDEX perps tickers", source: "sodex", path: "/perps/markets/tickers" },
   { label: "SoDEX BTC-USD order book", source: "sodex", path: "/perps/markets/BTC-USD/orderbook", query: { limit: 100 } },
   { label: "SoDEX spot vBTC/vUSDC order book", source: "sodex", path: "/spot/markets/vBTC_vUSDC/orderbook", query: { limit: 100 } },
+  { label: "SoDEX ETH-USD order book", source: "sodex", path: "/perps/markets/ETH-USD/orderbook", query: { limit: 100 } },
+  { label: "SoDEX spot vETH/vUSDC order book", source: "sodex", path: "/spot/markets/vETH_vUSDC/orderbook", query: { limit: 100 } },
+  { label: "SoDEX BTC-USD market parameters", source: "sodex", path: "/perps/markets/symbols", query: { symbol: "BTC-USD" } },
   { label: "SoSoValue BTC treasuries", source: "sosovalue", path: "/btc-treasuries" },
   { label: "SoSoValue MSTR holdings", source: "sosovalue", path: "/btc-treasuries/MSTR/purchase-history", query: { limit: 100 } },
   { label: "SoSoValue MSTR stock snapshot", source: "sosovalue", path: "/crypto-stocks/MSTR/market-snapshot" },
   { label: "SoSoValue US BTC ETFs", source: "sosovalue", path: "/etfs", query: { country_code: "US", symbol: "BTC" } },
+  { label: "SoSoValue US ETH ETFs", source: "sosovalue", path: "/etfs", query: { country_code: "US", symbol: "ETH" } },
+  { label: "SoSoValue BTC price (cross-check)", source: "sosovalue", path: "/currencies/1673723677362319866/market-snapshot" },
   { label: "SoSoValue IBIT history", source: "sosovalue", path: "/etfs/IBIT/history" },
   { label: "SoSoValue v3 MSTR balance sheet", source: "sosovalue-v3", path: "/parties/MSTR/financials", query: { period: "quarterly", statement: "balance" } },
 ];
@@ -35,10 +41,20 @@ export default async function Diag() {
 
   return (
     <>
-      <h1>Data status</h1>
+      <h1>Data status: spot checks</h1>
       <p className="lede">
-        Live check of every upstream endpoint Premium Check depends on. Mode: <b>{dataMode()}</b>
-        {dataMode() === "fixture" ? " (recorded real responses, offline)" : " (live APIs, cached)"}.
+        A sample of the upstream endpoints Premium Check depends on — one of each kind, not every ticker. Each check goes
+        through the same cache as the site (up to 5 minutes old). Every row on the comparison page also names its own
+        source and time. Mode: <b>{dataMode()}</b>
+        {dataMode() === "fixture" ? " (recorded real responses, offline)" : " (live APIs, cached)"}. Code version:{" "}
+        {build.sha ? (
+          <a href={`https://github.com/Lazaniaaa/premium-check/commit/${build.sha}`}>
+            <code>{build.sha.slice(0, 7)}</code>
+          </a>
+        ) : (
+          "unknown"
+        )}
+        {build.builtAt ? `, deployed ${timeUtc(build.builtAt)}` : ""}.
       </p>
       <div className="table-wrap">
         <table>

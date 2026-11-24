@@ -70,7 +70,7 @@ export default async function Journal() {
                 <th className="num">BTC</th>
                 <th>Cheapest way to hold BTC (12 months)</th>
                 <th className="num">SoDEX BTC perp funding / year</th>
-                <th className="num">MSTR mNAV (equity / with debt)</th>
+                <th className="num">MSTR market cap ÷ BTC value (plain / with debt)</th>
                 <th>Cheapest way to hold ETH</th>
                 <th>Note</th>
                 <th>Raw</th>
@@ -121,7 +121,10 @@ export default async function Journal() {
                       {report ? (
                         <>
                           {report.note.headline}
-                          <span className="sub">{report.author.kind === "llm" ? `${report.author.model}, validated` : "template"}</span>
+                          <span className="sub">{report.author.kind === "llm" ? `${report.author.model}, numbers checked against facts` : "template"}</span>
+                          {report.snapshotTakenAt && report.snapshotTakenAt !== snap.takenAt && (
+                            <span className="sub bad">note computed from a different snapshot ({timeUtc(report.snapshotTakenAt)})</span>
+                          )}
                         </>
                       ) : (
                         <span className="muted">—</span>

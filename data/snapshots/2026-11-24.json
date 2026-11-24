@@ -1,31 +1,31 @@
 {
   "schema": 1,
-  "takenAt": "2026-11-24T22:40:40.810Z",
-  "takenBy": "github-actions",
+  "takenAt": "2026-11-24T22:56:53.072Z",
+  "takenBy": "manual",
   "params": {
     "usd": 1000,
     "months": 12
   },
   "btc": {
     "reference": {
-      "price": 60080,
+      "price": 60034,
       "source": "SoDEX BTC-USD index price",
-      "sosoPrice": 60035.51,
-      "deviationBps": -7.405126498002401
+      "sosoPrice": 60033.57,
+      "deviationBps": -0.07162607855604186
     },
     "cheapest": {
       "id": "sodex-spot",
       "name": "SoDEX spot vBTC/vUSDC",
-      "cost": 0.0013166654167605651
+      "cost": 0.0013166804280200228
     },
-    "perpAnnualFunding": 0.09200626028561999,
+    "perpAnnualFunding": 0.092171411511792,
     "routes": [
       {
         "id": "sodex-spot",
         "name": "SoDEX spot vBTC/vUSDC",
-        "entryPremium": 0.0013166654167605651,
+        "entryPremium": 0.0013166804280200228,
         "annualCarry": 0,
-        "cost": 0.0013166654167605651,
+        "cost": 0.0013166804280200228,
         "ranked": true,
         "flags": []
       },
@@ -50,7 +50,7 @@
       {
         "id": "etf-BITB",
         "name": "BITB — Bitwise Bitcoin ETF",
-        "entryPremium": 0.00008336540564823913,
+        "entryPremium": 8.336540564823913e-05,
         "annualCarry": 0.002,
         "cost": 0.002083365405648239,
         "ranked": true,
@@ -68,7 +68,7 @@
       {
         "id": "etf-BTCO",
         "name": "BTCO — Invesco Galaxy Bitcoin ETF",
-        "entryPremium": 0.00009007390205062471,
+        "entryPremium": 9.007390205062471e-05,
         "annualCarry": 0.0025,
         "cost": 0.0025900739020506248,
         "ranked": true,
@@ -131,9 +131,9 @@
       {
         "id": "sodex-perp",
         "name": "SoDEX perp BTC-USD (1x long)",
-        "entryPremium": 0.0008166540373550912,
-        "annualCarry": 0.09200626028561999,
-        "cost": 0.09282291432297508,
+        "entryPremium": 0.000816663472834378,
+        "annualCarry": 0.092171411511792,
+        "cost": 0.09298807498462638,
         "ranked": true,
         "flags": [
           "funding_varies"
@@ -142,7 +142,7 @@
       {
         "id": "etf-FBTC",
         "name": "FBTC — Fidelity Wise Origin Bitcoin Fund",
-        "entryPremium": -0.000017233945695416253,
+        "entryPremium": -1.7233945695416253e-05,
         "annualCarry": null,
         "cost": null,
         "ranked": false,
@@ -157,29 +157,29 @@
         "kind": "treasury",
         "btcHolding": 851305,
         "holdingsAsOf": "2026-11-23",
-        "price": 78.52,
+        "price": 78.39,
         "priceSource": "sodex_24_7",
-        "mnavEquity": 0.6196705819336148,
-        "mnavWithDebt": 0.7041886443606973
+        "mnavEquity": 0.619118662868929,
+        "mnavWithDebt": 0.7037014857795982
       },
       {
         "ticker": "ASST",
         "kind": "treasury",
         "btcHolding": 43404,
         "holdingsAsOf": "2026-11-16",
-        "price": 14.3,
+        "price": 14.19,
         "priceSource": "exchange",
-        "mnavEquity": 0.6478099273619262,
-        "mnavWithDebt": 0.5932996967242155
+        "mnavEquity": 0.6433193288202945,
+        "mnavWithDebt": 0.5887673306740163
       },
       {
         "ticker": "MARA",
         "kind": "miner",
         "btcHolding": 35303,
         "holdingsAsOf": "2026-03-31",
-        "price": 5.385,
+        "price": 5.41,
         "priceSource": "exchange",
-        "mnavEquity": 0.9835828900346753,
+        "mnavEquity": 0.9889063507159085,
         "mnavWithDebt": null
       },
       {
@@ -197,7 +197,7 @@
         "kind": "operating",
         "btcHolding": 18712,
         "holdingsAsOf": "2025-12-31",
-        "price": 126.96,
+        "price": 126.77,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -217,7 +217,7 @@
         "kind": "operating",
         "btcHolding": 17864,
         "holdingsAsOf": "2026-07-30",
-        "price": 103.38,
+        "price": 103.2,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -229,7 +229,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 48.695,
         "priceSource": "exchange",
-        "mnavEquity": 5.957063361004007,
+        "mnavEquity": 5.961627856366738,
         "mnavWithDebt": null
       },
       {
@@ -239,7 +239,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 16.295,
         "priceSource": "exchange",
-        "mnavEquity": 6.490084472775802,
+        "mnavEquity": 6.495057386220645,
         "mnavWithDebt": null
       },
       {
@@ -249,7 +249,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 5.145,
         "priceSource": "exchange",
-        "mnavEquity": 1.845028553350845,
+        "mnavEquity": 1.846442274133304,
         "mnavWithDebt": null
       },
       {
@@ -257,7 +257,7 @@
         "kind": "operating",
         "btcHolding": 11509,
         "holdingsAsOf": "2025-03-31",
-        "price": 385.25,
+        "price": 385.16,
         "priceSource": "sodex_24_7",
         "mnavEquity": null,
         "mnavWithDebt": null
@@ -279,7 +279,7 @@
         "holdingsAsOf": "2026-09-30",
         "price": 3.7,
         "priceSource": "exchange",
-        "mnavEquity": 0.19593164199247332,
+        "mnavEquity": 0.19608177117812903,
         "mnavWithDebt": null
       },
       {
@@ -289,7 +289,7 @@
         "holdingsAsOf": "2025-06-30",
         "price": 3.45,
         "priceSource": "exchange",
-        "mnavEquity": 0.02777103855240273,
+        "mnavEquity": 0.0277923176238191,
         "mnavWithDebt": null
       },
       {
@@ -299,8 +299,8 @@
         "holdingsAsOf": "2026-06-30",
         "price": 3.36,
         "priceSource": "exchange",
-        "mnavEquity": 0.22969206225145072,
-        "mnavWithDebt": 0.7723309793344715
+        "mnavEquity": 0.22986805976725122,
+        "mnavWithDebt": 0.7729227644070867
       },
       {
         "ticker": "DDC",
@@ -309,8 +309,8 @@
         "holdingsAsOf": "2026-06-17",
         "price": 0.0865,
         "priceSource": "exchange",
-        "mnavEquity": 0.03385520283349922,
-        "mnavWithDebt": 0.47187454602039186
+        "mnavEquity": 0.03388114378913005,
+        "mnavWithDebt": 0.47223611161850193
       },
       {
         "ticker": "CAN",
@@ -319,7 +319,7 @@
         "holdingsAsOf": "2026-06-30",
         "price": 0.1242,
         "priceSource": "exchange",
-        "mnavEquity": 0.782345850366613,
+        "mnavEquity": 0.7829453091585786,
         "mnavWithDebt": null
       },
       {
@@ -329,7 +329,7 @@
         "holdingsAsOf": "2026-05-14",
         "price": 1.005,
         "priceSource": "exchange",
-        "mnavEquity": 0.29261129724385143,
+        "mnavEquity": 0.2928355055203817,
         "mnavWithDebt": null
       },
       {
@@ -339,7 +339,7 @@
         "holdingsAsOf": "2025-09-30",
         "price": 5.495,
         "priceSource": "exchange",
-        "mnavEquity": 27.826523479083445,
+        "mnavEquity": 27.847845064852137,
         "mnavWithDebt": null
       },
       {
@@ -349,8 +349,8 @@
         "holdingsAsOf": "2026-11-06",
         "price": 2.141,
         "priceSource": "exchange",
-        "mnavEquity": 0.9744736917630601,
-        "mnavWithDebt": 1.7851626887517675
+        "mnavEquity": 0.975220365145162,
+        "mnavWithDebt": 1.7865305383650296
       },
       {
         "ticker": "CANG",
@@ -359,7 +359,7 @@
         "holdingsAsOf": "2026-03-31",
         "price": 1.33,
         "priceSource": "exchange",
-        "mnavEquity": 0.8484174464910983,
+        "mnavEquity": 0.8490675314852447,
         "mnavWithDebt": null
       },
       {
@@ -369,18 +369,18 @@
         "holdingsAsOf": "2025-06-26",
         "price": 1.0034,
         "priceSource": "exchange",
-        "mnavEquity": 0.339953205982024,
-        "mnavWithDebt": 2.1286318344773636
+        "mnavEquity": 0.3402136891661392,
+        "mnavWithDebt": 2.130262861301929
       }
     ],
     "errors": []
   },
   "eth": {
     "reference": {
-      "price": 1687.6,
+      "price": 1687.1,
       "source": "SoDEX ETH-USD index price",
-      "sosoPrice": 1683.88,
-      "deviationBps": -22.043138184402178
+      "sosoPrice": 1687.12,
+      "deviationBps": 0.11854661845722703
     },
     "cheapest": {
       "id": "etf-ETHW",
@@ -401,9 +401,9 @@
       {
         "id": "sodex-spot",
         "name": "SoDEX spot vETH/vUSDC",
-        "entryPremium": 0.0014522728157138065,
+        "entryPremium": 0.0013989182558957758,
         "annualCarry": 0,
-        "cost": 0.0014522728157138065,
+        "cost": 0.0013989182558957758,
         "ranked": true,
         "flags": []
       },
@@ -455,9 +455,9 @@
       {
         "id": "sodex-perp",
         "name": "SoDEX perp ETH-USD (1x long)",
-        "entryPremium": 0.0008594088816279433,
+        "entryPremium": 0.0008592996708870482,
         "annualCarry": 0.1095,
-        "cost": 0.11035940888162794,
+        "cost": 0.11035929967088705,
         "ranked": true,
         "flags": [
           "funding_varies"

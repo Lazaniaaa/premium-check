@@ -36,6 +36,18 @@ export const COMPANY_KIND: Record<string, CompanyKind> = {
   BMNR: "operating",
 };
 
+/**
+ * US-listed tickers that held >= 1,000 BTC in SoSoValue's treasury data (checked 25 Nov 2026).
+ * Only these are queried, which keeps a cold-cache render inside the 100 req/min key limit.
+ * The page reports how many listed companies were left out and why.
+ */
+export const CANDIDATES = [
+  "MSTR", "CEP", "ASST", "MARA", "BSTR", "BLSH", "SPCX", "GLXY", "COIN", "HUT", "RIOT", "CLSK", "TSLA", "XYZ",
+  "ABTC", "NXTT", "NAKA", "DDC", "CAN", "FUFU", "CIFR", "IMG", "EMPD", "ZOOZ", "CANG", "BITF", "NA",
+];
+/** Tickers SoSoValue has no stock snapshot for (HTTP 404, checked 25 Nov 2026): not queried, listed as uncovered. */
+export const NO_STOCK_DATA = new Set(["CEP", "BSTR", "IMG", "ZOOZ", "BITF"]);
+
 /** Ignore tiny holders: below this the ratio is noise, not a BTC exposure. */
 export const MIN_BTC_HOLDING = 1000;
 

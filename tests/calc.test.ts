@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { annualFunding, holdingCost, maxSizeWithin, mnav, roundTrip, walkAsks } from "@/lib/calc";
+import { annualFunding, holdingCost, maxSizeVwapWithin, mnav, roundTrip, walkAsks } from "@/lib/calc";
 
 describe("walkAsks", () => {
   const asks: [number, number][] = [
@@ -20,8 +20,11 @@ describe("walkAsks", () => {
     expect(f.complete).toBe(false);
     expect(f.filledUsd).toBeCloseTo(100 + 202 + 1100);
   });
-  it("maxSizeWithin stops at the bps limit", () => {
-    expect(maxSizeWithin(asks, 150)).toBeCloseTo(302); // 101 is within 1.5%, 110 is not
+  it("maxSizeVwapWithin bounds the AVERAGE price, taking part of the last level", () => {
+    // limit = 101.5. Levels 1-2 average 100.67; then x units at 110 bring the average to exactly 101.5
+    const size = maxSizeVwapWithin(asks, 150);
+    expect(size).toBeCloseTo(302 + 110 * (2.5 / 8.5), 6);
+    expect(walkAsks(asks, size).vwap!).toBeCloseTo(101.5, 6);
   });
 });
 
@@ -49,7 +52,7 @@ describe("mnav", () => {
 });
 
 describe("roundTrip", () => {
-  it("costs at least the spread plus two fees, even when the market trades below an index", () => {
+  it("is the share of money lost buying and selling back: 1 - sell x (1-fee) / (buy x (1+fee))", () => {
     // a wrapped token trading ~0.1% under the index: bid 99.9 / ask 100.0
     const book = { bids: [[99.9, 100]] as [number, number][], asks: [[100, 100]] as [number, number][] };
     const rt = roundTrip(book, 1000, 0.00065)!;
