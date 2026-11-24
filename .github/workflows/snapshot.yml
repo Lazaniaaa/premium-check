@@ -1,0 +1,45 @@
+name: Daily snapshot
+
+# Once a day, record what Premium Check showed into data/snapshots/YYYY-MM-DD.json.
+# The commit history of that folder is the public, tamper-evident journal.
+on:
+  schedule:
+    - cron: "30 0 * * *" # 00:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch snapshot from the live site
+        run: |
+          mkdir -p data/snapshots
+          day=$(date -u +%F)
+          for i in 1 2 3; do
+            if curl -fsS --max-time 90 "https://premium-check-iota.vercel.app/api/snapshot?by=github-actions" -o /tmp/snap.json \
+               && jq -e '.schema == 1 and (.btc.routes | length) > 0' /tmp/snap.json > /dev/null; then
+              jq . /tmp/snap.json > "data/snapshots/$day.json"
+              echo "saved data/snapshots/$day.json"
+              exit 0
+            fi
+            echo "attempt $i failed, retrying in 60s"; sleep 60
+          done
+          exit 1
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/snapshots
+          git diff --cached --quiet && { echo "no change"; exit 0; }
+          git commit -m "snapshot: $(date -u +%F)"
+          git push

@@ -40,8 +40,9 @@ export type DirectRoute = {
   annualCarry: number | null; // fraction per year
   cost: number | null; // holdingCost over the chosen horizon
   units: number | null; // asset held per `usd` after cost
+  ranked: boolean; // false when the cost can't be trusted for a ranking (see flags)
   notes: string[];
-  flags: ("fee_unverified" | "book_too_thin" | "funding_varies")[];
+  flags: ("fee_unverified" | "book_too_thin" | "funding_varies" | "small_fund")[];
   source: string;
   asOf: string | null;
   fill?: Fill & { maxUsdWithin10bps: number; feeRate: number };
@@ -78,6 +79,9 @@ export type Comparison = {
   errors: string[];
 };
 
+/** Below this, spreads in the fund can easily exceed its fee advantage: shown, not ranked. */
+export const SMALL_FUND_USD = 100_000_000;
+
 const PERP: Record<Asset, string> = { BTC: "BTC-USD", ETH: "ETH-USD" };
 const SPOT: Record<Asset, string> = { BTC: "vBTC_vUSDC", ETH: "vETH_vUSDC" };
 const isRegularSession = (status: string) => /REGULAR|TRADING|OPEN/i.test(status) && !/CLOSE/i.test(status);
@@ -100,7 +104,8 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
     asset === "BTC" ? companyRows(ref, tickers, note) : Promise.resolve([]),
   ]);
 
-  direct.sort((a, b) => (a.cost ?? Infinity) - (b.cost ?? Infinity));
+  // Trusted rows first (cheapest first), then unranked rows, still by cost.
+  direct.sort((a, b) => Number(b.ranked) - Number(a.ranked) || (a.cost ?? Infinity) - (b.cost ?? Infinity));
   companies.sort((a, b) => (b.btcHolding ?? 0) - (a.btcHolding ?? 0));
 
   return {
@@ -129,9 +134,10 @@ async function directRoutes(
   note: (w: string) => (e: unknown) => null,
 ): Promise<DirectRoute[]> {
   const rows: DirectRoute[] = [];
-  const finish = (r: Omit<DirectRoute, "cost" | "units">): DirectRoute => {
+  const finish = (r: Omit<DirectRoute, "cost" | "units" | "ranked">): DirectRoute => {
     const cost = r.entryPremium != null && r.annualCarry != null ? holdingCost(r.entryPremium, r.annualCarry, months) : null;
-    return { ...r, cost, units: cost != null ? effectiveUnits(usd, ref, cost) : null };
+    const untrusted = r.flags.some((f) => f === "fee_unverified" || f === "small_fund" || f === "book_too_thin");
+    return { ...r, cost, units: cost != null ? effectiveUnits(usd, ref, cost) : null, ranked: cost != null && !untrusted };
   };
 
   const [spotBook, perpBook, etfs] = await Promise.all([
@@ -196,6 +202,7 @@ async function directRoutes(
       const d = await etfData(e.ticker).catch(note(`SoSoValue ETF ${e.ticker}`));
       if (!d) return null;
       const feeUnverified = d.fee === null || d.fee === 0;
+      const small = d.netAssets != null && d.netAssets < SMALL_FUND_USD;
       return finish({
         id: `etf-${e.ticker}`,
         kind: "etf",
@@ -206,8 +213,9 @@ async function directRoutes(
         notes: [
           d.premiumDate ? `Premium/discount to NAV as of ${d.premiumDate}` : "No premium/discount data",
           "Assumes you sell at NAV; brokerage commission and bid/ask spread not included",
+          ...(d.netAssets != null ? [`Net assets ${(d.netAssets / 1e9).toFixed(2)}B USD`] : []),
         ],
-        flags: feeUnverified ? ["fee_unverified"] : [],
+        flags: [...(feeUnverified ? (["fee_unverified"] as const) : []), ...(small ? (["small_fund"] as const) : [])],
         source: `SoSoValue /etfs/${e.ticker}/market-snapshot + /history`,
         asOf: d.date,
       });

@@ -85,6 +85,14 @@ describe("BTC comparison on recorded data", () => {
 });
 
 describe("ETH comparison on recorded data", () => {
+  it("keeps funds under $100M out of the ranking", () => {
+    const teth = eth.direct.find((r) => r.id === "etf-TETH")!; // ~$20M net assets in the recording
+    expect(teth.flags).toContain("small_fund");
+    expect(teth.ranked).toBe(false);
+    const firstUnranked = eth.direct.findIndex((r) => !r.ranked);
+    expect(eth.direct.slice(firstUnranked).every((r) => !r.ranked)).toBe(true);
+  });
+
   it("has 11 ETH ETFs and no treasury companies", () => {
     expect(eth.direct.filter((r) => r.kind === "etf")).toHaveLength(11);
     expect(eth.companies).toHaveLength(0);

@@ -18,6 +18,7 @@ function parse(sp: Record<string, string | string[] | undefined>) {
 
 const FLAG_TEXT: Record<string, string> = {
   fee_unverified: "fee reported as 0 — not ranked",
+  small_fund: "fund under $100M — spread may exceed the fee edge; not ranked",
   book_too_thin: "visible order book too thin for this size",
   funding_varies: "funding changes hourly",
 };
@@ -25,7 +26,7 @@ const FLAG_TEXT: Record<string, string> = {
 export default async function Page({ searchParams }: { searchParams: SP }) {
   const { asset, amount, months } = parse(await searchParams);
   const c = await buildComparison(asset, amount, months);
-  const ranked = c.direct.filter((r) => r.cost != null);
+  const ranked = c.direct.filter((r) => r.ranked);
   const best = ranked[0];
   const worst = ranked.at(-1);
   const sodexRoutes = c.direct.filter((r) => r.fill);
@@ -126,7 +127,7 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           <li>Reference price: SoDEX {asset}-USD index price; SoSoValue price shown as an independent cross-check.</li>
           <li>SoDEX routes: buy {usd(amount)} and sell the same quantity into the live order book (100 levels), measured against that book's mid price, with tier-0 taker fees (0.065% spot, 0.04% perps) each way. A persistent gap between a market and the index is shown as a note, not counted as a gain — you get it back when you sell.</li>
           <li>Perp carry = current hourly funding × 8,760. It changes every hour; past funding is not a promise.</li>
-          <li>ETF cost = latest premium/discount to NAV (SoSoValue ETF history) + sponsor fee. Brokerage fees and spread are not included. A fee SoSoValue reports as 0 is shown but not ranked.</li>
+          <li>ETF cost = latest premium/discount to NAV (SoSoValue ETF history) + sponsor fee. Brokerage fees and spread are not included. A fee SoSoValue reports as 0, and funds under $100M in net assets (where trading spread can outweigh the fee), are shown but not ranked.</li>
           <li>Treasury mNAV = share price × total shares ÷ (BTC held × BTC price). &ldquo;With debt&rdquo; adds debt and subtracts cash from the latest SoSoValue quarterly balance sheet; preferred stock is not in that data, so the official enterprise-value mNAV is higher.</li>
           <li>SoSoValue history is limited to 90 days for this API key; holdings come from company purchase disclosures and can be months old (flagged).</li>
           <li>Nothing here places orders. Execution numbers are a preview from the public order book.</li>
@@ -170,7 +171,7 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
         <tbody>
           {rows.map((r, i) => (
             <tr key={r.id} className={r.id === bestId ? "best" : undefined}>
-              <td className="muted">{r.cost != null ? i + 1 : "—"}</td>
+              <td className="muted">{r.ranked ? i + 1 : "—"}</td>
               <td>
                 {r.name}
                 <span className="sub">{r.provider}</span>

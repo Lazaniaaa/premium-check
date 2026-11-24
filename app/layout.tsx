@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav>
               <Link href="/">Compare</Link>
+              <Link href="/journal">Journal</Link>
               <Link href="/diag">Data status</Link>
               <a href="https://github.com/Lazaniaaa/premium-check" target="_blank" rel="noreferrer">
                 GitHub
