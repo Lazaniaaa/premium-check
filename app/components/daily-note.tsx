@@ -23,6 +23,13 @@ export function DailyNote({ report }: { report: Report }) {
           </li>
         ))}
       </ul>
+      {report.facts.some((f) => f.text.includes("under $100M")) && (
+        <p className="sub" style={{ margin: "4px 0" }}>
+          Editor&apos;s note (25 Nov 2026): this archived note used the earlier ETF filter (funds under $100M in net assets not
+          ranked). Since commit db58b18 the site instead leaves out funds with under $2M daily value traded or where your order
+          would exceed 0.1% of it. The note is kept as it was published.
+        </p>
+      )}
       <details style={{ marginTop: 8 }}>
         <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
           How this note is made: facts and checks

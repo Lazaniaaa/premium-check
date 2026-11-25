@@ -152,14 +152,19 @@ The model choice was tested on the actual task: on parsing requests into the sch
 - **/journal** — a GitHub Action commits a dated snapshot and the day's validated note every day, with the change vs
   the previous day; the git history makes it tamper-evident. Below it, history straight from SoSoValue (clearly
   separated from what we recorded): 30 days of BTC ETF premium/discount and Strategy's BTC purchases.
-- **/validation** — the method tested where history allows it. (1) The ETF exit-premium rule on SoSoValue's
-  30-day ETF history: for every fund and start day, the error after 1, 5 and 10 trading days, against two other
-  assumptions (premium returns to zero / to its past median) and for the gap between two funds. Result: premiums
-  moved up to ~0.35 % within 10 trading days in 9 of 10 cases, and "returns to zero" was more accurate than our rule.
-  We kept the rule (it never books a discount as profit) and the answer now says when routes are closer than that
-  noise. (2) A prediction saved with its order book by `scripts/predict-trade.mjs` *before* a real SoDEX round trip,
-  next to the actual fills from SoDEX's public account-trades endpoint. (3) What history cannot test: past SoDEX
-  books, perp funding, treasury ratios.
+- **/validation** — one assumption tested where history allows it. The cost rule assumes an ETF's premium to NAV
+  is the same at exit as at entry. On 22 sessions of SoSoValue history (26 Oct – 24 Nov 2026, all 12 BTC and 11 ETH
+  US spot ETFs), after 10 sessions the reported closing premium moved by more than 0.35 % (BTC) / 0.34 % (ETH) in
+  1 of 10 fund-windows; "sold at NAV" would have cut that to 0.19 % / 0.23 %; after 1 session the fund's past median
+  did best. Windows overlap and funds move together, so these describe this sample only. The ranking still books no
+  gain or loss from an unknown exit premium; the answer says when a premium change could reverse the order (gap
+  between two funds for ETF vs ETF, the fund's own move for ETF vs SoDEX). The exact inputs are frozen in
+  `data/validation/etf-premium-history.json` (`scripts/freeze-premium-history.mjs`), and
+  `node scripts/reproduce-validation.mjs` re-computes the tables without a key, with the same `lib/backtest.ts`.
+  Real-trade check: a prediction with the full order book is committed *before* a SoDEX round trip
+  (`scripts/predict-trade.mjs`), then `scripts/record-fill.mjs` reads the fills from SoDEX's public account-trades
+  endpoint. Status is shown on the page (0 verified round trips until one is recorded). What history cannot test:
+  past SoDEX books, perp funding, treasury ratios.
 - **Tests on real data:** `fixtures/` holds responses recorded from the live APIs (key stripped).
   `tests/model.test.ts` runs the whole pipeline on them and re-derives each figure from the raw JSON
   (e.g. IBIT cost = 0.25 % fee, MSTR ratio from the raw snapshot and holdings), plus the edge cases reviewers found:
@@ -184,7 +189,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 52 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 53 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
@@ -215,7 +220,8 @@ lib/
   snapshot.ts           compact snapshot shape
   trade.ts              SoDEX deep links and unsigned order tickets
   history.ts            ETF premium history and Strategy purchases from SoSoValue
-  validation.ts         exit-premium backtest (pure, tested) and recorded trades
+  backtest.ts           exit-premium backtest on one session calendar (pure, tested)
+  validation.ts         reads the frozen dataset and recorded trades for /validation
   llm.ts                OpenAI Responses API client (strict JSON schema)
   query.ts              question parser + normalisation
   report.ts             facts, writer prompt, validator, template fallback
@@ -223,7 +229,8 @@ lib/
 fixtures/               recorded real API responses (key stripped)
 tests/                  vitest
 data/                   daily snapshots and notes (Action), validation/ predictions and trades
-scripts/predict-trade.mjs  saves a SoDEX round-trip prediction and its book before a real trade
+scripts/                predict-trade / record-fill (real-trade check), freeze-premium-history /
+                        reproduce-validation (backtest inputs and offline re-run), deploy, fixtures
 .github/workflows/      daily snapshot
 ```
 
@@ -239,8 +246,8 @@ scripts/predict-trade.mjs  saves a SoDEX round-trip prediction and its book befo
 
 New project in Wave 3: comparison engine, SoDEX execution check, treasury market-cap ratios with 24/7 SoDEX pricing, ETF coverage
 for BTC and ETH, plain-language ask box, daily AI note in which the model types no digits (code inserts every number), SoDEX order tickets and deep links,
-/diag, daily journal with day-over-day changes and SoSoValue history, /judges, /validation (backtest of the exit-premium
-rule on 30 days of SoSoValue history; prediction vs a real SoDEX fill), tests on recorded real data.
+/diag, daily journal with day-over-day changes and SoSoValue history, /judges, /validation (exit-premium assumption tested
+on 22 sessions of SoSoValue history with frozen inputs; protocol for checking a prediction against a real SoDEX fill), tests on recorded real data.
 
 ## Team
 

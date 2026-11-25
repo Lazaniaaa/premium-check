@@ -3,6 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
+import { premiumBacktest, trades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -60,8 +61,12 @@ export default async function Judges() {
             market cap vs BTC value for each treasury company, with and without debt minus cash, and the price source.
           </li>
           <li>
-            <Link href="/validation">Does the method hold up?</Link> — the cost rule tested on 30 days of SoSoValue ETF
-            history, a prediction compared with a real SoDEX fill, and what history can&apos;t test.
+            <Link href="/validation">Does the method hold up?</Link> — one assumption of the cost rule tested on {premiumBacktest("BTC").sessions}
+            sessions of SoSoValue ETF history (data and re-run command in the repo);{" "}
+            {trades.length
+              ? `${trades.length} SoDEX round trip${trades.length > 1 ? "s" : ""} checked against the prediction made before it`
+              : "real-trade check: 0 verified round trips so far, protocol published"}
+            ; and what history can&apos;t test.
           </li>
         </ul>
       </div>
@@ -89,7 +94,7 @@ export default async function Judges() {
       <div className="card" style={{ marginTop: 12 }}>
         <b>Right now, for $1,000 of BTC held 12 months</b>
         <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
-          {best && <li>Cheapest: {best.name} — {pct(best.cost)} total cost</li>}
+          {best && <li>{winner(btc, 1000)}</li>}
           {ibit && <li>BlackRock IBIT — {pct(ibit.cost)}</li>}
           {perp && (
             <li>

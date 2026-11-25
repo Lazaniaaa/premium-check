@@ -1,15 +1,15 @@
 import Link from "next/link";
-import { premiumBacktest, type Backtest, type Stats, type TradeRecord } from "@/lib/validation";
+import { datasetFile, premiumBacktest, trades, type Backtest, type Stats, type TradeRecord } from "@/lib/validation";
 import { REPO_URL } from "@/lib/reports-store";
-import { bps, timeUtc, usd } from "@/lib/format";
-import tradesJson from "@/data/validation/trades.json";
+import { bps, pct, usd } from "@/lib/format";
 
-export const maxDuration = 60;
 export const metadata = { title: "Premium Check — validation" };
 
-const trades = tradesJson as TradeRecord[];
 const b = (x: number | null | undefined) => bps(x == null ? null : x * 1e4);
-const NAMES = { unchanged: "stays the same (our cost rule)", zero: "returns to zero", pastMedian: "returns to the fund's past median" };
+const NAMES = { unchanged: "premium stays the same", zero: "sold at NAV", pastMedian: "back to the fund's past median" };
+const ms = (iso: string) => iso.replace("T", " ").replace("Z", " UTC");
+const day = (d: string | null) =>
+  d ? new Date(`${d}T00:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) : "—";
 
 function Cell({ s, best }: { s: Stats; best?: boolean }) {
   return (
@@ -20,194 +20,202 @@ function Cell({ s, best }: { s: Stats; best?: boolean }) {
 }
 
 function BacktestTable({ r }: { r: Backtest }) {
+  const l = r.longest!;
   return (
     <>
       <h3>
-        {r.asset}: {r.funds.length} US spot ETFs, {r.from} → {r.to}
+        {r.asset}: {r.covered}/{r.listed} US spot ETFs · {r.sessions} sessions, {day(r.from)} – {day(r.to)}
       </h3>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
               <th>Sold after</th>
-              <th>Premium stays the same (our rule)</th>
-              <th>Returns to zero</th>
-              <th>Returns to past median</th>
+              <th>Same premium (our rule)</th>
+              <th>Sold at NAV</th>
+              <th>Past median</th>
               <th>Gap between two funds</th>
-              <th>Samples</th>
             </tr>
           </thead>
           <tbody>
-            {r.horizons.map((h) => {
-              const min = Math.min(h.unchanged.p90 ?? 1, h.zero.p90 ?? 1, h.pastMedian.p90 ?? 1);
-              return (
-                <tr key={h.days}>
-                  <td>{h.days === 1 ? "1 trading day" : `${h.days} trading days`}</td>
-                  <Cell s={h.unchanged} best={h.unchanged.p90 === min} />
-                  <Cell s={h.zero} best={h.zero.p90 === min} />
-                  <Cell s={h.pastMedian} best={h.pastMedian.p90 === min} />
-                  <Cell s={h.pairwise} />
-                  <td className="muted">{h.unchanged.n}</td>
-                </tr>
-              );
-            })}
+            {r.horizons.map((h) => (
+              <tr key={h.days}>
+                <td>
+                  {h.days === 1 ? "1 session" : `${h.days} sessions`}
+                  <div className="sub">
+                    {h.startDates} start dates · {h.unchanged.n} fund-windows
+                  </div>
+                </td>
+                <Cell s={h.unchanged} best={h.best === "unchanged"} />
+                <Cell s={h.zero} best={h.best === "zero"} />
+                <Cell s={h.pastMedian} best={h.best === "pastMedian"} />
+                <td>
+                  {b(h.pairwise.median)} <span className="muted">/ {b(h.pairwise.p90)}</span>
+                  <div className="sub">{h.pairwise.n} pair-windows</div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      <p className="sub">Each cell: typical error (median) / error in 9 of 10 cases (p90). Lowest p90 in bold.</p>
+      <p className="sub">
+        Each cell: typical error (median) / error exceeded in 1 of 10 windows (p90); lowest p90 in bold. Example: after{" "}
+        {l.days} sessions, {l.startDates} start dates × {r.covered} funds = {l.unchanged.n} windows. Windows overlap and funds
+        share market moves, so these describe this sample; they are not independent observations.
+      </p>
     </>
   );
 }
 
-export default async function Validation() {
-  const [btc, eth] = await Promise.all([premiumBacktest("BTC"), premiumBacktest("ETH")]);
-  const both = [btc, eth];
-  const stillUnchanged = both.filter((r) => r.bestAssumption === "unchanged").length;
-  // Figures for the conclusions, all at the longest horizon the history allows.
-  const at = (r: Backtest) => r.horizons.find((h) => h.days === r.noiseDays) ?? null;
-  const pairCalmer = both.filter((r) => {
-    const h = at(r);
-    return h && h.pairwise.p90! < h.unchanged.p90!;
-  });
-  const gain = (r: Backtest) => {
-    const h = at(r);
-    if (!h || !r.bestAssumption || r.bestAssumption === "unchanged") return null;
-    const alt = h[r.bestAssumption];
-    return { name: NAMES[r.bestAssumption], median: h.unchanged.median! - alt.median!, p90: h.unchanged.p90! - alt.p90! };
-  };
+function TradeTable({ t }: { t: TradeRecord }) {
+  const leg = (name: string, l: TradeRecord["buy"]) => (
+    <tr>
+      <td>{name}</td>
+      <td>{l.predictedVwap.toFixed(2)}</td>
+      <td>{l.actualVwap.toFixed(2)}</td>
+      <td>{bps(l.diffBps)}</td>
+      <td>{l.qty}</td>
+      <td>
+        {l.feePaid} {l.feeAsset}
+        <div className="sub">{l.feeRate != null ? `rate ${pct(l.feeRate, 3)}` : ""}</div>
+      </td>
+    </tr>
+  );
+  return (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <b>
+        {usd(t.usd)} {t.symbol} round trip
+      </b>
+      <div className="sub">
+        Prediction (book at {ms(t.predictedAt)}) published in{" "}
+        {t.predictionCommit ? <a href={`${REPO_URL}/commit/${t.predictionCommit}`}>{t.predictionCommit.slice(0, 7)}</a> : "—"}{" "}
+        before the trade · fills {ms(t.firstFillAt)} → {ms(t.lastFillAt)}
+      </div>
+      <div className="table-wrap" style={{ marginTop: 8 }}>
+        <table>
+          <thead>
+            <tr>
+              <th>Leg</th>
+              <th>Predicted VWAP</th>
+              <th>Actual VWAP</th>
+              <th>Difference</th>
+              <th>Quantity</th>
+              <th>Fee charged</th>
+            </tr>
+          </thead>
+          <tbody>
+            {leg("Buy", t.buy)}
+            {leg("Sell", t.sell)}
+          </tbody>
+        </table>
+      </div>
+      <p style={{ marginBottom: 4 }}>
+        Round-trip cost: predicted <b>{usd(t.predictedCostUsd, 4)}</b> ({bps(t.predictedCostBps)}), actual{" "}
+        <b>{usd(t.actualCostUsd, 4)}</b> ({bps(t.actualCostBps)}).
+      </p>
+      <p className="sub">
+        Spent {usd(t.usdcSpent, 4)} USDC, got back {usd(t.usdcReturned, 4)}; {t.baseLeft} BTC left from lot rounding, valued at
+        the sell price. Fee rate: site model {pct(t.feeRates.model, 3)}, SoDEX symbol {pct(t.feeRates.symbol, 3)}, charged as
+        shown per leg.
+        {t.note ? ` ${t.note}` : ""} <a href={`${REPO_URL}/blob/main/${t.predictionFile}`}>Prediction + full book</a> ·{" "}
+        <a href={`https://mainnet-gw.sodex.dev/api/v1/spot/accounts/${t.account}/trades?symbol=${t.symbol}`}>fills on SoDEX</a>{" "}
+        (trade ids {t.tradeIds.join(", ")})
+      </p>
+    </div>
+  );
+}
+
+export default function Validation() {
+  const both = [premiumBacktest("BTC"), premiumBacktest("ETH")];
+  const [btc] = both;
+  const oneDay = both.map((r) => ({ asset: r.asset, best: r.horizons[0].best }));
 
   return (
     <>
       <h1>Validation: does the method hold up?</h1>
-      <p className="lede">
-        Premium Check is new in Wave 3, so it has no long track record. Instead, this page tests the method two ways: against
-        30 days of history that SoSoValue already holds, and against a real trade on SoDEX. It also says what can&apos;t be
-        tested.
-      </p>
 
-      <h2 id="premium">1. The ETF exit premium, tested on 30 days of history</h2>
+      <section className="card answer">
+        <b>Result</b>
+        <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
+          <li>
+            We tested one assumption of the cost rule — an ETF&apos;s premium to NAV is the same when you sell as when you buy
+            — on {btc.sessions} trading sessions ({day(btc.from)} – {day(btc.to)}) for every US spot BTC and ETH ETF.
+          </li>
+          {both.map((r) => (
+            <li key={r.asset}>
+              <b>{r.asset}:</b> after {r.longest!.days} sessions the reported premium moved by more than{" "}
+              <b>{b(r.longest!.unchanged.p90)}</b> in 1 of 10 fund-windows. Assuming the fund is sold at NAV would have cut
+              that to <b>{b(r.longest!.zero.p90)}</b>.
+            </li>
+          ))}
+          <li>
+            After 1 session the best of the three was{" "}
+            {oneDay.map((o, i) => (
+              <span key={o.asset}>
+                {i ? "; " : ""}
+                {o.asset}: {NAMES[o.best]}
+              </span>
+            ))}
+            . So the alternative is better only in this sample and horizon, not proven in general.
+          </li>
+          <li>
+            <b>Real-trade check:</b>{" "}
+            {trades.length === 0
+              ? "0 verified round trips so far · the protocol is below."
+              : `${trades.length} verified SoDEX round trip${trades.length > 1 ? "s" : ""} · see section 2.`}
+          </li>
+        </ul>
+        <span className="sub">
+          Frozen dataset: <a href={`${REPO_URL}/blob/main/${datasetFile}`}>{datasetFile}</a> ({ms(btc.frozenAt)}). Re-run
+          without a key: <code>node scripts/reproduce-validation.mjs</code> · <a href="/api/validation">JSON</a> ·{" "}
+          <a href={`${REPO_URL}/blob/main/lib/backtest.ts`}>code</a> ·{" "}
+          <a href={`${REPO_URL}/blob/main/tests/validation.test.ts`}>tests</a>
+        </span>
+      </section>
+
+      <h2 id="premium">1. The ETF exit premium</h2>
       <p>
-        An ETF trades a little above or below the value of the coins it holds (its premium or discount). Nobody knows the
-        premium on the day you sell, so the cost rule assumes it <b>stays the same</b>: no gain or loss from it. Here is how
-        wrong that assumption was. For every fund and every start day, we compare the premium when you buy with the premium
-        when you sell, using SoSoValue&apos;s daily history. We also test two other assumptions.
+        The ranking books no gain or loss from an exit premium nobody knows yet: it assumes the premium stays the same. We
+        then checked separately how far that assumption was from historical closing prices, against two alternatives. A
+        discount can pay off if it narrows; what we avoid is counting that possible gain in advance, which is the error the
+        first review found. When the gap between two routes is small enough for a premium change to reverse it, the answer
+        says so.
+      </p>
+      <p className="sub">
+        The metric is SoSoValue&apos;s <i>reported closing premium/discount</i> (<code>prem_dsc</code>): the closing share
+        price against NAV. Funds value NAV from a benchmark coin price taken at a different time than the closing trade, so
+        part of the reported premium is timing, not a cost an investor pays. The test compares two end dates; it does not
+        measure moves within the window, and it says nothing direct about selling after 1–24 months.
       </p>
       {both.map((r) => (
         <BacktestTable key={r.asset} r={r} />
       ))}
 
-      <div className="card answer">
-        <b>What we learned</b>
-        <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
-          {both.map((r) =>
-            r.noise != null ? (
-              <li key={r.asset}>
-                {r.asset} ETFs: within {r.noiseDays} trading days, the premium moved by up to <b>{b(r.noise)}</b> in 9 of 10
-                cases ({r.noiseDays} trading days is the longest window the 30-day history allows). Gaps between routes
-                smaller than that can go either way.
-              </li>
-            ) : (
-              <li key={r.asset}>{r.asset}: not enough history to measure.</li>
-            ),
-          )}
-          {stillUnchanged === 2 ? (
-            <li>Assuming the premium stays the same had the lowest error of the three assumptions for both assets.</li>
-          ) : (
-            <li>
-              Our rule was not the most accurate.{" "}
-              {both.map((r) => {
-                const g = gain(r);
-                return g ? (
-                  <span key={r.asset}>
-                    For {r.asset}, &ldquo;{g.name}&rdquo; cut the typical error by {b(g.median)} and the 9-in-10 error by{" "}
-                    {b(g.p90)}.{" "}
-                  </span>
-                ) : null;
-              })}
-              We kept our rule for the cost: switching would turn today&apos;s discount into a predicted profit, the error the
-              first review caught, while the typical gain is a few bps. Instead, the answer now warns when routes are closer
-              than this noise.
-            </li>
-          )}
-          <li>
-            {pairCalmer.length === 2
-              ? "The gap between two funds moved less than each premium alone: premiums of different funds tend to move together, so rankings between ETFs are a little more stable than their absolute costs."
-              : pairCalmer.length === 1
-                ? `For ${pairCalmer[0].asset} the gap between two funds moved less than each premium alone (funds tend to move together); for ${both.find((r) => !pairCalmer.includes(r))!.asset} it did not, so a ranking between those ETFs is as uncertain as their costs.`
-                : "The gap between two funds moved about as much as each premium alone, so a ranking between ETFs is as uncertain as their costs."}
-          </li>
-        </ul>
-        <span className="sub">
-          Reconstructed from SoSoValue <code>/etfs/&#123;ticker&#125;/history</code> when this page was built (
-          {timeUtc(btc.generatedAt)}); not recorded by us at the time. The same funds and cache as the main page.{" "}
-          <a href="/api/validation">Download JSON</a> · <a href={`${REPO_URL}/blob/main/lib/validation.ts`}>code</a> ·{" "}
-          <a href={`${REPO_URL}/blob/main/tests/validation.test.ts`}>tests</a>
-        </span>
-      </div>
-
       <h2 id="trade">2. Prediction vs a real SoDEX fill</h2>
-      <p>
-        Right before a real trade, a script saves what Premium Check predicts for the round trip (buy, then sell straight back)
-        together with the order book it used. The real fills come from SoDEX&apos;s public account trades endpoint, so anyone
-        can check them.
-      </p>
       {trades.length === 0 ? (
         <div className="card">
-          <b>Not recorded yet.</b>{" "}
-          <span className="muted">
-            The prediction script is <a href={`${REPO_URL}/blob/main/scripts/predict-trade.mjs`}>scripts/predict-trade.mjs</a>.
+          <b>0 verified round trips so far.</b> The protocol, so that one small trade can be checked end to end:
+          <ol className="notes" style={{ marginTop: 6 }}>
+            <li>
+              <a href={`${REPO_URL}/blob/main/scripts/predict-trade.mjs`}>scripts/predict-trade.mjs</a> saves the prediction,
+              the code version and the full order book it used; the file is committed and pushed before the trade, so
+              GitHub&apos;s timestamp shows it came first.
+            </li>
+            <li>A taker buy at market, then the bought quantity sold back at market, within seconds.</li>
+            <li>
+              <a href={`${REPO_URL}/blob/main/scripts/record-fill.mjs`}>scripts/record-fill.mjs</a> reads the fills from
+              SoDEX&apos;s public account-trades endpoint and shows, per leg, predicted vs actual VWAP, quantity and the fee
+              actually charged, plus USDC spent and returned and any BTC left from lot rounding. Failed or partial attempts
+              are published too.
+            </li>
+          </ol>
+          <span className="sub">
+            A $20 trade fits inside the best price level, so it checks spread, side of the book, lot rounding and fees — not
+            depth. Depth is shown from the live book on the Execution tab.
           </span>
         </div>
       ) : (
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Trade</th>
-                <th>Buy price (VWAP)</th>
-                <th>Sell price (VWAP)</th>
-                <th>Round-trip cost</th>
-                <th>Check</th>
-              </tr>
-            </thead>
-            <tbody>
-              {trades.map((t) => (
-                <tr key={t.predictionFile}>
-                  <td>
-                    {usd(t.usd)} {t.symbol}
-                    <div className="sub">
-                      predicted {timeUtc(t.predictedAt)}, traded {timeUtc(t.tradedAt)}
-                    </div>
-                  </td>
-                  <td>
-                    predicted {t.predicted.buyVwap.toFixed(2)}
-                    <div>actual {t.actual.buyVwap.toFixed(2)}</div>
-                  </td>
-                  <td>
-                    predicted {t.predicted.sellVwap.toFixed(2)}
-                    <div>actual {t.actual.sellVwap.toFixed(2)}</div>
-                  </td>
-                  <td>
-                    predicted {b(t.predicted.roundTripCost)} ({usd(t.predicted.roundTripUsd, 4)})
-                    <div>
-                      <b>
-                        actual {b(t.actual.roundTripCost)} ({usd(t.actual.roundTripUsd, 4)})
-                      </b>
-                    </div>
-                    {t.note && <div className="sub">{t.note}</div>}
-                  </td>
-                  <td>
-                    <a href={`${REPO_URL}/blob/main/${t.predictionFile}`}>prediction + book</a>
-                    <div>
-                      <a href={`https://mainnet-gw.sodex.dev/api/v1/spot/accounts/${t.account}/trades`}>fills on SoDEX</a>
-                    </div>
-                    <div className="sub">trade ids {t.tradeIds.join(", ")}</div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        trades.map((t) => <TradeTable key={t.predictionFile} t={t} />)
       )}
 
       <h2 id="limits">3. What history can&apos;t test</h2>
@@ -215,18 +223,20 @@ export default async function Validation() {
         <ul className="notes">
           <li>
             <b>SoDEX order books.</b> There is no public history of past books, so past SoDEX round-trip costs can&apos;t be
-            rebuilt. Our own <Link href="/journal">journal</Link> records them once a day from 24 Nov 2026.
+            rebuilt. Our <Link href="/journal">journal</Link> records the computed route costs once a day from 24 Nov 2026
+            (not the books themselves).
           </li>
           <li>
-            <b>Perp funding.</b> We found no public funding-history endpoint, so the &ldquo;today&apos;s rate over the whole
-            period&rdquo; assumption can&apos;t be tested backwards. The page shows the cost at zero funding next to it.
+            <b>Perp funding.</b> We found no public funding-history endpoint, so &ldquo;today&apos;s rate over the whole
+            period&rdquo; can&apos;t be tested backwards. The page shows the cost at zero funding next to it.
           </li>
           <li>
             <b>Treasury company ratios.</b> SoSoValue&apos;s market-cap history doesn&apos;t reconcile with price × shares,
             so we don&apos;t chart those ratios over time.
           </li>
           <li>
-            <b>Thirty days is short.</b> It covers one market regime. The numbers above describe that window, not a guarantee.
+            <b>{btc.sessions} sessions is short.</b> It covers one market regime. The numbers describe that window, not a
+            guarantee.
           </li>
         </ul>
       </div>

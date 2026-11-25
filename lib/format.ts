@@ -4,10 +4,13 @@ export const pct = (x: number | null | undefined, digits = 2) =>
 export const signedPct = (x: number | null | undefined, digits = 2) =>
   x == null || !Number.isFinite(x) ? "—" : `${x > 0 ? "+" : ""}${(x * 100).toFixed(digits)}%`;
 
+// A positive amount that would round to zero is shown as "<$0.01", not "$0.00".
 export const usd = (x: number | null | undefined, digits = 0) =>
   x == null || !Number.isFinite(x)
     ? "—"
-    : x.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: digits, minimumFractionDigits: digits });
+    : digits > 0 && x > 0 && x < 0.5 / 10 ** digits
+      ? `<$${(1 / 10 ** digits).toFixed(digits)}`
+      : x.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: digits, minimumFractionDigits: digits });
 
 export const compactUsd = (x: number | null | undefined) =>
   x == null || !Number.isFinite(x)

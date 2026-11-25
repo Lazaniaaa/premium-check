@@ -1,15 +1,10 @@
-import { premiumBacktest, type TradeRecord } from "@/lib/validation";
-import trades from "@/data/validation/trades.json";
+import { datasetFile, premiumBacktest, trades } from "@/lib/validation";
 
-export const dynamic = "force-dynamic";
-export const maxDuration = 60;
-
-// Everything behind /validation as JSON: the exit-premium backtest for BTC and ETH ETFs
-// (from SoSoValue history, same cache as the main page) and recorded prediction-vs-fill trades.
-export async function GET() {
-  const [btc, eth] = await Promise.all([premiumBacktest("BTC"), premiumBacktest("ETH")]);
+// Everything behind /validation as JSON: the exit-premium backtest for BTC and ETH ETFs on
+// the frozen SoSoValue dataset (raw inputs in the repo at datasetFile) and recorded trades.
+export function GET() {
   return Response.json(
-    { premiumBacktest: [btc, eth], trades: trades as TradeRecord[] },
+    { dataset: datasetFile, premiumBacktest: [premiumBacktest("BTC"), premiumBacktest("ETH")], trades },
     { headers: { "content-disposition": 'inline; filename="premium-check-validation.json"' } },
   );
 }
