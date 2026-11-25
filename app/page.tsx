@@ -18,7 +18,9 @@ function parse(sp: Record<string, string | string[] | undefined>) {
   const exclude = (one("exclude") ?? "")
     .split(",")
     .filter((x): x is RouteGroup => (ROUTE_GROUPS as readonly string[]).includes(x));
-  return { asset, amount, months, exclude, q: one("q")?.slice(0, 200) ?? "", qerr: one("qerr") ?? "" };
+  // the user's ETF round-trip cost (commission + spread) in percent, 0-2
+  const etfPct = Math.min(Math.max(Number(one("etfcost")) || 0, 0), 2);
+  return { asset, amount, months, exclude, etfPct, q: one("q")?.slice(0, 200) ?? "", qerr: one("qerr") ?? "" };
 }
 
 const GROUP_TEXT: Record<RouteGroup, string> = {
@@ -30,7 +32,7 @@ const GROUP_TEXT: Record<RouteGroup, string> = {
 
 const FLAG_TEXT: Record<string, string> = {
   fee_unverified: "fee reported as 0 — not ranked",
-  small_fund: "fund under $100M — spread may exceed the fee edge; not ranked",
+  thin_trading: "thin trading for this amount (rule of thumb); not ranked",
   staking_unmodeled: "staking ETF — distributions not modelled; not ranked",
   below_min_order: "below SoDEX minimum order; not ranked",
   book_anomaly: "crossed order book (data anomaly); not ranked",
@@ -40,8 +42,11 @@ const FLAG_TEXT: Record<string, string> = {
 };
 
 export default async function Page({ searchParams }: { searchParams: SP }) {
-  const { asset, amount, months, exclude, q, qerr } = parse(await searchParams);
-  const [full, report] = await Promise.all([buildComparison(asset, amount, months), latestReport()]);
+  const { asset, amount, months, exclude, etfPct, q, qerr } = parse(await searchParams);
+  const [full, report] = await Promise.all([
+    buildComparison(asset, amount, months, { etfTradingCost: etfPct / 100 }),
+    latestReport(),
+  ]);
   const c = { ...full, direct: full.direct.filter((r) => !exclude.includes(r.kind)) };
   const ranked = c.direct.filter((r) => r.ranked);
   const best = ranked[0];
@@ -104,6 +109,10 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
               </option>
             ))}
           </select>
+        </label>
+        <label>
+          ETF: your commission + spread, % round trip
+          <input name="etfcost" type="number" min={0} max={2} step={0.01} defaultValue={etfPct || ""} placeholder="0" />
         </label>
         {exclude.length > 0 && <input type="hidden" name="exclude" value={exclude.join(",")} />}
         <button type="submit">Compare</button>
@@ -190,7 +199,7 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           <li>SoDEX round trip = 1 − (sell VWAP × (1 − fee)) ÷ (buy VWAP × (1 + fee)) for {usd(amount)} against the live order book (100 levels), tier-0 taker fees 0.065% spot / 0.04% perps. It is today&apos;s friction; tomorrow&apos;s book may differ.</li>
           <li>Gaps to a reference — an ETF&apos;s premium to NAV, a SoDEX market&apos;s gap to the index — are treated the same way for every route: shown, and assumed unchanged when you sell. If they change, the result changes by that amount.</li>
           <li>Perp carry = current hourly funding × 8,760, i.e. what a year would cost if today&apos;s rate never changed. Funding resets every hour; the row also shows the cost at zero funding.</li>
-          <li>ETF cost = sponsor fee × holding period. Your broker&apos;s commission and the ETF&apos;s bid/ask spread are not included. Not ranked, but shown: a fee SoSoValue reports as 0, funds under $100M in net assets (a rule of thumb for thin trading), staking ETFs whose yield and fee waivers are not modelled, and any route the order book cannot fill.</li>
+          <li>ETF cost = sponsor fee × holding period. Your broker&apos;s commission and the ETF&apos;s bid/ask spread are not included. Not ranked, but shown: a fee SoSoValue reports as 0, funds that traded under $2M on the last day or where your amount exceeds 0.1% of that day's trading (a rule of thumb — we have no spread data), staking ETFs whose yield and fee waivers are not modelled, and any route the order book cannot fill.</li>
           <li>Company ratios: market cap ÷ BTC value, and (market cap + debt − cash) ÷ BTC value with debt and cash from the latest SoSoValue quarterly balance sheet. Preferred stock and dilution are not in that data, so these are simple ratios, not Strategy&apos;s own mNAV (since 23 Jul 2026 Strategy defines mNAV from net bitcoin per share after senior claims).</li>
           <li>SoSoValue history is limited to 90 days for this API key; holdings come from company purchase disclosures and can be months old (flagged).</li>
           <li>Nothing here places orders. Execution numbers are a preview from the public order book.</li>
@@ -244,7 +253,7 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
                 {r.costAtZeroFunding != null && <span className="sub">{pct(r.costAtZeroFunding)} at zero funding</span>}
               </td>
               <td className="num">
-                {r.kind === "etf" ? <span className="muted">not incl.</span> : pct(r.tradingCost, 3)}
+                {r.kind === "etf" && !r.tradingCost ? <span className="muted">not incl.</span> : pct(r.tradingCost, 3)}
                 {r.premiumNow != null && (
                   <span className="sub">{r.kind === "etf" ? "premium to NAV" : "vs index"} {signedPct(r.premiumNow, 3)}</span>
                 )}
@@ -506,7 +515,9 @@ function DailyNote({ report }: { report: NonNullable<Awaited<ReturnType<typeof l
           <p className="muted" style={{ fontSize: 13 }}>
             Our code computes the facts below from that day&apos;s snapshot.{" "}
             {a.kind === "llm"
-              ? `${a.model} turned them into prose; a validator confirmed every number appears in the facts each sentence cites (accepted on attempt ${a.attempts}).`
+              ? report.note.points.some((p) => p.template)
+                ? `${a.model} wrote the sentences using {variables} only — it typed no digits — and code inserted every number and name from the facts below (accepted on attempt ${a.attempts}).`
+                : `${a.model} turned them into prose; a validator checked every number against the facts each sentence cites (earlier method, before 25 Nov 2026).`
               : `The AI writer was not used (${a.reason}); this is the template version.`}{" "}
             Raw file: <a href={`${REPO_URL}/blob/main/data/reports/${report.day}.json`}>data/reports/{report.day}.json</a>
           </p>

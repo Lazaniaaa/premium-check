@@ -73,7 +73,7 @@ export type DirectRoute = {
     | "below_min_order"
     | "funding_varies"
     | "funding_unavailable"
-    | "small_fund"
+    | "thin_trading"
     | "staking_unmodeled"
   )[];
   source: string;
@@ -123,14 +123,24 @@ export type Coverage = {
   missing: string[]; // queried but holdings or snapshot unavailable right now
 };
 
-/** Below this, spreads in the fund can easily exceed its fee advantage: shown, not ranked. */
-export const SMALL_FUND_USD = 100_000_000;
+/**
+ * Liquidity rule of thumb for ETFs (we have no spread data): rank a fund only if it traded at least
+ * MIN_DAILY_TRADED_USD on the last day (thinly traded funds tend to have wide spreads) and the
+ * order is at most MAX_PARTICIPATION of that day's trading. Unknown trading -> not ranked.
+ */
+export const MIN_DAILY_TRADED_USD = 2_000_000;
+export const MAX_PARTICIPATION = 0.001;
 
 const PERP: Record<Asset, string> = { BTC: "BTC-USD", ETH: "ETH-USD" };
 const SPOT: Record<Asset, string> = { BTC: "vBTC_vUSDC", ETH: "vETH_vUSDC" };
 const isRegularSession = (status: string) => /REGULAR|TRADING|OPEN/i.test(status) && !/CLOSE/i.test(status);
 
-export async function buildComparison(asset: Asset, usd: number, months: number): Promise<Comparison> {
+export type Options = {
+  /** The user's own ETF round-trip trading cost (broker commission + bid/ask spread), as a fraction. */
+  etfTradingCost?: number;
+};
+
+export async function buildComparison(asset: Asset, usd: number, months: number, opts: Options = {}): Promise<Comparison> {
   const errors: string[] = [];
   const note = (what: string) => (e: unknown) => {
     errors.push(`${what}: ${e instanceof Error ? e.message : String(e)}`);
@@ -152,7 +162,7 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
   const soso = await maybe(sosoPrice(asset));
 
   const [direct, comp] = await Promise.all([
-    directRoutes(asset, usd, months, ref, refTicker, note),
+    directRoutes(asset, usd, months, ref, refTicker, note, opts.etfTradingCost ?? 0),
     asset === "BTC" ? companyRows(ref, tickers, note) : Promise.resolve({ rows: [] as CompanyRow[], coverage: null }),
   ]);
   const companies = comp.rows;
@@ -186,6 +196,7 @@ async function directRoutes(
   ref: number,
   perp: PerpTicker,
   note: (w: string) => (e: unknown) => null,
+  etfTradingCost: number,
 ): Promise<DirectRoute[]> {
   const rows: DirectRoute[] = [];
   const finish = (r: Omit<DirectRoute, "cost" | "units" | "ranked">): DirectRoute => {
@@ -193,7 +204,7 @@ async function directRoutes(
     // A partial fill has no honest full-size cost or quantity: show what is fillable instead.
     const cost = !thin && r.tradingCost != null && r.annualCarry != null ? holdingCost(r.tradingCost, r.annualCarry, months) : null;
     const untrusted = r.flags.some((f) =>
-      ["fee_unverified", "small_fund", "book_too_thin", "book_anomaly", "below_min_order", "funding_unavailable", "staking_unmodeled"].includes(
+      ["fee_unverified", "thin_trading", "book_too_thin", "book_anomaly", "below_min_order", "funding_unavailable", "staking_unmodeled"].includes(
         f,
       ),
     );
@@ -272,7 +283,7 @@ async function directRoutes(
       const d = await etfData(e.ticker).catch(note(`SoSoValue ETF ${e.ticker}`));
       if (!d) return null;
       const feeUnverified = d.fee === null || d.fee === 0;
-      const small = d.netAssets != null && d.netAssets < SMALL_FUND_USD;
+      const thin = d.valueTraded == null || d.valueTraded < MIN_DAILY_TRADED_USD || usd > d.valueTraded * MAX_PARTICIPATION;
       const staking = STAKING_ETFS.has(e.ticker);
       const range = d.premiumRange
         ? `; ${d.premiumRange.days}-day range ${signedPctStr(d.premiumRange.min)} to ${signedPctStr(d.premiumRange.max)}`
@@ -284,21 +295,28 @@ async function directRoutes(
         provider: e.exchange,
         // Same rule as SoDEX: today's gap to NAV is assumed unchanged when you sell, so it
         // is shown as entry-timing risk, not counted as a cost or a gain.
-        tradingCost: 0,
+        tradingCost: etfTradingCost,
         annualCarry: feeUnverified ? null : d.fee,
         premiumNow: d.premium,
         notes: [
           d.premiumDate
             ? `Premium to NAV ${signedPctStr(d.premium, 3)} on ${d.premiumDate}${range}; assumed unchanged when you sell`
             : "No premium/discount data",
-          "Your broker's commission and the ETF's bid/ask spread are not included",
+          etfTradingCost > 0
+            ? `Includes your ${pctStr(etfTradingCost, 2)} round-trip broker commission + spread`
+            : "Your broker's commission and the ETF's bid/ask spread are not included (you can enter them above)",
           ...(staking ? ["Staking ETF: staking distributions (and any fee waiver) are not modelled; not ranked"] : []),
           ...(d.price && usd < d.price ? [`One share costs ${usdStr(d.price)}: this amount needs fractional shares from your broker`] : []),
-          ...(d.netAssets != null ? [`Net assets ${(d.netAssets / 1e9).toFixed(2)}B USD`] : []),
+          d.valueTraded != null
+            ? `Traded ${usdStr(d.valueTraded)} on ${d.date ?? "the last day"}; net assets ${d.netAssets != null ? `${(d.netAssets / 1e9).toFixed(2)}B USD` : "n/a"}`
+            : "No trading volume reported",
+          ...(thin && d.valueTraded != null && usd > d.valueTraded * MAX_PARTICIPATION
+            ? [`Your amount is more than ${MAX_PARTICIPATION * 100}% of that day's trading`]
+            : []),
         ],
         flags: [
           ...(feeUnverified ? (["fee_unverified"] as const) : []),
-          ...(small ? (["small_fund"] as const) : []),
+          ...(thin ? (["thin_trading"] as const) : []),
           ...(staking ? (["staking_unmodeled"] as const) : []),
         ],
         source: `SoSoValue /etfs/${e.ticker}/market-snapshot + /history`,

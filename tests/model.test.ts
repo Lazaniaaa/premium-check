@@ -89,10 +89,10 @@ describe("BTC comparison on recorded data", () => {
 });
 
 describe("ETH comparison on recorded data", () => {
-  it("keeps funds under $100M out of the ranking", () => {
-    const teth = eth.direct.find((r) => r.id === "etf-TETH")!; // ~$20M net assets in the recording
-    expect(teth.flags).toContain("small_fund");
-    expect(teth.ranked).toBe(false);
+  it("keeps thinly traded funds out of the ranking (traded < $2M on the day)", () => {
+    const qeth = eth.direct.find((r) => r.id === "etf-QETH")!; // ~$0.44M traded in the recording
+    expect(qeth.flags).toContain("thin_trading");
+    expect(qeth.ranked).toBe(false);
     const firstUnranked = eth.direct.findIndex((r) => !r.ranked);
     expect(eth.direct.slice(firstUnranked).every((r) => !r.ranked)).toBe(true);
   });
@@ -163,5 +163,28 @@ describe("second review (Astra) cases", () => {
     expect(s.methodVersion).toBe(METHOD_VERSION);
     expect(s.btc && s.eth).toBeTruthy();
     expect(s.errors).toEqual([]);
+  });
+});
+
+describe("liquidity rule depends on the amount", () => {
+  it("$1M of BTC: only funds that traded at least $1B on the day stay ranked", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const big = await buildComparison("BTC", 1_000_000, 12);
+    const rankedEtfs = big.direct.filter((r) => r.kind === "etf" && r.ranked).map((r) => r.id);
+    expect(rankedEtfs).toEqual(["etf-IBIT"]); // IBIT traded ~$1.9B; the next was ~$0.26B
+  });
+});
+
+describe("user's ETF trading cost", () => {
+  it("adds the broker commission + spread to every ETF, and leaves SoDEX routes alone", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const base = await buildComparison("BTC", 1000, 12);
+    const withBroker = await buildComparison("BTC", 1000, 12, { etfTradingCost: 0.001 });
+    const ibit0 = base.direct.find((r) => r.id === "etf-IBIT")!;
+    const ibit1 = withBroker.direct.find((r) => r.id === "etf-IBIT")!;
+    expect(ibit1.cost! - ibit0.cost!).toBeCloseTo(0.001, 10);
+    const spot0 = base.direct.find((r) => r.kind === "sodex_spot")!;
+    const spot1 = withBroker.direct.find((r) => r.kind === "sodex_spot")!;
+    expect(spot1.cost).toBe(spot0.cost);
   });
 });

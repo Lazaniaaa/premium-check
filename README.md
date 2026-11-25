@@ -87,6 +87,7 @@ SoSoValue OpenAPI (v1 + v3)          SoDEX mainnet (public REST)
   and assumed unchanged when you sell, so they are neither a cost nor a gain. ETF cost is therefore the sponsor fee
   (commission and spread not included); SoDEX cost is the round trip `1 − sell VWAP × (1 − fee) ÷ (buy VWAP × (1 + fee))`.
 - **Ties:** routes within 0.1 pp of the cheapest are shown as effectively tied — at that gap, your broker can decide.
+- **Your broker:** an optional field adds your own ETF round-trip commission + spread to every ETF route.
 - **Partial fills:** if the visible book can't fill the amount, the route shows what is fillable and is not ranked.
 - **Also shown but not ranked:** staking ETFs (ETHB, ETH, ETHE, TETH — distributions and fee waivers are not
   modelled), amounts below SoDEX's minimum order, crossed order books (treated as a data anomaly).
@@ -94,8 +95,9 @@ SoSoValue OpenAPI (v1 + v3)          SoDEX mainnet (public REST)
   method change. Method 2 (25 Nov 2026) introduced the rules above.
 - **Operating companies** (Coinbase, Tesla, Block…) get no mNAV — it would be meaningless — only the share of
   market cap their BTC represents.
-- **Not ranked, but shown:** ETFs whose fee SoSoValue reports as 0 (FBTC), funds under $100M in net assets (trading
-  spread can outweigh their fee edge), and order books too thin for the requested size.
+- **Not ranked, but shown:** ETFs whose fee SoSoValue reports as 0 (FBTC); ETFs that traded under $2M on the last
+  day, or where your amount exceeds 0.1% of that day's trading (a rule of thumb — no spread data exists in the
+  APIs, and thin trading usually means wide spreads); and order books too thin for the requested size.
 
 ### Data quirks found on real responses (and how they are handled)
 
@@ -117,17 +119,19 @@ places, and in neither can it introduce a number:
 | | Model | What it does | Guard |
 |---|---|---|---|
 | Ask box (`/ask`) | `gpt-6-luna` | turns a sentence into `{asset, usd, months, exclude}` | strict JSON schema; values snapped to supported options; the page shows the interpretation |
-| Premium Report (`/api/report`) | `gpt-6.1-terra` | writes 3–4 plain-English points from numbered facts | **validator**: every number in a sentence must match a number in a fact that sentence cites — same value, sign, unit and period (it cannot detect two correct numbers swapped between labels); one retry with the validator's errors, then a template fallback |
+| Premium Report (`/api/report`) | `gpt-6.1-terra` | writes 3–4 plain-English points from numbered facts | **the model may not type a digit**: numbers and names appear only as `{variables}` of the facts it cites, and code inserts the values; one retry with the validator's errors, then a template fallback |
 
 How the report works (`lib/report.ts`):
 
-1. Code builds numbered facts from today's snapshot and yesterday's committed one, e.g.
-   `F6: SoDEX BTC-USD perp funding is 6.93% per year at the current hourly rate.`
-2. The model returns `{headline, points: [{text, facts: ["F6"]}]}` — it may only copy numbers, not compute them
-   (no differences, no bps conversions).
-3. `validate()` extracts every number from each sentence and checks it against the numbers in the facts that
-   sentence cites. A wrong number, a right number cited to the wrong fact, or a derived number is rejected
-   (`tests/report.test.ts`).
+1. Code builds numbered facts from today's snapshot and yesterday's committed one. Every number and name in a fact
+   is a named variable, e.g. `F6: SoDEX BTC-USD perp funding is {btc_funding_year} a year…` with
+   `{btc_funding_year} = "6.93%"`.
+2. The model returns `{headline, points: [{text, facts: ["F6"]}]}` where the text uses those variables —
+   "Funding would cost {btc_funding_year} a year" — and **contains no digits**.
+3. `validate()` rejects any digit outside a variable and any variable that does not belong to a fact the sentence
+   cites; then code renders the values. So the model cannot invent, round, flip, convert or misattribute a number.
+   It can still word a sentence poorly — each point lists its facts so a reader can check (`tests/report.test.ts`;
+   an opt-in live check: `LIVE_LLM=1 npx vitest run tests/live-note.test.ts`).
 4. A report already committed for the day is served straight from the repo (no API or AI calls); otherwise at
    most one generation per UTC day per instance (cached). The ask box has a daily parse budget and capped output
    tokens. The daily GitHub Action
@@ -167,7 +171,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 46 tests: math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 45 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
@@ -215,7 +219,7 @@ tests/                  vitest
 ## Wave 3 changelog
 
 New project in Wave 3: comparison engine, SoDEX execution check, treasury market-cap ratios with 24/7 SoDEX pricing, ETF coverage
-for BTC and ETH, plain-language ask box, daily AI note with a number validator, SoDEX order tickets and deep links,
+for BTC and ETH, plain-language ask box, daily AI note in which the model types no digits (code inserts every number), SoDEX order tickets and deep links,
 /diag, daily journal with day-over-day changes and SoSoValue history, /judges, tests on recorded real data.
 
 ## Team

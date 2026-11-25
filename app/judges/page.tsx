@@ -80,8 +80,8 @@ export default async function Judges() {
               <td className="muted">4</td>
               <td>
                 Read today&apos;s <b>Premium Report</b> on the main page and open &ldquo;facts and checks&rdquo;: each
-                sentence cites numbered facts our code computed; a validator rejects any number whose value, sign, unit or
-                period does not match a cited fact.
+                the AI writes sentences with named variables like {"{mstr_ratio_debt}"} and may not type a single digit;
+                code inserts every number and name from facts it computed.
                 {report ? (
                   <>
                     {" "}
@@ -118,9 +118,9 @@ export default async function Judges() {
               <td>&ldquo;Logic leans heavily on LLM judgment&rdquo;</td>
               <td>
                 All numbers are deterministic code (<a href={`${REPO_URL}/blob/main/lib/calc.ts`}>lib/calc.ts</a>). The LLM
-                parses questions and writes prose from facts; a <a href={`${REPO_URL}/blob/main/lib/report.ts`}>validator</a>{" "}
-                blocks any number whose value, sign, unit or period differs from a cited fact. It cannot tell two correct
-                numbers swapped between labels, so every point links to its facts.
+                parses questions, and writes the daily note with named variables only — the{" "}
+                <a href={`${REPO_URL}/blob/main/lib/report.ts`}>validator</a> rejects any digit it types, and code fills in
+                the values. It can still word a sentence badly, so every point links to the facts it used.
               </td>
             </tr>
             <tr>

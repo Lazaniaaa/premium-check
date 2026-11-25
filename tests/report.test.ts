@@ -1,71 +1,64 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { buildFacts, numbersIn, templateNote, validate, type Fact } from "@/lib/report";
+import { buildFacts, renderNote, templateNote, validate, type Fact, type Note } from "@/lib/report";
 import { normalize } from "@/lib/query";
 import { takeSnapshot, type Snapshot } from "@/lib/snapshot";
 
+const fact = (id: string, template: string, vars: Record<string, string>): Fact => {
+  const v = Object.fromEntries(Object.entries(vars).map(([k, value]) => [k, { value, label: k }]));
+  return { id, template, text: template.replace(/\{(\w+)\}/g, (_, k) => v[k].value), vars: v };
+};
 const facts: Fact[] = [
-  { id: "F1", text: "Cheapest way to hold BTC: SoDEX spot vBTC/vUSDC at 0.13% total cost." },
-  { id: "F2", text: "SoDEX BTC-USD perp funding is 6.93% per year at the current hourly rate." },
-  { id: "F3", text: "Strategy (MSTR) mNAV is 0.62× on equity and 0.70× with debt; price $77.86." },
-  { id: "F4", text: "7 of 7 treasury companies trade below 1.00× mNAV on equity." },
+  fact("F1", "Cheapest way to hold BTC: {btc_best_name} at {btc_best_cost} total cost.", {
+    btc_best_name: "SoDEX spot vBTC/vUSDC",
+    btc_best_cost: "0.13%",
+  }),
+  fact("F2", "SoDEX BTC-USD perp funding is {btc_funding_year} a year.", { btc_funding_year: "6.93%" }),
+  fact("F3", "Strategy: {mstr_ratio_equity} on equity, {mstr_ratio_debt} with debt.", {
+    mstr_ratio_equity: "0.62×",
+    mstr_ratio_debt: "0.70×",
+  }),
 ];
-const note = (headline: string, headlineFacts: string[], points: [string, string[]][]) => ({
+const note = (headline: string, headlineFacts: string[], points: [string, string[]][]): Note => ({
   headline,
   headlineFacts,
   points: points.map(([text, f]) => ({ text, facts: f })),
 });
 
-describe("note validator", () => {
-  it("accepts numbers copied exactly from cited facts", () => {
-    const n = note("Spot is cheapest at 0.13%", ["F1"], [
-      ["Perp funding runs at 6.93% a year.", ["F2"]],
-      ["Strategy sits at 0.62× on equity, 0.70× with debt.", ["F3"]],
+describe("note validator: the AI may not type a digit", () => {
+  it("accepts text that uses only {variables} of the cited facts, and code fills the values", () => {
+    const n = note("{btc_best_name} is the cheapest way to hold BTC", ["F1"], [
+      ["It costs {btc_best_cost} over the period.", ["F1"]],
+      ["Perp funding runs at {btc_funding_year} a year.", ["F2"]],
     ]);
     expect(validate(n, facts)).toEqual([]);
+    const r = renderNote(n, facts);
+    expect(r.headline).toBe("SoDEX spot vBTC/vUSDC is the cheapest way to hold BTC");
+    expect(r.points[1].text).toBe("Perp funding runs at 6.93% a year.");
   });
 
-  it("treats 1.00× and 1× as the same number", () => {
-    expect(numbersIn("below 1.00×")).toEqual(numbersIn("below 1×"));
-    const n = note("All seven trade below 1×", ["F4"], [["7 of 7 are below 1.00×.", ["F4"]], ["Spot costs 0.13%.", ["F1"]]]);
-    expect(validate(n, facts)).toEqual([]);
+  it("rejects any typed number — invented, copied, rounded, sign-flipped or converted", () => {
+    for (const bad of ["Spot costs 0.13%.", "Funding is -6.93% per hour.", "Spot costs 13 bps.", "Ratio 0.6x."]) {
+      const errs = validate(note("x", [], [[bad, ["F1", "F2", "F3"]], ["Fine {btc_best_cost}.", ["F1"]]]), facts).join();
+      expect(errs).toMatch(/digit outside a \{variable\}/);
+    }
   });
 
-  it("rejects a number the facts do not contain", () => {
-    const n = note("Spot is cheapest", [], [["Spot costs 0.12%.", ["F1"]], ["Perp: 6.93%.", ["F2"]]]);
-    expect(validate(n, facts).join()).toMatch(/0\.12/);
+  it("rejects a variable from a fact the sentence does not cite", () => {
+    const n = note("x", [], [["Funding is {btc_funding_year}.", ["F1"]], ["Spot {btc_best_cost}.", ["F1"]]]);
+    expect(validate(n, facts).join()).toMatch(/\{btc_funding_year\} is not a variable of the facts it cites/);
   });
 
-  it("rejects derived numbers (a computed difference or a bps conversion)", () => {
-    const diff = note("x", [], [["Perps cost 6.8 points more than spot.", ["F1", "F2"]], ["Spot 0.13%.", ["F1"]]]);
-    expect(validate(diff, facts).join()).toMatch(/6\.8/);
-    const bpsNote = note("x", [], [["Spot costs 13 bps.", ["F1"]], ["Perp 6.93%.", ["F2"]]]);
-    expect(validate(bpsNote, facts).join()).toMatch(/"13bps"/);
-  });
-
-  it("rejects a correct number attributed to the wrong fact", () => {
-    const n = note("x", [], [["Spot costs 0.13%.", ["F2"]], ["Perp 6.93%.", ["F2"]]]);
-    expect(validate(n, facts).join()).toMatch(/0\.13/);
-  });
-
-  it("rejects a flipped sign, a changed period or a changed unit (cases found in review)", () => {
-    const sign = note("x", [], [["Perp funding is -6.93% per year.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
-    expect(validate(sign, facts).join()).toMatch(/-6.93/);
-    const period = note("x", [], [["Perp funding is 6.93% per hour.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
-    expect(validate(period, facts).join()).toMatch(/per hour/);
-    const unit = note("x", [], [["Perp funding is 6.93x a year.", ["F2"]], ["Spot 0.13%.", ["F1"]]]);
-    expect(validate(unit, facts).join()).toMatch(/6.93x/);
-  });
-
-  it("accepts the same number with an agreeing period, or with no period", () => {
-    const ok = note("x", [], [["Funding runs at 6.93% a year.", ["F2"]], ["Spot costs 0.13% and the ratio is 0.62x.", ["F1", "F3"]]]);
-    expect(validate(ok, facts)).toEqual([]);
-  });
-
-  it("rejects unknown fact ids and too few points", () => {
-    const n = note("x", ["F9"], [["Spot.", ["F1"]]]);
-    const errs = validate(n, facts).join();
+  it("rejects unknown variables, unknown fact ids, malformed braces and too few points", () => {
+    const errs = validate(note("x {made_up}", ["F9"], [["Spot {btc_best_cost", ["F1"]]]), facts).join();
     expect(errs).toMatch(/unknown facts F9/);
+    expect(errs).toMatch(/\{made_up\} is not a variable/);
+    expect(errs).toMatch(/malformed/);
     expect(errs).toMatch(/2-5 points/);
+  });
+
+  it("cannot stop a misleading sentence: swapped variables pass, which is why each point lists its facts", () => {
+    const swapped = note("x", [], [["With debt it is {mstr_ratio_equity}.", ["F3"]], ["Spot {btc_best_cost}.", ["F1"]]]);
+    expect(validate(swapped, facts)).toEqual([]); // documented limit
   });
 });
 
@@ -80,6 +73,8 @@ describe("facts from a real (recorded) snapshot", () => {
     const f = buildFacts(snap, null);
     expect(f.map((x) => x.id)).toEqual(f.map((_, i) => `F${i + 1}`));
     expect(f.find((x) => x.text.startsWith("Cheapest way to hold BTC"))).toBeTruthy();
+    // every number in every fact comes from a variable: the template itself has no digits
+    for (const x of f) expect(x.template.replace(/\{\w+\}/g, "")).not.toMatch(/\d/);
     expect(f.find((x) => x.text.startsWith("Strategy (MSTR)"))).toBeTruthy();
     // ETF names are spelled out with the ticker in brackets, so e.g. the "BTC" ticker can't be mistaken for the coin
     const etfFacts = f.filter((x) => /^(Cheapest|Second cheapest)/.test(x.text) && /Trust|ETF|Fund/.test(x.text));

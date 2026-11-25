@@ -146,6 +146,7 @@ export type EtfData = {
   premiumDate: string | null;
   premiumRange: { min: number; max: number; days: number } | null; // over SoSoValue's history window
   netInflow: number | null;
+  valueTraded: number | null; // dollar value traded on the snapshot date
   date: string | null;
 };
 export async function etfData(ticker: string): Promise<EtfData | null> {
@@ -165,6 +166,7 @@ export async function etfData(ticker: string): Promise<EtfData | null> {
     premiumDate: lastPrem?.date ?? null,
     premiumRange: prems.length ? { min: Math.min(...prems), max: Math.max(...prems), days: prems.length } : null,
     netInflow: num(snap.net_inflow),
+    valueTraded: num(snap.value_traded),
     date: snap.date ?? null,
   };
 }

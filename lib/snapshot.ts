@@ -3,7 +3,8 @@ import { buildComparison, type Comparison } from "./model";
 /** Compact, stable JSON shape committed daily to data/snapshots/ by GitHub Actions. */
 /**
  * schema 2 / methodVersion 2 (25 Nov 2026): ETF cost = sponsor fee (premium assumed unchanged
- * at exit), SoDEX round trip vs money spent, staking ETFs and sub-minimum orders unranked.
+ * at exit), SoDEX round trip vs money spent, staking ETFs and sub-minimum orders unranked,
+ * ETF liquidity rule from daily value traded (>= $2M and order <= 0.1% of it).
  * Files written before that are schema 1 (method 1) and are not comparable day-over-day.
  */
 export const METHOD_VERSION = 2;
