@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "day": "2026-11-25",
+  "generatedAt": "2026-11-25T09:00:30.213Z",
+  "by": "github-actions",
+  "snapshotTakenAt": "2026-11-25T09:00:17.975Z",
+  "facts": [
+    {
+      "id": "F1",
+      "text": "Comparison basis: $1,000 held for 12 months; costs include trading and recurring costs."
+    },
+    {
+      "id": "F2",
+      "text": "BTC reference price $59,370 (SoDEX BTC-USD index); the SoSoValue price differs by 2.4 bps."
+    },
+    {
+      "id": "F3",
+      "text": "Cheapest way to hold BTC: SoDEX spot vBTC/vUSDC at 0.13% total cost."
+    },
+    {
+      "id": "F4",
+      "text": "Second cheapest BTC route: Morgan Stanley Bitcoin Trust (MSBT) at 0.14%."
+    },
+    {
+      "id": "F5",
+      "text": "BlackRock IBIT total cost 0.25% (sponsor fee 0.25%)."
+    },
+    {
+      "id": "F6",
+      "text": "SoDEX BTC-USD perp funding is 8.86% per year at the current hourly rate."
+    },
+    {
+      "id": "F7",
+      "text": "Holding BTC through the SoDEX perp costs 8.94% in total."
+    },
+    {
+      "id": "F8",
+      "text": "Strategy (MSTR): market cap is 0.61× its BTC value; adding debt and subtracting cash it is 0.70×. Price $76.76 from the SoDEX MSTR-USD perp (24/7 proxy)."
+    },
+    {
+      "id": "F9",
+      "text": "7 of 7 treasury companies have a market cap below the value of their BTC (before debt)."
+    },
+    {
+      "id": "F10",
+      "text": "Cheapest way to hold ETH: SoDEX spot vETH/vUSDC at 0.14% total cost."
+    },
+    {
+      "id": "F11",
+      "text": "SoDEX ETH-USD perp funding is 10.95% per year at the current hourly rate."
+    },
+    {
+      "id": "F12",
+      "text": "5 ETH ETFs are under $100M in net assets and are not ranked."
+    },
+    {
+      "id": "F13",
+      "text": "Previous snapshot (2026-11-24): Strategy's market cap was 0.62× its BTC value."
+    },
+    {
+      "id": "F14",
+      "text": "Previous snapshot (2026-11-24): SoDEX BTC perp funding was 9.20% per year."
+    }
+  ],
+  "note": {
+    "headline": "SoDEX spot is the cheapest BTC route at 0.13% total cost.",
+    "headlineFacts": [
+      "F3"
+    ],
+    "points": [
+      {
+        "text": "The comparison covers $1,000 held for 12 months, including trading and recurring costs. The second-cheapest BTC route is Morgan Stanley Bitcoin Trust at 0.14%; BlackRock IBIT costs 0.25%.",
+        "facts": [
+          "F1",
+          "F4",
+          "F5"
+        ]
+      },
+      {
+        "text": "The cheapest ETH route is SoDEX spot vETH/vUSDC at 0.14% total cost. 5 ETH ETFs are not ranked because they have under $100M in net assets.",
+        "facts": [
+          "F10",
+          "F12"
+        ]
+      },
+      {
+        "text": "At the current hourly rates, SoDEX perp funding is 8.86% per year for BTC and 10.95% per year for ETH. The BTC perp's total holding cost is 8.94%.",
+        "facts": [
+          "F6",
+          "F7",
+          "F11"
+        ]
+      },
+      {
+        "text": "Strategy's market cap is 0.61× the value of its BTC; including debt and cash, it is 0.70×. Before debt, 7 of 7 treasury companies have market caps below the value of their BTC.",
+        "facts": [
+          "F8",
+          "F9"
+        ]
+      }
+    ]
+  },
+  "author": {
+    "kind": "llm",
+    "model": "gpt-6.1-terra",
+    "attempts": 1,
+    "tokens": {
+      "input": 675,
+      "output": 561
+    }
+  }
+}
