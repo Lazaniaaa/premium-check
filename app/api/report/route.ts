@@ -7,6 +7,13 @@ export const maxDuration = 60;
 
 const RAW = "https://raw.githubusercontent.com/Lazaniaaa/premium-check/main/data/snapshots";
 
+async function fromRepo(kind: "reports" | "snapshots", day: string): Promise<unknown | null> {
+  const r = await fetch(`https://raw.githubusercontent.com/Lazaniaaa/premium-check/main/data/${kind}/${day}.json`, {
+    next: { revalidate: 300 },
+  }).catch(() => null);
+  return r?.ok ? r.json() : null;
+}
+
 async function previousSnapshot(day: string): Promise<Snapshot | null> {
   const d = new Date(day + "T00:00:00Z");
   d.setUTCDate(d.getUTCDate() - 1);
@@ -25,6 +32,14 @@ export async function GET(req: Request) {
   const by = new URL(req.url).searchParams.get("by") ?? "api";
   const takenBy = /^[a-z0-9-]{1,32}$/i.test(by) ? by : "api";
   const day = new Date().toISOString().slice(0, 10);
+
+  // A report already committed for today is served as is: 0 SoSoValue and 0 OpenAI calls.
+  const [committedReport, committedSnap] = await Promise.all([fromRepo("reports", day), fromRepo("snapshots", day)]);
+  if (committedReport && committedSnap)
+    return Response.json(
+      { ...(committedReport as object), snapshot: committedSnap, servedFrom: "repository" },
+      { headers: { "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } },
+    );
 
   const [snapshot, prev] = await Promise.all([takeSnapshot(takenBy), previousSnapshot(day)]);
   const facts = buildFacts(snapshot, prev);

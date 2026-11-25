@@ -1,13 +1,22 @@
 import { buildComparison, type Comparison } from "./model";
 
 /** Compact, stable JSON shape committed daily to data/snapshots/ by GitHub Actions. */
+/**
+ * schema 2 / methodVersion 2 (25 Nov 2026): ETF cost = sponsor fee (premium assumed unchanged
+ * at exit), SoDEX round trip vs money spent, staking ETFs and sub-minimum orders unranked.
+ * Files written before that are schema 1 (method 1) and are not comparable day-over-day.
+ */
+export const METHOD_VERSION = 2;
+
 export type Snapshot = {
-  schema: 1;
+  schema: 1 | 2;
+  methodVersion?: number;
   takenAt: string;
   takenBy: string;
   params: { usd: number; months: number };
-  btc: AssetSnapshot;
-  eth: AssetSnapshot;
+  btc: AssetSnapshot | null;
+  eth: AssetSnapshot | null;
+  errors?: string[];
 };
 
 type AssetSnapshot = {
@@ -61,6 +70,17 @@ const compact = (c: Comparison): AssetSnapshot => {
 export async function takeSnapshot(takenBy: string): Promise<Snapshot> {
   const usd = 1000;
   const months = 12;
-  const [btc, eth] = await Promise.all([buildComparison("BTC", usd, months), buildComparison("ETH", usd, months)]);
-  return { schema: 1, takenAt: new Date().toISOString(), takenBy, params: { usd, months }, btc: compact(btc), eth: compact(eth) };
+  // One asset failing must not take the other down with it.
+  const [btc, eth] = await Promise.allSettled([buildComparison("BTC", usd, months), buildComparison("ETH", usd, months)]);
+  const errors = [btc, eth].flatMap((r, i) => (r.status === "rejected" ? [`${i ? "ETH" : "BTC"}: ${String(r.reason?.message ?? r.reason)}`] : []));
+  return {
+    schema: 2,
+    methodVersion: METHOD_VERSION,
+    takenAt: new Date().toISOString(),
+    takenBy,
+    params: { usd, months },
+    btc: btc.status === "fulfilled" ? compact(btc.value) : null,
+    eth: eth.status === "fulfilled" ? compact(eth.value) : null,
+    errors,
+  };
 }

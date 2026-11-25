@@ -26,9 +26,14 @@ jobs:
           mkdir -p data/snapshots data/reports
           day=$(date -u +%F)
           site="https://premium-check-iota.vercel.app"
+          # Warm the BTC and ETH caches in separate minutes so the report never needs more
+          # than the API's per-minute limit in one go.
+          curl -s -o /dev/null --max-time 90 "$site/" || true
+          sleep 65
+          curl -s -o /dev/null --max-time 90 "$site/?asset=ETH" || true
           for i in 1 2 3; do
             if curl -fsS --max-time 120 "$site/api/report?by=github-actions" -o /tmp/report.json \
-               && jq -e '.schema == 1 and (.snapshot.btc.routes | length) > 0 and (.note.points | length) > 0' /tmp/report.json > /dev/null; then
+               && jq -e '.schema >= 1 and (.snapshot.btc.routes | length) > 0 and (.note.points | length) > 0' /tmp/report.json > /dev/null; then
               jq .snapshot /tmp/report.json > "data/snapshots/$day.json"
               jq 'del(.snapshot)' /tmp/report.json > "data/reports/$day.json"
               echo "saved snapshot and report for $day"
@@ -38,7 +43,7 @@ jobs:
           done
           echo "report unavailable, saving snapshot only"
           curl -fsS --max-time 90 "$site/api/snapshot?by=github-actions" -o /tmp/snap.json
-          jq -e '.schema == 1 and (.btc.routes | length) > 0' /tmp/snap.json > /dev/null
+          jq -e '.schema >= 1 and (.btc.routes | length) > 0' /tmp/snap.json > /dev/null
           jq . /tmp/snap.json > "data/snapshots/$day.json"
 
       - name: Commit

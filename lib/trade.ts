@@ -22,6 +22,7 @@ export type OrderTicket = {
   limitPrice: string;
   maxSpend: number; // quantity x limit price x (1 + fee): the most this order can cost
   fillableAtLimit: number; // quantity resting at or below the limit price right now
+  belowMinimum: boolean; // under the market's minimum quantity or order value
   warnings: string[];
 };
 
@@ -59,6 +60,7 @@ export function buildTicket(
   const fillableAtLimit = asks.filter(([px]) => px <= priceNum).reduce((s, [, sz]) => s + sz, 0);
 
   const warnings: string[] = [];
+  const belowMinimum = qtyNum < info.minQuantity || (!!info.minNotional && qtyNum * priceNum < info.minNotional);
   if (qtyNum < info.minQuantity) warnings.push(`Quantity below the market minimum (${info.minQuantity}).`);
   if (info.minNotional && qtyNum * priceNum < info.minNotional) warnings.push(`Order value below SoDEX minimum of $${info.minNotional}.`);
   if (worst > cap) warnings.push(`Filling the full amount needs more than ${MAX_TICKET_SLIPPAGE_BPS / 100}% above the best ask; the limit is capped there.`);
@@ -94,6 +96,7 @@ export function buildTicket(
     limitPrice,
     maxSpend,
     fillableAtLimit,
+    belowMinimum,
     warnings,
   };
 }

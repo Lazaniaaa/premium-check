@@ -88,6 +88,10 @@ SoSoValue OpenAPI (v1 + v3)          SoDEX mainnet (public REST)
   (commission and spread not included); SoDEX cost is the round trip `1 − sell VWAP × (1 − fee) ÷ (buy VWAP × (1 + fee))`.
 - **Ties:** routes within 0.1 pp of the cheapest are shown as effectively tied — at that gap, your broker can decide.
 - **Partial fills:** if the visible book can't fill the amount, the route shows what is fillable and is not ranked.
+- **Also shown but not ranked:** staking ETFs (ETHB, ETH, ETHE, TETH — distributions and fee waivers are not
+  modelled), amounts below SoDEX's minimum order, crossed order books (treated as a data anomaly).
+- **Method versions:** snapshots carry `methodVersion`; the journal never shows a day-over-day change across a
+  method change. Method 2 (25 Nov 2026) introduced the rules above.
 - **Operating companies** (Coinbase, Tesla, Block…) get no mNAV — it would be meaningless — only the share of
   market cap their BTC represents.
 - **Not ranked, but shown:** ETFs whose fee SoSoValue reports as 0 (FBTC), funds under $100M in net assets (trading
@@ -124,7 +128,9 @@ How the report works (`lib/report.ts`):
 3. `validate()` extracts every number from each sentence and checks it against the numbers in the facts that
    sentence cites. A wrong number, a right number cited to the wrong fact, or a derived number is rejected
    (`tests/report.test.ts`).
-4. At most one generation per UTC day (cached), so the public endpoint can't run up costs. The daily GitHub Action
+4. A report already committed for the day is served straight from the repo (no API or AI calls); otherwise at
+   most one generation per UTC day per instance (cached). The ask box has a daily parse budget and capped output
+   tokens. The daily GitHub Action
    commits the note together with its facts and the model's name to `data/reports/`.
 
 The model choice was tested on the actual task: on parsing requests into the schema, `gpt-6-luna` and
@@ -161,7 +167,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 43 tests: math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 46 tests: math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```

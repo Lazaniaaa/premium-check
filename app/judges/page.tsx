@@ -126,8 +126,8 @@ export default async function Judges() {
             <tr>
               <td>&ldquo;Needs proof / validation, not claims&rdquo;</td>
               <td>
-                43 tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
-                and re-derive each figure from the raw JSON; a daily, git-committed journal shows what the site said each day.
+                Tests run the full pipeline on <a href={`${REPO_URL}/tree/main/fixtures`}>recorded real API responses</a>{" "}
+                and re-derive key figures (route costs, funding, Strategy&apos;s ratio) from the raw JSON; a daily, git-committed journal shows what the site said each day.
               </td>
             </tr>
             <tr>

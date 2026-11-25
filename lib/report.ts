@@ -32,6 +32,7 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
   const f: Fact[] = [];
   const add = (text: string) => f.push({ id: `F${f.length + 1}`, text });
   const { btc, eth, params } = today;
+  if (!btc) throw new Error("no BTC data in this snapshot");
   add(`Comparison basis: $${params.usd.toLocaleString("en-US")} held for ${params.months} months; costs include trading and recurring costs.`);
   add(
     btc.reference.deviationBps != null
@@ -54,12 +55,14 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
   const pure = btc.companies.filter((c) => c.kind === "treasury" && c.mnavEquity != null);
   if (pure.length)
     add(`${pure.filter((c) => c.mnavEquity! < 1).length} of ${pure.length} treasury companies have a market cap below the value of their BTC (before debt).`);
-  const ethRanked = eth.routes.filter((r) => r.ranked);
-  if (ethRanked[0]) add(`Cheapest way to hold ETH: ${name(ethRanked[0].name)} at ${pct(ethRanked[0].cost)} total cost.`);
-  if (eth.perpAnnualFunding != null) add(`SoDEX ETH-USD perp funding is ${pct(eth.perpAnnualFunding)} per year at the current hourly rate.`);
-  const small = eth.routes.filter((r) => r.flags.includes("small_fund")).length;
-  if (small) add(`${small} ETH ETFs are under $100M in net assets and are not ranked.`);
-  if (prev) {
+  if (eth) {
+    const ethRanked = eth.routes.filter((r) => r.ranked);
+    if (ethRanked[0]) add(`Cheapest way to hold ETH: ${name(ethRanked[0].name)} at ${pct(ethRanked[0].cost)} total cost.`);
+    if (eth.perpAnnualFunding != null) add(`SoDEX ETH-USD perp funding is ${pct(eth.perpAnnualFunding)} per year at the current hourly rate.`);
+    const staking = eth.routes.filter((r) => r.flags.includes("staking_unmodeled")).length;
+    if (staking) add(`${staking} ETH ETFs stake and pay distributions, which this comparison does not model, so they are not ranked.`);
+  }
+  if (prev?.btc && (prev.methodVersion ?? 1) === (today.methodVersion ?? 1)) {
     const pm = prev.btc.companies.find((c) => c.ticker === "MSTR");
     if (pm?.mnavEquity != null && mstr?.mnavEquity != null)
       add(`Previous snapshot (${prev.takenAt.slice(0, 10)}): Strategy's market cap was ${ratio(pm.mnavEquity)} its BTC value.`);
@@ -181,6 +184,7 @@ export async function writeNote(facts: Fact[]): Promise<{ note: Note; author: Re
         schemaName: "premium_note",
         schema: SCHEMA,
         timeoutMs: 40_000,
+        maxOutputTokens: 3000,
       });
       tokens = { input: tokens.input + r.usage.input, output: tokens.output + r.usage.output };
       model = r.model;
@@ -188,7 +192,9 @@ export async function writeNote(facts: Fact[]): Promise<{ note: Note; author: Re
       if (!errors.length) return { note: r.data, author: { kind: "llm", model, attempts: attempt, tokens } };
       feedback = `\n\nYour previous draft was rejected by the validator:\n- ${errors.join("\n- ")}\nRewrite it so every number is copied exactly from a cited fact.`;
     } catch (e) {
-      return { note: templateNote(facts), author: { kind: "template", reason: e instanceof Error ? e.message : String(e) } };
+      // Provider error text stays in server logs; the public report gets a generic reason.
+      console.error("[report] writer failed:", e instanceof Error ? e.message : e);
+      return { note: templateNote(facts), author: { kind: "template", reason: "AI writer unavailable" } };
     }
   }
   return { note: templateNote(facts), author: { kind: "template", reason: `validator rejected 2 drafts: ${feedback.slice(0, 300)}` } };

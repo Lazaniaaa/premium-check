@@ -17,6 +17,7 @@ export async function structured<T>(args: {
   schemaName: string;
   schema: Record<string, unknown>;
   timeoutMs?: number;
+  maxOutputTokens?: number;
 }): Promise<{ data: T; usage: { input: number; output: number }; model: string }> {
   const key = process.env.OPENAI_API_KEY;
   if (!key) throw new LlmError("OPENAI_API_KEY is not set");
@@ -30,6 +31,7 @@ export async function structured<T>(args: {
         { role: "user", content: args.user },
       ],
       text: { format: { type: "json_schema", name: args.schemaName, schema: args.schema, strict: true } },
+      max_output_tokens: args.maxOutputTokens ?? 2000,
     }),
     cache: "no-store",
     signal: AbortSignal.timeout(args.timeoutMs ?? 45_000),

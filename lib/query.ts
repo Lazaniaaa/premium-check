@@ -45,14 +45,31 @@ const parseUncached = async (q: string) => {
     schemaName: "holding_query",
     schema: SCHEMA,
     timeoutMs: 20_000,
+    maxOutputTokens: 1000,
   });
   return { understood: r.data.understood, params: normalize(r.data), model: r.model };
 };
 
+// Spend guard for the public ask box: at most this many uncached OpenAI parses per UTC
+// day per server instance; after that the ask box asks people to use the form.
+const DAILY_PARSE_BUDGET = 300;
+let budget = { day: "", used: 0 };
+export class BudgetExceeded extends Error {}
+
 /** Same question -> same answer for a day, and no repeated OpenAI cost. */
 export async function parseQuery(q: string) {
   const clean = q.replace(/\s+/g, " ").trim().slice(0, 200);
-  return unstable_cache(() => parseUncached(clean), ["parse-v1", clean.toLowerCase()], { revalidate: 86400 })();
+  return unstable_cache(
+    () => {
+      const day = new Date().toISOString().slice(0, 10);
+      if (budget.day !== day) budget = { day, used: 0 };
+      if (budget.used >= DAILY_PARSE_BUDGET) throw new BudgetExceeded("daily AI parse budget reached");
+      budget.used++;
+      return parseUncached(clean);
+    },
+    ["parse-v1", clean.toLowerCase()],
+    { revalidate: 86400 },
+  )();
 }
 
 export function toSearch(p: QueryParams, q?: string): string {

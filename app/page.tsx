@@ -31,7 +31,9 @@ const GROUP_TEXT: Record<RouteGroup, string> = {
 const FLAG_TEXT: Record<string, string> = {
   fee_unverified: "fee reported as 0 — not ranked",
   small_fund: "fund under $100M — spread may exceed the fee edge; not ranked",
-  staking_unmodeled: "staking ETF — yield and fee waiver not modelled; not ranked",
+  staking_unmodeled: "staking ETF — distributions not modelled; not ranked",
+  below_min_order: "below SoDEX minimum order; not ranked",
+  book_anomaly: "crossed order book (data anomaly); not ranked",
   funding_unavailable: "funding rate unavailable; not ranked",
   book_too_thin: "order book too thin for this amount; not ranked",
   funding_varies: "funding changes hourly",
@@ -222,9 +224,9 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
           <tr>
             <th>#</th>
             <th>Route</th>
+            <th className="num">Total cost</th>
             <th className="num">Round-trip trading cost</th>
             <th className="num">Recurring / year</th>
-            <th className="num">Total cost</th>
             <th className="num">{asset}-equivalent kept*</th>
             <th>Notes</th>
           </tr>
@@ -238,6 +240,10 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
                 <span className="sub">{r.provider}</span>
               </td>
               <td className="num">
+                <b>{pct(r.cost)}</b>
+                {r.costAtZeroFunding != null && <span className="sub">{pct(r.costAtZeroFunding)} at zero funding</span>}
+              </td>
+              <td className="num">
                 {r.kind === "etf" ? <span className="muted">not incl.</span> : pct(r.tradingCost, 3)}
                 {r.premiumNow != null && (
                   <span className="sub">{r.kind === "etf" ? "premium to NAV" : "vs index"} {signedPct(r.premiumNow, 3)}</span>
@@ -246,10 +252,7 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
               <td className={`num ${r.annualCarry != null && r.annualCarry > 0.02 ? "bad" : ""}`}>
                 {r.annualCarry == null ? "n/a" : pct(r.annualCarry)}
               </td>
-              <td className="num">
-                <b>{pct(r.cost)}</b>
-                {r.costAtZeroFunding != null && <span className="sub">{pct(r.costAtZeroFunding)} at zero funding</span>}
-              </td>
+
               <td className="num">
                 {r.fillableUsd != null ? <span className="bad">book fills {usd(r.fillableUsd)} only</span> : units(r.units, asset)}
               </td>

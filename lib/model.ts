@@ -17,8 +17,13 @@ const pctStr = (x: number | null, d = 2) => (x == null ? "n/a" : `${(x * 100).to
 const signedPctStr = (x: number | null, d = 2) => (x == null ? "n/a" : `${x > 0 ? "+" : ""}${(x * 100).toFixed(d)}%`);
 const usdStr = (x: number) => x.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
-/** ETFs whose economics we do not model (staking yield, temporary fee waivers). */
-const STAKING_ETFS = new Set(["ETHB"]);
+/**
+ * ETFs that stake and pay distributions (and may run fee waivers) — economics we do not
+ * model, so they are shown but not ranked. Sources: ishares.com ETHB (staking, 0.12% waiver
+ * from 12 Mar 2026); etfs.grayscale.com ETH and ETHE (staking, monthly distributions);
+ * 21shares.com TETH (staking).
+ */
+const STAKING_ETFS = new Set(["ETHB", "ETH", "ETHE", "TETH"]);
 import { maybe } from "./http";
 import {
   etfData,
@@ -61,7 +66,16 @@ export type DirectRoute = {
   costAtZeroFunding?: number | null; // perps only: the same route if funding were zero
   fillableUsd?: number; // when the visible book can't absorb the whole amount
   notes: string[];
-  flags: ("fee_unverified" | "book_too_thin" | "funding_varies" | "funding_unavailable" | "small_fund" | "staking_unmodeled")[];
+  flags: (
+    | "fee_unverified"
+    | "book_too_thin"
+    | "book_anomaly"
+    | "below_min_order"
+    | "funding_varies"
+    | "funding_unavailable"
+    | "small_fund"
+    | "staking_unmodeled"
+  )[];
   source: string;
   asOf: string | null;
   fill?: Fill & { maxUsdVwapWithin10bps: number; feeRate: number };
@@ -126,7 +140,15 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
   const tickers = await perpTickers();
   const refTicker = tickers.find((t) => t.symbol === PERP[asset]);
   if (!refTicker) throw new Error(`SoDEX has no ${PERP[asset]} market`);
-  const ref = refTicker.indexPrice || refTicker.markPrice;
+  // Only a finite, positive price can be a reference; say which one was used.
+  const refPick = (
+    [
+      ["index", refTicker.indexPrice],
+      ["mark", refTicker.markPrice],
+    ] as const
+  ).find(([, v]) => Number.isFinite(v) && v > 0);
+  if (!refPick) throw new Error(`SoDEX returned no valid ${PERP[asset]} reference price`);
+  const [refKind, ref] = refPick;
   const soso = await maybe(sosoPrice(asset));
 
   const [direct, comp] = await Promise.all([
@@ -146,7 +168,7 @@ export async function buildComparison(asset: Asset, usd: number, months: number)
     generatedAt: new Date().toISOString(),
     reference: {
       price: ref,
-      source: `SoDEX ${PERP[asset]} index price`,
+      source: `SoDEX ${PERP[asset]} ${refKind} price`,
       sosoPrice: soso,
       deviationBps: soso ? (soso / ref - 1) * 1e4 : null,
     },
@@ -171,7 +193,9 @@ async function directRoutes(
     // A partial fill has no honest full-size cost or quantity: show what is fillable instead.
     const cost = !thin && r.tradingCost != null && r.annualCarry != null ? holdingCost(r.tradingCost, r.annualCarry, months) : null;
     const untrusted = r.flags.some((f) =>
-      ["fee_unverified", "small_fund", "book_too_thin", "funding_unavailable", "staking_unmodeled"].includes(f),
+      ["fee_unverified", "small_fund", "book_too_thin", "book_anomaly", "below_min_order", "funding_unavailable", "staking_unmodeled"].includes(
+        f,
+      ),
     );
     return { ...r, cost, units: cost != null ? effectiveUnits(usd, ref, cost) : null, ranked: cost != null && !untrusted };
   };
@@ -194,9 +218,11 @@ async function directRoutes(
     const fee = market === "spot" ? SODEX_FEES.spotTaker : SODEX_FEES.perpTaker;
     const symbol = market === "spot" ? SPOT[asset] : PERP[asset];
     const info = market === "spot" ? spotInfo : perpInfo;
-    const rt = roundTrip(book, usd, fee);
+    const crossed = !!(book.bids[0] && book.asks[0] && book.bids[0][0] >= book.asks[0][0]);
+    const rt = crossed ? null : roundTrip(book, usd, fee);
     const f = walkAsks(book.asks, usd);
     const thin = rt?.complete === false || !f.complete;
+    const ticket = info && !crossed ? buildTicket(market, info, book.asks, usd, fee, now) : null;
     const funding = market === "perps" ? perp.fundingRate : 0;
     const carry = funding == null ? null : annualFunding(funding);
     const notes =
@@ -210,6 +236,8 @@ async function directRoutes(
           ];
     if (rt) notes.push(basisNote(rt.mid));
     if (thin) notes.unshift(partialNote(f));
+    if (crossed) notes.unshift("Order book is crossed (best bid at or above best ask): treated as a data anomaly; not ranked");
+    if (ticket?.belowMinimum) notes.unshift("Amount is below SoDEX's minimum order for this market; not ranked");
     rows.push(
       finish({
         id: market === "spot" ? "sodex-spot" : "sodex-perp",
@@ -226,11 +254,13 @@ async function directRoutes(
           ...(market === "perps" ? (["funding_varies"] as const) : []),
           ...(market === "perps" && funding == null ? (["funding_unavailable"] as const) : []),
           ...(thin ? (["book_too_thin"] as const) : []),
+          ...(crossed ? (["book_anomaly"] as const) : []),
+          ...(ticket?.belowMinimum ? (["below_min_order"] as const) : []),
         ],
         source: `SoDEX /${market}/markets/${symbol}/orderbook${market === "perps" ? " + tickers" : ""}`,
         asOf: book.blockTime ? new Date(book.blockTime).toISOString() : null,
         fill: { ...f, maxUsdVwapWithin10bps: maxSizeVwapWithin(book.asks, 10), feeRate: fee },
-        ticket: info ? buildTicket(market, info, book.asks, usd, fee, now) : null,
+        ticket,
       }),
     );
   };
@@ -262,7 +292,8 @@ async function directRoutes(
             ? `Premium to NAV ${signedPctStr(d.premium, 3)} on ${d.premiumDate}${range}; assumed unchanged when you sell`
             : "No premium/discount data",
           "Your broker's commission and the ETF's bid/ask spread are not included",
-          ...(staking ? ["Staking ETF: fee waiver and staking distributions are not modelled; not ranked"] : []),
+          ...(staking ? ["Staking ETF: staking distributions (and any fee waiver) are not modelled; not ranked"] : []),
+          ...(d.price && usd < d.price ? [`One share costs ${usdStr(d.price)}: this amount needs fractional shares from your broker`] : []),
           ...(d.netAssets != null ? [`Net assets ${(d.netAssets / 1e9).toFixed(2)}B USD`] : []),
         ],
         flags: [

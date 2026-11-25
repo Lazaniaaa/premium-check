@@ -134,3 +134,34 @@ describe("edge cases found in review", () => {
     expect(btc.coverage!.shown).toBe(btc.companies.length);
   });
 });
+
+describe("second review (Astra) cases", () => {
+  it("no staking ETF can win or be ranked: ETH, ETHE, TETH, ETHB", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const small = await buildComparison("ETH", 10, 1);
+    for (const id of ["etf-ETH", "etf-ETHE", "etf-TETH", "etf-ETHB"]) {
+      const r = small.direct.find((x) => x.id === id)!;
+      expect(r.flags).toContain("staking_unmodeled");
+      expect(r.ranked).toBe(false);
+    }
+  });
+
+  it("a route below SoDEX's minimum order is shown but not ranked ($10 of ETH)", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const small = await buildComparison("ETH", 10, 1);
+    const perp = small.direct.find((x) => x.kind === "sodex_perp")!;
+    expect(perp.ticket!.belowMinimum).toBe(true);
+    expect(perp.flags).toContain("below_min_order");
+    expect(perp.ranked).toBe(false);
+  });
+
+  it("snapshots carry their method version so the journal never compares across methods", async () => {
+    process.env.DATA_SOURCE = "fixture";
+    const { takeSnapshot, METHOD_VERSION } = await import("@/lib/snapshot");
+    const s = await takeSnapshot("test");
+    expect(s.schema).toBe(2);
+    expect(s.methodVersion).toBe(METHOD_VERSION);
+    expect(s.btc && s.eth).toBeTruthy();
+    expect(s.errors).toEqual([]);
+  });
+});

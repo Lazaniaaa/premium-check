@@ -78,40 +78,44 @@ export default async function Journal() {
             </thead>
             <tbody>
               {rows.map(({ file, snap, report }, i) => {
-                const mstr = snap.btc.companies.find((c) => c.ticker === "MSTR");
-                const prev = rows[i + 1]?.snap;
-                const prevMstr = prev?.btc.companies.find((c) => c.ticker === "MSTR");
+                const mstr = snap.btc?.companies.find((c) => c.ticker === "MSTR");
+                const older = rows[i + 1]?.snap;
+                // Day-over-day changes only between snapshots computed with the same method.
+                const sameMethod = !!older && (older.methodVersion ?? 1) === (snap.methodVersion ?? 1);
+                const prev = sameMethod ? older : undefined;
+                const prevMstr = prev?.btc?.companies.find((c) => c.ticker === "MSTR");
                 return (
                   <tr key={file.name}>
                     <td>
                       {file.name.replace(".json", "")}
                       <span className="sub">
-                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy}`}
+                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy} · method v${snap.methodVersion ?? 1}`}
                       </span>
+                      {older && !sameMethod && <span className="sub">method changed since the previous day — no comparison</span>}
                     </td>
-                    <td className="num">{usd(snap.btc.reference.price, 0)}</td>
+                    <td className="num">{usd(snap.btc?.reference.price, 0)}</td>
                     <td>
-                      {snap.btc.cheapest ? (
+                      {snap.btc?.cheapest ? (
                         <>
-                          {snap.btc.cheapest.name} <b>{pct(snap.btc.cheapest.cost)}</b>
-                          <Delta now={snap.btc.cheapest.cost} prev={prev?.btc.cheapest?.cost} kind="pp" />
+                          {snap.btc?.cheapest.name} <b>{pct(snap.btc?.cheapest.cost)}</b>
+                          <Delta now={snap.btc?.cheapest.cost} prev={prev?.btc?.cheapest?.cost} kind="pp" />
                         </>
                       ) : (
                         "—"
                       )}
                     </td>
                     <td className="num">
-                      {pct(snap.btc.perpAnnualFunding)}
-                      <Delta now={snap.btc.perpAnnualFunding} prev={prev?.btc.perpAnnualFunding} kind="pp" />
+                      {pct(snap.btc?.perpAnnualFunding)}
+                      <Delta now={snap.btc?.perpAnnualFunding} prev={prev?.btc?.perpAnnualFunding} kind="pp" />
                     </td>
                     <td className="num">
                       {ratio(mstr?.mnavEquity)} / {ratio(mstr?.mnavWithDebt)}
                       <Delta now={mstr?.mnavEquity} prev={prevMstr?.mnavEquity} kind="x" />
                     </td>
                     <td>
-                      {snap.eth.cheapest ? (
+                      {snap.eth?.cheapest ? (
                         <>
-                          {snap.eth.cheapest.name} <b>{pct(snap.eth.cheapest.cost)}</b>
+                          {snap.eth?.cheapest.name} <b>{pct(snap.eth?.cheapest.cost)}</b>
                         </>
                       ) : (
                         "—"
