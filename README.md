@@ -29,7 +29,8 @@ Pick an asset, an amount and a holding period. You get:
 0. **The answer in dollars** — the cheapest route, or an honest tie when several routes are within 0.1 pp; the
    **broker break-even** ("ETFs stay cheapest only while your commission + spread is below X%"); a table of how the
    answer changes from 1 to 24 months; and a **downloadable JSON** of the calculation (inputs, sources, times,
-   method version). One-click examples on the first screen.
+   method version). The answer comes first; below it, tabs **Routes · Execution · Companies** (each has its own
+   link, e.g. `?tab=execution`; switching tabs does not recompute, so the numbers stay the ones you are reading).
 1. **Direct exposure, ranked by total cost** — SoDEX spot, SoDEX perp (1x long), 12 US BTC ETFs or 11 US ETH ETFs.
    Total cost = trading cost + recurring cost × holding period, and how much of the asset you actually keep.
 2. **A SoDEX execution check** for your exact size — VWAP, slippage, fee, and the largest size that stays within

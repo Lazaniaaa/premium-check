@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { buildComparison, type Comparison } from "@/lib/model";
+import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
@@ -12,9 +12,14 @@ const ASK_EN = "5k in ether for half a year, no broker";
 const ASK_UK = "Куплю біткоїна на 2к на пів року";
 const BEFORE = "e44b263"; // first public version, before two external reviews
 
+// Same wording as the main page: a tie is called a tie.
 const winner = (c: Comparison, amount: number) => {
-  const b = c.direct.find((r) => r.ranked);
-  return b ? `${b.name.split(" — ")[0]} — ${usd(amount * b.cost!, 2)}` : "no ranked route";
+  const ranked = c.direct.filter((r) => r.ranked);
+  const b = ranked[0];
+  if (!b) return "no ranked route";
+  const tied = ranked.filter((r) => r.id !== b.id && r.cost! - b.cost! < TIE_SHARE).length;
+  const name = `${b.name.split(" — ")[0]} ${usd(amount * b.cost!, 2)}`;
+  return tied ? `${tied + 1} routes within ${usd(amount * TIE_SHARE, 2)} — effectively tied (lowest: ${name})` : `${name}, the cheapest`;
 };
 
 export default async function Judges() {
@@ -39,17 +44,35 @@ export default async function Judges() {
         treasury stock — for my amount and holding period? Everything is live; nothing needs a login.
       </p>
 
-      <div className="card answer">
+      <div className="card">
+        <b>Three questions, one click each</b>
+        <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
+          <li>
+            <Link href="/?asset=BTC&usd=2000&months=6">Does my broker change the answer?</Link> — a near-tie between ETFs and
+            SoDEX spot, the broker cost where it flips, and a button to try it.
+          </li>
+          <li>
+            <Link href="/?asset=ETH&usd=1000000&months=24&tab=execution#fill-sodex-spot">Can SoDEX fill $1M of ETH?</Link> —
+            requested vs fillable amount in the live book, VWAP, slippage and the order you would sign.
+          </li>
+          <li>
+            <Link href="/?asset=BTC&usd=1000&months=12&tab=companies#treasuries">What changes when debt is included?</Link> —
+            market cap vs BTC value for each treasury company, with and without debt minus cash, and the price source.
+          </li>
+        </ul>
+      </div>
+
+      <div className="card answer" style={{ marginTop: 12 }}>
         <b>Two clicks: does your broker change the answer?</b>
         <p style={{ margin: "6px 0" }}>
           $2,000 of BTC for 6 months, on today&apos;s market:
         </p>
         <ul className="notes" style={{ color: "var(--text)" }}>
           <li>
-            <Link href="/?asset=BTC&usd=2000&months=6">ETF broker cost 0%</Link> → cheapest: <b>{winner(noBroker, 2000)}</b>
+            <Link href="/?asset=BTC&usd=2000&months=6">ETF broker cost 0%</Link> → <b>{winner(noBroker, 2000)}</b>
           </li>
           <li>
-            <Link href="/?asset=BTC&usd=2000&months=6&etfcost=0.25">ETF broker cost 0.25% round trip</Link> → cheapest:{" "}
+            <Link href="/?asset=BTC&usd=2000&months=6&etfcost=0.25">ETF broker cost 0.25% round trip</Link> →{" "}
             <b>{winner(withBroker, 2000)}</b>
           </li>
         </ul>
@@ -100,15 +123,17 @@ export default async function Judges() {
             <tr>
               <td className="muted">3</td>
               <td>
-                Scroll to <b>SoDEX execution check</b>: VWAP, slippage, fee, the largest order whose average price stays
-                within 10 bps, a button that opens the market on SoDEX and the exact order body you would sign (never sent).
-                Then <b>companies holding BTC</b>: market cap vs BTC value, priced 24/7 from SoDEX when the US market is closed.
+                Switch tabs under the answer: <b>Routes</b> (every route, cheapest first, and costs by holding period),{" "}
+                <b>Execution</b> (VWAP, slippage, the largest order whose average price stays within 10 bps, a button to the
+                SoDEX market and the exact order body you would sign — never sent) and <b>Companies</b> (market cap vs BTC
+                value, priced 24/7 from SoDEX when the US market is closed). Each tab has its own link.
               </td>
             </tr>
             <tr>
               <td className="muted">4</td>
               <td>
-                Read the <b>Daily Premium Report</b> and open &ldquo;facts and checks&rdquo;.{" "}
+                Read the <b>Daily Premium Report</b> in the <Link href="/journal">journal</Link> and open &ldquo;facts and
+                checks&rdquo;.{" "}
                 {newWriter
                   ? "The AI wrote it with named variables only and typed no digits or fund tickers; code inserted every number and name."
                   : "This note predates the current writer (introduced 25 Nov 2026), which writes with named variables only and types no digits — the next daily note uses it."}

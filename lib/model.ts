@@ -129,6 +129,9 @@ export type Coverage = {
  * order is at most MAX_PARTICIPATION of that day's trading. Unknown trading -> not ranked.
  */
 export const MIN_DAILY_TRADED_USD = 2_000_000;
+
+/** Routes whose total cost is within this share of the cheapest are called a tie (spreads and commissions we don't see are larger). */
+export const TIE_SHARE = 0.001;
 export const MAX_PARTICIPATION = 0.001;
 
 const PERP: Record<Asset, string> = { BTC: "BTC-USD", ETH: "ETH-USD" };

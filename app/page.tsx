@@ -1,7 +1,8 @@
-import { buildComparison, type Asset, type CompanyRow, type Comparison, type DirectRoute } from "@/lib/model";
+import { buildComparison, TIE_SHARE, type Asset, type CompanyRow, type Comparison, type DirectRoute } from "@/lib/model";
 import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from "@/lib/format";
 import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
-import { latestReport, REPO_URL } from "@/lib/reports-store";
+import { latestReport } from "@/lib/reports-store";
+import { TabLink, Tabs, type TabDef } from "./components/tabs";
 import { METHOD_VERSION } from "@/lib/snapshot";
 
 // A cold cache needs ~100 paced SoSoValue requests; allow the first render time to finish.
@@ -70,7 +71,7 @@ function HorizonTable({ routes, amount, months }: { routes: DirectRoute[]; amoun
   const cheapest = HORIZONS.map((h) => Math.min(...routes.map((r) => cost(r, h))));
   return (
     <>
-      <h2>How the answer changes with the holding period</h2>
+      <h2 id="horizons">How the answer changes with the holding period</h2>
       <p className="lede">
         Same amount, today&apos;s costs. Recurring costs (ETF fees, perp funding at today&apos;s rate) grow with time;
         trading costs are paid once. Cheapest in each column in bold.
@@ -121,7 +122,8 @@ const FLAG_TEXT: Record<string, string> = {
 };
 
 export default async function Page({ searchParams }: { searchParams: SP }) {
-  const { asset, amount, months, exclude, etfPct, q, qerr } = parse(await searchParams);
+  const sp = await searchParams;
+  const { asset, amount, months, exclude, etfPct, q, qerr } = parse(sp);
   const [full, report] = await Promise.all([
     buildComparison(asset, amount, months, { etfTradingCost: etfPct / 100 }),
     latestReport(),
@@ -130,12 +132,9 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
   const ranked = c.direct.filter((r) => r.ranked);
   const best = ranked[0];
   const worst = ranked.at(-1);
-  // Differences smaller than this are inside what the model leaves out (spreads, commissions).
-  const TIE = 0.001;
-  const tied = best ? ranked.filter((r) => r.id !== best.id && r.cost! - best.cost! < TIE) : [];
+  const tied = best ? ranked.filter((r) => r.id !== best.id && r.cost! - best.cost! < TIE_SHARE) : [];
   const unranked = c.direct.filter((r) => !r.ranked);
   const reasons = reasonCounts(unranked);
-  const sodexRoutes = c.direct.filter((r) => r.fill);
   const horizon = months === 1 ? "1 month" : `${months} months`;
   // Broker break-even: the ETF round-trip cost at which the best ranked ETF costs the same as the best SoDEX route.
   const bestEtf = ranked.find((r) => r.kind === "etf");
@@ -149,109 +148,139 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
     bestEtf,
     ...tied,
   ]).slice(0, 5);
-  const here = `asset=${asset}&usd=${amount}&months=${months}${etfPct ? `&etfcost=${etfPct}` : ""}${exclude.length ? `&exclude=${exclude.join(",")}` : ""}`;
+  // SoDEX routes the visible book can't fill: the reason the answer looks the way it does.
+  const partial = c.direct.filter((r) => r.kind !== "etf" && r.fillableUsd != null);
+  const execution = [...c.direct.filter((r) => r.fill)].sort((a, b) => Number(b.fillableUsd != null) - Number(a.fillableUsd != null));
+  const showCompanies = asset === "BTC" && !exclude.includes("treasury_stock");
+
+  const query = `asset=${asset}&usd=${amount}&months=${months}${etfPct ? `&etfcost=${etfPct}` : ""}${exclude.length ? `&exclude=${exclude.join(",")}` : ""}`;
+  const tabs: TabDef[] = [
+    {
+      id: "routes",
+      label: "Routes",
+      panel: (
+        <RoutesPanel
+          rows={c.direct}
+          asset={asset}
+          bestId={best?.id}
+          horizon={horizon}
+          horizonRoutes={horizonRoutes}
+          amount={amount}
+          months={months}
+        />
+      ),
+    },
+    { id: "execution", label: "Execution", panel: <ExecutionPanel rows={execution} asset={asset} amount={amount} /> },
+    ...(showCompanies ? [{ id: "companies", label: "Companies", panel: <Companies rows={c.companies} coverage={c.coverage} /> }] : []),
+  ];
+  const requested = (Array.isArray(sp.tab) ? sp.tab[0] : sp.tab) ?? "";
+  const activeTab = tabs.some((t) => t.id === requested) ? requested : "routes";
 
   return (
     <>
-      <h1>What does it really cost to hold {asset}?</h1>
-      <p className="lede">
-        Spot or perps on SoDEX, a spot ETF, or a bitcoin-treasury stock: see what each really costs for your amount and
-        holding period, in dollars, on live SoSoValue and SoDEX data.
-      </p>
-      <div className="examples">
-        <span className="muted">Try:</span>
-        {EXAMPLES.map(([label, href]) => (
-          <a key={href} className="chip-link" href={href}>
-            {label}
-          </a>
-        ))}
-      </div>
-
-      <form className="card form ask" method="get" action="/ask">
-        <label style={{ flex: 1 }}>
-          Ask in your own words
-          <input name="q" defaultValue={q} maxLength={200} placeholder="e.g. 5k in ether for half a year, no broker" />
-        </label>
-        <button type="submit">Ask</button>
-        {q && !qerr && (
-          <span className="sub" style={{ width: "100%" }}>
-            Understood as: {asset}, {usd(amount)}, {horizon}
-            {exclude.length ? `, without ${exclude.map((x) => GROUP_TEXT[x]).join(", ")}` : ""}. The AI only fills in this
-            form; every number below is calculated by code.
+      <h1>What does it cost to hold {asset}?</h1>
+      <details className="scenario">
+        <summary>
+          <span>
+            {usd(amount)} · {horizon} · ETF broker cost {etfPct || 0}%
+            {exclude.length ? ` · without ${exclude.map((x) => GROUP_TEXT[x]).join(", ")}` : ""}
           </span>
-        )}
-        {qerr && (
-          <span className="sub bad" style={{ width: "100%" }}>
-            {qerr === "notunderstood" ? "That doesn't look like a question about holding BTC or ETH." : "The AI parser is unavailable right now — use the form below."}
-          </span>
-        )}
-      </form>
-
-      <form className="card form" method="get" style={{ marginTop: 12 }}>
-        <label>
-          Asset
-          <select name="asset" defaultValue={asset}>
-            <option value="BTC">BTC</option>
-            <option value="ETH">ETH</option>
-          </select>
-        </label>
-        <label>
-          Amount (USD)
-          <input name="usd" type="number" min={10} max={1000000} step={10} defaultValue={amount} />
-        </label>
-        <label>
-          Holding period
-          <select name="months" defaultValue={String(months)}>
-            {HORIZONS.map((h) => (
-              <option key={h} value={h}>
-                {h === 1 ? "1 month" : `${h} months`}
-              </option>
+          <span className="edit-btn">Edit</span>
+        </summary>
+        <div className="scenario-body">
+          <div className="examples">
+            <span className="muted">Examples:</span>
+            {EXAMPLES.map(([label, href]) => (
+              <a key={href} className="chip-link" href={href}>
+                {label}
+              </a>
             ))}
-          </select>
-        </label>
-        <label>
-          ETF: your commission + spread, % round trip
-          <input name="etfcost" type="number" min={0} max={2} step={0.01} defaultValue={etfPct || ""} placeholder="0" />
-        </label>
-        {exclude.length > 0 && <input type="hidden" name="exclude" value={exclude.join(",")} />}
-        <button type="submit">Compare</button>
-        {exclude.length > 0 && (
-          <span className="sub">
-            Excluding {exclude.map((x) => GROUP_TEXT[x]).join(", ")} · <a href={`/?asset=${asset}&usd=${amount}&months=${months}`}>show all</a>
-          </span>
-        )}
-      </form>
+          </div>
+          <form className="form ask" method="get" action="/ask">
+            <label style={{ flex: 1 }}>
+              Ask in your own words
+              <input name="q" defaultValue={q} maxLength={200} placeholder="e.g. 5k in ether for half a year, no broker" />
+            </label>
+            <button type="submit">Ask</button>
+          </form>
+          <form className="form" method="get" style={{ marginTop: 12 }}>
+            <label>
+              Asset
+              <select name="asset" defaultValue={asset}>
+                <option value="BTC">BTC</option>
+                <option value="ETH">ETH</option>
+              </select>
+            </label>
+            <label>
+              Amount (USD)
+              <input name="usd" type="number" min={10} max={1000000} step={10} defaultValue={amount} />
+            </label>
+            <label>
+              Holding period
+              <select name="months" defaultValue={String(months)}>
+                {HORIZONS.map((h) => (
+                  <option key={h} value={h}>
+                    {h === 1 ? "1 month" : `${h} months`}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              ETF: your commission + spread, % round trip
+              <input name="etfcost" type="number" min={0} max={2} step={0.01} defaultValue={etfPct || ""} placeholder="0" />
+            </label>
+            {exclude.length > 0 && <input type="hidden" name="exclude" value={exclude.join(",")} />}
+            <button type="submit">Compare</button>
+            {exclude.length > 0 && (
+              <span className="sub">
+                <a href={`/?asset=${asset}&usd=${amount}&months=${months}`}>Show all routes</a>
+              </span>
+            )}
+          </form>
+        </div>
+      </details>
+      {q && !qerr && (
+        <p className="sub" style={{ margin: "0 0 8px" }}>
+          You asked: &ldquo;{q}&rdquo; — understood as the scenario above. The AI only filled in the form; every number is
+          calculated by code.
+        </p>
+      )}
+      {qerr && (
+        <p className="sub bad" style={{ margin: "0 0 8px" }}>
+          {qerr === "notunderstood" ? "That doesn't look like a question about holding BTC or ETH." : "The AI parser is unavailable right now — use Edit."}
+        </p>
+      )}
 
       <section className="card answer">
-        <div className="muted">
-          {usd(amount)} of {asset} for {horizon}
-          {etfPct ? `, your ETF commission + spread ${etfPct}% round trip` : ""}
-        </div>
         {!best ? (
           <div className="big">No route passes the checks for this amount.</div>
         ) : ranked.length === 1 ? (
           <>
             <div className="big">
-              Only one route passes the checks: {best.name} — {usd(amount * best.cost!, 2)} ({pct(best.cost)})
+              Only 1 of {c.direct.length} routes passes: {best.name} — {usd(amount * best.cost!, 2)} ({pct(best.cost)})
             </div>
             <p className="muted" style={{ marginTop: 0 }}>
-              So there is no real comparison at this size. The others are shown below but not ranked.
+              {best.costAtZeroFunding != null
+                ? `At zero funding it would be ${usd(amount * best.costAtZeroFunding, 2)}; funding changes hourly. `
+                : ""}
+              There is no real comparison at this size.
             </p>
           </>
         ) : tied.length > 0 ? (
           <>
             <div className="big">
-              {tied.length + 1} routes cost within {usd(amount * TIE, 2)} of each other — effectively a tie
+              {tied.length + 1} routes are within {usd(amount * TIE_SHARE, 2)} — effectively tied
             </div>
             <p style={{ marginTop: 0 }}>
-              {[best, ...tied].slice(0, 4).map((r, i) => (
-                <span key={r.id}>
-                  {i ? " · " : ""}
-                  {r.name.split(" — ")[0]} <b>{usd(amount * r.cost!, 2)}</b>
-                </span>
-              ))}
-              {tied.length > 3 ? ` and ${tied.length - 3} more` : ""}. At this gap your broker&apos;s commission or the
-              spread decides — enter yours above.
+              Lowest estimate: <b>{best.name.split(" — ")[0]}</b> · {usd(amount * best.cost!, 2)} over {horizon}.{" "}
+              <span className="muted">
+                Also within the tie:{" "}
+                {tied
+                  .slice(0, 3)
+                  .map((r) => `${r.name.split(" — ")[0]} ${usd(amount * r.cost!, 2)}`)
+                  .join(" · ")}
+                {tied.length > 3 ? ` and ${tied.length - 3} more` : ""}.
+              </span>
             </p>
           </>
         ) : (
@@ -259,95 +288,88 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
             {usd(amount * best.cost!, 2)} ({pct(best.cost)}) — {best.name} is the cheapest
           </div>
         )}
+
         {best && breakEven != null && bestEtf && bestSodex && (
           <p>
             {breakEven <= 0 ? (
-              <>
-                {bestSodex.name} is cheaper than every ranked ETF even with a 0% broker cost.
-              </>
+              <>{bestSodex.name} is cheaper than every ranked ETF even with a 0% broker cost.</>
             ) : (
               <>
-                ETFs stay cheapest only while your commission + spread is below <b>{pct(breakEven, 2)}</b> round trip;
-                above that, {bestSodex.name} wins.{" "}
+                Above ~<b>{pct(breakEven, 2)}</b> in ETF broker costs (round trip), {bestSodex.name.replace(/ \(.*\)$/, "")} costs
+                less.{" "}
                 <a href={`/?asset=${asset}&usd=${amount}&months=${months}&etfcost=${Math.min(2, Math.ceil((breakEven * 100 + 0.05) * 100) / 100)}`}>
-                  See it flip
+                  Try {Math.min(2, Math.ceil((breakEven * 100 + 0.05) * 100) / 100)}% broker cost
                 </a>
               </>
             )}
           </p>
         )}
-        {best && worst && worst.id !== best.id && (
-          <p>
-            Most expensive ranked route: <b>{worst.name}</b> at {usd(amount * worst.cost!, 2)} ({pct(worst.cost)}).
+
+        {partial.map((r) => (
+          <p key={r.id}>
+            {r.name.replace(/ \(.*\)$/, "")} covers only <b>{usd(r.fillableUsd)}</b> of {usd(amount)} in today&apos;s visible
+            book.{" "}
+            <TabLink tab="execution" anchor={`fill-${r.id}`} href={`/?${query}&tab=execution#fill-${r.id}`}>
+              Inspect the fill
+            </TabLink>
           </p>
-        )}
-        {reasons.length > 0 && (
-          <p className="muted">
-            Not ranked: {reasons.map(([why, n]) => `${n} ${why}`).join(" · ")}.
-          </p>
-        )}
-        <div className="kpis">
-          <div className="kpi">
-            <div className="label">Reference price</div>
-            <div className="value">{usd(c.reference.price, 2)}</div>
-            <span className="sub">{c.reference.source}</span>
-          </div>
-          <div className="kpi">
-            <div className="label">SoSoValue cross-check</div>
-            <div className="value">{usd(c.reference.sosoPrice, 2)}</div>
-            <span className="sub">difference {bps(c.reference.deviationBps)}</span>
-          </div>
-          <div className="kpi">
-            <div className="label">This calculation</div>
-            <div className="value" style={{ fontSize: 14 }}>
-              <a href={`/api/compare?${here}`}>Download JSON</a>
+        ))}
+
+        <p className="muted">
+          {ranked.length} of {c.direct.length} routes ranked
+          {reasons.length > 0 ? ` · not ranked: ${reasons.map(([why, n]) => `${n} ${why}`).join(", ")}` : ""}
+          {best && worst && worst.id !== best.id ? ` · most expensive ranked: ${worst.name.split(" — ")[0]} ${usd(amount * worst.cost!, 2)}` : ""}
+        </p>
+
+        <details>
+          <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
+            Price, sources &amp; calculation JSON
+          </summary>
+          <div className="kpis">
+            <div className="kpi">
+              <div className="label">Reference price</div>
+              <div className="value">{usd(c.reference.price, 2)}</div>
+              <span className="sub">{c.reference.source}</span>
             </div>
-            <span className="sub">
-              inputs, sources, times, method v{METHOD_VERSION}; the page link recomputes it on today&apos;s market
-            </span>
+            <div className="kpi">
+              <div className="label">SoSoValue cross-check</div>
+              <div className="value">{usd(c.reference.sosoPrice, 2)}</div>
+              <span className="sub">difference {bps(c.reference.deviationBps)}</span>
+            </div>
+            <div className="kpi">
+              <div className="label">This calculation</div>
+              <div className="value" style={{ fontSize: 14 }}>
+                <a href={`/api/compare?${query}`}>Download JSON</a>
+              </div>
+              <span className="sub">
+                inputs, sources, times, method v{METHOD_VERSION} · computed {timeUtc(c.generatedAt)}
+              </span>
+            </div>
           </div>
-        </div>
+        </details>
       </section>
 
-      {horizonRoutes.length > 1 && <HorizonTable routes={horizonRoutes} amount={amount} months={months} />}
+      <Tabs tabs={tabs} initial={activeTab} baseQuery={query} />
 
-      <h2>Direct exposure (tracks {asset} 1:1)</h2>
-      <p className="lede">
-        Total cost = round-trip trading cost + recurring cost × {horizon}, as a share of the money you put in. SoDEX: buy
-        and sell into today&apos;s order book, fees both ways. ETFs: sponsor fee; today&apos;s premium to NAV is shown as
-        entry-timing risk and assumed unchanged when you sell (the same rule as a SoDEX market&apos;s gap to the index).
-        Ranked cheapest first.
-      </p>
-      <DirectTable rows={c.direct} asset={asset} bestId={best?.id} />
-
-      {sodexRoutes.length > 0 && (
-        <>
-          <h2>SoDEX execution check for {usd(amount)}</h2>
-          <div className="grid2">
-            {sodexRoutes.map((r) => (
-              <Ticket key={r.id} r={r} asset={asset} />
-            ))}
-          </div>
-        </>
-      )}
-
-      {asset === "BTC" && !exclude.includes("treasury_stock") && <Companies rows={c.companies} coverage={c.coverage} />}
-
-      {report && <DailyNote report={report} />}
-
-      <h2>Method and limits</h2>
-      <div className="card">
-        <ul className="notes">
-          <li>Reference price: SoDEX {asset}-USD index price; SoSoValue price shown as an independent cross-check.</li>
+      <details className="card" style={{ marginTop: 16 }}>
+        <summary style={{ cursor: "pointer", fontWeight: 600 }}>Method and limits</summary>
+        <ul className="notes" style={{ marginTop: 8 }}>
+          <li>Reference price: SoDEX {asset}-USD index price (mark price if the index is unavailable); SoSoValue price shown as an independent cross-check.</li>
           <li>SoDEX round trip = 1 − (sell VWAP × (1 − fee)) ÷ (buy VWAP × (1 + fee)) for {usd(amount)} against the live order book (100 levels), tier-0 taker fees 0.065% spot / 0.04% perps. It is today&apos;s friction; tomorrow&apos;s book may differ.</li>
           <li>Gaps to a reference — an ETF&apos;s premium to NAV, a SoDEX market&apos;s gap to the index — are treated the same way for every route: shown, and assumed unchanged when you sell. If they change, the result changes by that amount.</li>
-          <li>Perp carry = current hourly funding × 8,760, i.e. what a year would cost if today&apos;s rate never changed. Funding resets every hour; the row also shows the cost at zero funding.</li>
-          <li>ETF cost = sponsor fee × holding period. Your broker&apos;s commission and the ETF&apos;s bid/ask spread are not included. Not ranked, but shown: a fee SoSoValue reports as 0, funds that traded under $2M on the last day or where your amount exceeds 0.1% of that day's trading (a rule of thumb — we have no spread data), staking ETFs whose yield and fee waivers are not modelled, and any route the order book cannot fill.</li>
+          <li>Perp carry = current hourly funding × 8,760, i.e. what a year would cost if today&apos;s rate never changed. Funding resets every hour; the cost at zero funding is shown too.</li>
+          <li>ETF cost = sponsor fee × holding period + your commission and spread if you enter them. Not ranked, but shown: a fee SoSoValue reports as 0, funds that traded under $2M on the last day or where your amount exceeds 0.1% of that day&apos;s trading (a rule of thumb — we have no spread data), staking ETFs, and any route the order book cannot fill. Routes within 0.1 pp are called a tie.</li>
           <li>Company ratios: market cap ÷ BTC value, and (market cap + debt − cash) ÷ BTC value with debt and cash from the latest SoSoValue quarterly balance sheet. Preferred stock and dilution are not in that data, so these are simple ratios, not Strategy&apos;s own mNAV (since 23 Jul 2026 Strategy defines mNAV from net bitcoin per share after senior claims).</li>
-          <li>SoSoValue history is limited to 90 days for this API key; holdings come from company purchase disclosures and can be months old (flagged).</li>
           <li>Nothing here places orders. Execution numbers are a preview from the public order book.</li>
         </ul>
-      </div>
+      </details>
+
+      {report && (
+        <p style={{ marginTop: 16 }}>
+          <span className="muted">Daily Premium Report ({report.day}, general $1,000 / 12 months): </span>
+          <a href={`/journal#note-${report.day}`}>{report.note.headline}</a>
+        </p>
+      )}
 
       {c.errors.length > 0 && (
         <>
@@ -362,8 +384,46 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         </>
       )}
       <p className="muted" style={{ fontSize: 12 }}>
-        Generated {timeUtc(c.generatedAt)} · <a href="/diag">data status</a>
+        Computed {timeUtc(c.generatedAt)} · <a href="/diag">data status</a>
       </p>
+    </>
+  );
+}
+
+function RoutesPanel(props: {
+  rows: DirectRoute[];
+  asset: string;
+  bestId?: string;
+  horizon: string;
+  horizonRoutes: DirectRoute[];
+  amount: number;
+  months: number;
+}) {
+  const { rows, asset, bestId, horizon, horizonRoutes, amount, months } = props;
+  return (
+    <>
+      <p className="lede" style={{ marginTop: 12 }}>
+        Every direct route, cheapest first. Total cost = round-trip trading cost + recurring cost × {horizon}.{" "}
+        {horizonRoutes.length > 1 && <a href="#horizons">Compare holding periods ↓</a>}
+      </p>
+      <DirectTable rows={rows} asset={asset} bestId={bestId} />
+      {horizonRoutes.length > 1 && <HorizonTable routes={horizonRoutes} amount={amount} months={months} />}
+    </>
+  );
+}
+
+function ExecutionPanel({ rows, asset, amount }: { rows: DirectRoute[]; asset: string; amount: number }) {
+  if (!rows.length) return <p className="muted" style={{ marginTop: 12 }}>No SoDEX route in this scenario.</p>;
+  return (
+    <>
+      <p className="lede" style={{ marginTop: 12 }}>
+        What {usd(amount)} would do in SoDEX&apos;s live order book right now, and the order you would sign. Nothing is sent.
+      </p>
+      <div className="grid2">
+        {rows.map((r) => (
+          <Ticket key={r.id} r={r} asset={asset} />
+        ))}
+      </div>
     </>
   );
 }
@@ -440,9 +500,10 @@ function DirectTable({ rows, asset, bestId }: { rows: DirectRoute[]; asset: stri
 function Ticket({ r, asset }: { r: DirectRoute; asset: string }) {
   const f = r.fill!;
   return (
-    <div className="card">
-      <b>{r.name}</b>
-      <table style={{ marginTop: 8 }}>
+    <div className="card ticket" id={`fill-${r.id}`} tabIndex={-1}>
+      <b>{r.name}</b>{" "}
+      <span className={`chip ${f.complete ? "good" : "warn"}`}>{f.complete ? "full fill" : "partial fill"}</span>
+      <table className="kv" style={{ marginTop: 8 }}>
         <tbody>
           <tr>
             <td>Fills</td>
@@ -512,7 +573,7 @@ function Companies({ rows, coverage }: { rows: CompanyRow[]; coverage: Compariso
   const ops = rows.filter((r) => r.kind === "operating");
   return (
     <>
-      <h2>Indirect exposure: companies holding BTC</h2>
+      <h2 id="treasuries">Indirect exposure: companies holding BTC</h2>
       <p className="lede">
         How much the market pays for each dollar of bitcoin on the balance sheet. A ratio below 1× does not mean cheap
         bitcoin: debt and preferred stock rank ahead of shareholders, so compare both columns. This is equity, not BTC —
@@ -627,57 +688,6 @@ function Companies({ rows, coverage }: { rows: CompanyRow[]; coverage: Compariso
           </div>
         </>
       )}
-    </>
-  );
-}
-
-function DailyNote({ report }: { report: NonNullable<Awaited<ReturnType<typeof latestReport>>> }) {
-  const byId = new Map(report.facts.map((f) => [f.id, f.text]));
-  const a = report.author;
-  return (
-    <>
-      <h2>Daily Premium Report · {report.day}</h2>
-      <p className="lede">
-        A general note for $1,000 held 12 months, written once a day — not for the amount and period you chose above.
-      </p>
-      <div className="card">
-        <div className="big" style={{ fontSize: 17, fontWeight: 650, marginBottom: 6 }}>
-          {report.note.headline}
-        </div>
-        <ul className="notes" style={{ color: "var(--text)", fontSize: 14 }}>
-          {report.note.points.map((p, i) => (
-            <li key={i}>
-              {p.text}{" "}
-              {p.facts.map((f) => (
-                <span key={f} className="chip" title={byId.get(f)}>
-                  {f}
-                </span>
-              ))}
-            </li>
-          ))}
-        </ul>
-        <details style={{ marginTop: 8 }}>
-          <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
-            How this note is made: facts and checks
-          </summary>
-          <p className="muted" style={{ fontSize: 13 }}>
-            Our code computes the facts below from that day&apos;s snapshot.{" "}
-            {a.kind === "llm"
-              ? report.note.points.some((p) => p.template)
-                ? `${a.model} wrote the sentences using {variables} only — it typed no digits — and code inserted every number and name from the facts below (accepted on attempt ${a.attempts}).`
-                : `${a.model} turned them into prose; a validator checked every number against the facts each sentence cites (earlier method, before 25 Nov 2026).`
-              : `The AI writer was not used (${a.reason}); this is the template version.`}{" "}
-            Raw file: <a href={`${REPO_URL}/blob/main/data/reports/${report.day}.json`}>data/reports/{report.day}.json</a>
-          </p>
-          <ul className="notes">
-            {report.facts.map((f) => (
-              <li key={f.id}>
-                <b>{f.id}</b> {f.text}
-              </li>
-            ))}
-          </ul>
-        </details>
-      </div>
     </>
   );
 }

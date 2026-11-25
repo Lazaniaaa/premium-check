@@ -1,5 +1,6 @@
 import { int, pct, ratio, signedPct, timeUtc, usd } from "@/lib/format";
 import { etfPremiumHistory, strategyPurchases } from "@/lib/history";
+import { DailyNote } from "../components/daily-note";
 import { methodOf, type Snapshot } from "@/lib/snapshot";
 import type { Report } from "@/lib/report";
 
@@ -149,6 +150,20 @@ export default async function Journal() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {rows.some((r) => r.report) && (
+        <>
+          <h2>Daily notes</h2>
+          <p className="lede">
+            The note written each day from that day&apos;s facts, with the facts behind every point.
+          </p>
+          <div style={{ display: "grid", gap: 12 }}>
+            {rows.filter((r) => r.report).map((r) => (
+              <DailyNote key={r.file.name} report={r.report!} />
+            ))}
+          </div>
+        </>
       )}
 
       <h2>History from SoSoValue (not recorded by us)</h2>
