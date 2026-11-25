@@ -6,7 +6,7 @@
 // lists the facts it used so a reader can check.
 import { pct, ratio, usd } from "./format";
 import { MODELS, structured } from "./llm";
-import type { Snapshot } from "./snapshot";
+import { methodOf, type Snapshot } from "./snapshot";
 
 export type Var = { value: string; label: string };
 export type Fact = { id: string; template: string; text: string; vars: Record<string, Var> };
@@ -119,7 +119,7 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
         eth_staking_count: [String(staking), "staking ETH ETFs left out of the ranking"],
       });
   }
-  if (prev?.btc && (prev.methodVersion ?? 1) === (today.methodVersion ?? 1)) {
+  if (prev?.btc && methodOf(prev) === methodOf(today)) {
     const pm = prev.btc.companies.find((c) => c.ticker === "MSTR");
     const day = prev.takenAt.slice(0, 10);
     if (pm?.mnavEquity != null && mstr?.mnavEquity != null)
@@ -141,7 +141,7 @@ export function buildFacts(today: Snapshot, prev: Snapshot | null): Fact[] {
  * The model's text may contain no digits at all. Numbers and names appear only as
  * {variables}, and each variable must belong to a fact that sentence cites.
  */
-export function validate(note: Note, facts: Fact[]): string[] {
+export function validate(note: Note, facts: Fact[], protectedTerms: string[] = []): string[] {
   const byId = new Map(facts.map((x) => [x.id, x]));
   const errors: string[] = [];
   const check = (template: string, cites: string[], where: string) => {
@@ -153,6 +153,8 @@ export function validate(note: Note, facts: Fact[]): string[] {
     const rest = template.replace(VAR, "");
     if (/\d/.test(rest)) errors.push(`${where}: contains a digit outside a {variable}: "${rest.match(/[^\s]*\d[^\s]*/)?.[0]}"`);
     if (/[{}]/.test(rest)) errors.push(`${where}: malformed {variable}`);
+    // Fund and company tickers may appear only through variables, so a sentence can't name the wrong fund.
+    for (const t of protectedTerms) if (new RegExp(`\\b${t}\\b`).test(rest)) errors.push(`${where}: names ${t} outside a {variable}`);
   };
   check(note.headlineTemplate ?? note.headline, note.headlineFacts, "headline");
   if (note.points.length < 2 || note.points.length > 5) errors.push(`expected 2-5 points, got ${note.points.length}`);
@@ -198,7 +200,7 @@ const SYSTEM = `You write the daily "Premium Check" note: what it costs today to
 Write for a retail investor, in plain English, neutral tone, no advice ("buy", "sell", "should").
 Rules:
 - Use ONLY the numbered facts given. Each fact lists its variables with their current values so you understand them.
-- NEVER type a digit. Every number, date and fund or route name must be written as its {variable} from a fact you cite in that sentence's "facts" list, e.g. "Strategy trades at {mstr_ratio_equity} its BTC value". Code fills in the values.
+- NEVER type a digit or a fund ticker. Every number, date and fund or route name must be written as its {variable} from a fact you cite in that sentence's "facts" list, e.g. "Strategy trades at {mstr_ratio_equity} its BTC value". Code fills in the values.
 - Do not describe differences as numbers; compare with words ("lower than", "about the same").
 - Headline: one sentence, max 14 words, stating the single most useful finding of the day. Then 3 or 4 points, each one or two sentences.
 - Cite fact ids like "F3" in the facts arrays, never in the text itself.`;
@@ -218,7 +220,7 @@ export function templateNote(facts: Fact[]): Note {
   );
 }
 
-export async function writeNote(facts: Fact[]): Promise<{ note: Note; author: Report["author"] }> {
+export async function writeNote(facts: Fact[], protectedTerms: string[] = []): Promise<{ note: Note; author: Report["author"] }> {
   const factList = facts
     .map((x) => `${x.id}: ${x.template}\n    ${Object.entries(x.vars).map(([k, v]) => `{${k}} = "${v.value}" (${v.label})`).join("; ")}`)
     .join("\n");
@@ -244,7 +246,7 @@ export async function writeNote(facts: Fact[]): Promise<{ note: Note; author: Re
         headlineFacts: r.data.headlineFacts,
         points: r.data.points.map((p) => ({ text: p.text, template: p.text, facts: p.facts })),
       };
-      const errors = validate(draft, facts);
+      const errors = validate(draft, facts, protectedTerms);
       if (!errors.length) return { note: renderNote(draft, facts), author: { kind: "llm", model, attempts: attempt, tokens } };
       feedback = `\n\nYour previous draft was rejected by the validator:\n- ${errors.join("\n- ")}\nRewrite it using only {variables} for every number and name.`;
     } catch (e) {

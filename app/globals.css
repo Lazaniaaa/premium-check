@@ -101,3 +101,7 @@ pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; 
 }
 .btn-link { display: inline-block; font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 8px; padding: 6px 12px; }
 .btn-link:hover { background: var(--accent-soft); }
+
+.examples { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: -6px 0 14px; font-size: 13px; }
+.chip-link { text-decoration: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 10px; color: var(--text); }
+.chip-link:hover { border-color: var(--accent); color: var(--accent); }

@@ -9,6 +9,24 @@ import { buildComparison, type Comparison } from "./model";
  */
 export const METHOD_VERSION = 2;
 
+/**
+ * Method of a stored snapshot. Files from before methodVersion existed are told apart by
+ * their fields: method 1 stored `entryPremium` (ETF premium counted as a cost), method 2
+ * stores `tradingCost`.
+ */
+export function methodOf(s: Pick<Snapshot, "methodVersion" | "btc">): number {
+  if (s.methodVersion) return s.methodVersion;
+  const r = s.btc?.routes?.[0] as Record<string, unknown> | undefined;
+  return r && "tradingCost" in r ? 2 : 1;
+}
+
+/** Tickers the AI note may only mention through {variables} (BTC / ETH are excluded: they are also the coins). */
+export function protectedTerms(s: Snapshot): string[] {
+  const etfs = [...(s.btc?.routes ?? []), ...(s.eth?.routes ?? [])].filter((r) => r.id.startsWith("etf-")).map((r) => r.id.slice(4));
+  const companies = (s.btc?.companies ?? []).map((c) => c.ticker).filter((t) => t !== "MSTR");
+  return [...new Set([...etfs, ...companies])].filter((t) => t !== "BTC" && t !== "ETH");
+}
+
 export type Snapshot = {
   schema: 1 | 2;
   methodVersion?: number;

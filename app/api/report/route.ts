@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { buildFacts, writeNote, type Report } from "@/lib/report";
-import { takeSnapshot, type Snapshot } from "@/lib/snapshot";
+import { protectedTerms, takeSnapshot, type Snapshot } from "@/lib/snapshot";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -46,7 +46,7 @@ export async function GET(req: Request) {
 
   const report = await unstable_cache(
     async (): Promise<Report> => {
-      const { note, author } = await writeNote(facts);
+      const { note, author } = await writeNote(facts, protectedTerms(snapshot));
       return {
         schema: 1,
         day,

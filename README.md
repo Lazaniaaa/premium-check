@@ -26,6 +26,10 @@ behind the share.
 
 Pick an asset, an amount and a holding period. You get:
 
+0. **The answer in dollars** — the cheapest route, or an honest tie when several routes are within 0.1 pp; the
+   **broker break-even** ("ETFs stay cheapest only while your commission + spread is below X%"); a table of how the
+   answer changes from 1 to 24 months; and a **downloadable JSON** of the calculation (inputs, sources, times,
+   method version). One-click examples on the first screen.
 1. **Direct exposure, ranked by total cost** — SoDEX spot, SoDEX perp (1x long), 12 US BTC ETFs or 11 US ETH ETFs.
    Total cost = trading cost + recurring cost × holding period, and how much of the asset you actually keep.
 2. **A SoDEX execution check** for your exact size — VWAP, slippage, fee, and the largest size that stays within
@@ -128,8 +132,8 @@ How the report works (`lib/report.ts`):
    `{btc_funding_year} = "6.93%"`.
 2. The model returns `{headline, points: [{text, facts: ["F6"]}]}` where the text uses those variables —
    "Funding would cost {btc_funding_year} a year" — and **contains no digits**.
-3. `validate()` rejects any digit outside a variable and any variable that does not belong to a fact the sentence
-   cites; then code renders the values. So the model cannot invent, round, flip, convert or misattribute a number.
+3. `validate()` rejects any digit or fund ticker outside a variable and any variable that does not belong to a fact
+   the sentence cites; then code renders the values. So the model cannot invent, round, flip, convert or misattribute a number.
    It can still word a sentence poorly — each point lists its facts so a reader can check (`tests/report.test.ts`;
    an opt-in live check: `LIVE_LLM=1 npx vitest run tests/live-note.test.ts`).
 4. A report already committed for the day is served straight from the repo (no API or AI calls); otherwise at
@@ -171,7 +175,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 45 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 47 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
@@ -190,6 +194,7 @@ app/
   ask/route.ts          plain-language question -> form parameters
   api/snapshot/route.ts JSON snapshot
   api/report/route.ts   snapshot + facts + validated note (used by the daily GitHub Action)
+  api/compare/route.ts  one calculation as a downloadable JSON file
 lib/
   http.ts               cached, paced upstream client + fixture mode
   sources.ts            typed SoSoValue / SoDEX accessors

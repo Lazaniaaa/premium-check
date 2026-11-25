@@ -99,3 +99,21 @@ describe("query normalisation", () => {
     expect(normalize({ asset: "BTC", usd: 3, months: 0, exclude: [] }).usd).toBe(10);
   });
 });
+
+describe("third review (Astra) cases", () => {
+  it("rejects a fund ticker typed outside a variable ('IBIT is the cheapest' while citing MSBT)", () => {
+    const f2 = [
+      { id: "F1", template: "Cheapest: {btc_best_name} at {btc_best_cost}.", text: "", vars: { btc_best_name: { value: "Morgan Stanley Bitcoin Trust (MSBT)", label: "" }, btc_best_cost: { value: "0.14%", label: "" } } },
+    ];
+    const n = { headline: "IBIT is the cheapest", headlineFacts: ["F1"], points: [{ text: "x {btc_best_cost}", facts: ["F1"] }, { text: "y", facts: ["F1"] }] };
+    expect(validate(n, f2, ["IBIT", "MSBT"]).join()).toMatch(/names IBIT outside a \{variable\}/);
+  });
+
+  it("tells the two stored formats apart: 24 Nov (premium counted) vs 25 Nov (fee only)", async () => {
+    const fs = await import("node:fs");
+    const { methodOf } = await import("@/lib/snapshot");
+    const read = (d: string) => JSON.parse(fs.readFileSync(`data/snapshots/${d}.json`, "utf8"));
+    expect(methodOf(read("2026-11-24"))).toBe(1);
+    expect(methodOf(read("2026-11-25"))).toBe(2);
+  });
+});

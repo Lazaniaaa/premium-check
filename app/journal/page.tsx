@@ -1,6 +1,6 @@
 import { int, pct, ratio, signedPct, timeUtc, usd } from "@/lib/format";
 import { etfPremiumHistory, strategyPurchases } from "@/lib/history";
-import type { Snapshot } from "@/lib/snapshot";
+import { methodOf, type Snapshot } from "@/lib/snapshot";
 import type { Report } from "@/lib/report";
 
 export const dynamic = "force-dynamic";
@@ -81,7 +81,7 @@ export default async function Journal() {
                 const mstr = snap.btc?.companies.find((c) => c.ticker === "MSTR");
                 const older = rows[i + 1]?.snap;
                 // Day-over-day changes only between snapshots computed with the same method.
-                const sameMethod = !!older && (older.methodVersion ?? 1) === (snap.methodVersion ?? 1);
+                const sameMethod = !!older && methodOf(older) === methodOf(snap);
                 const prev = sameMethod ? older : undefined;
                 const prevMstr = prev?.btc?.companies.find((c) => c.ticker === "MSTR");
                 return (
@@ -89,7 +89,7 @@ export default async function Journal() {
                     <td>
                       {file.name.replace(".json", "")}
                       <span className="sub">
-                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy} · method v${snap.methodVersion ?? 1}`}
+                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy} · method v${methodOf(snap)}`}
                       </span>
                       {older && !sameMethod && <span className="sub">method changed since the previous day — no comparison</span>}
                     </td>
