@@ -2,6 +2,9 @@ import { buildComparison, TIE_SHARE, type Asset, type CompanyRow, type Compariso
 import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from "@/lib/format";
 import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
 import { latestReport } from "@/lib/reports-store";
+import Link from "next/link";
+import { maybe } from "@/lib/http";
+import { premiumBacktest } from "@/lib/validation";
 import { TabLink, Tabs, type TabDef } from "./components/tabs";
 import { METHOD_VERSION } from "@/lib/snapshot";
 
@@ -124,9 +127,10 @@ const FLAG_TEXT: Record<string, string> = {
 export default async function Page({ searchParams }: { searchParams: SP }) {
   const sp = await searchParams;
   const { asset, amount, months, exclude, etfPct, q, qerr } = parse(sp);
-  const [full, report] = await Promise.all([
+  const [full, report, premiumTest] = await Promise.all([
     buildComparison(asset, amount, months, { etfTradingCost: etfPct / 100 }),
     latestReport(),
+    maybe(premiumBacktest(asset)),
   ]);
   const c = { ...full, direct: full.direct.filter((r) => !exclude.includes(r.kind)) };
   const ranked = c.direct.filter((r) => r.ranked);
@@ -152,6 +156,14 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
   const partial = c.direct.filter((r) => r.kind !== "etf" && r.fillableUsd != null);
   const execution = [...c.direct.filter((r) => r.fill)].sort((a, b) => Number(b.fillableUsd != null) - Number(a.fillableUsd != null));
   const showCompanies = asset === "BTC" && !exclude.includes("treasury_stock");
+  // Backtest on SoSoValue history (/validation): how far ETF premiums moved within ~2 weeks.
+  // If the winner and the runner-up are closer than that and an ETF is involved, say so.
+  const noise = premiumTest?.noise ?? null;
+  const withinNoise =
+    best && noise != null
+      ? ranked.filter((r) => r.id !== best.id && (best.kind === "etf" || r.kind === "etf") && r.cost! - best.cost! < noise)
+      : [];
+  const runnerUp = ranked[1];
 
   const query = `asset=${asset}&usd=${amount}&months=${months}${etfPct ? `&etfcost=${etfPct}` : ""}${exclude.length ? `&exclude=${exclude.join(",")}` : ""}`;
   const tabs: TabDef[] = [
@@ -302,6 +314,17 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
                 </a>
               </>
             )}
+          </p>
+        )}
+
+        {withinNoise.length > 0 && premiumTest && (
+          <p>
+            Over the last 30 days, ETF premiums moved by up to {pct(noise, 2)} ({usd(amount * noise!, 2)} here) within{" "}
+            {premiumTest.noiseDays} trading days in 9 of 10 cases.{" "}
+            {withinNoise.length === 1 && withinNoise[0].id === runnerUp?.id
+              ? `${best.name.split(" — ")[0]} beats ${runnerUp.name.split(" — ")[0]} by ${usd(amount * (runnerUp.cost! - best.cost!), 2)}, less than that, so the order could flip.`
+              : `${withinNoise.length} other routes are within that of the lowest estimate, so the order among them could change.`}{" "}
+            <Link href="/validation#premium">How we checked</Link>
           </p>
         )}
 

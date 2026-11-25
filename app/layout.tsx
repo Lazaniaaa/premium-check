@@ -20,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav>
               <Link className="nav-full" href="/">Compare</Link>
               <Link className="nav-full" href="/journal">Journal</Link>
+              <Link className="nav-full" href="/validation">Validation</Link>
               <Link className="nav-full" href="/diag">Data status</Link>
               <Link href="/judges">For judges</Link>
               <a className="nav-full" href="https://github.com/Lazaniaaa/premium-check" target="_blank" rel="noreferrer">
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="nav-menu-list">
                   <Link href="/">Compare</Link>
                   <Link href="/journal">Journal</Link>
+                  <Link href="/validation">Validation</Link>
                   <Link href="/diag">Data status</Link>
                   <a href="https://github.com/Lazaniaaa/premium-check">GitHub</a>
                 </div>

@@ -45,7 +45,7 @@ export default async function Judges() {
       </p>
 
       <div className="card">
-        <b>Three questions, one click each</b>
+        <b>Four questions, one click each</b>
         <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
           <li>
             <Link href="/?asset=BTC&usd=2000&months=6">Does my broker change the answer?</Link> — a near-tie between ETFs and
@@ -58,6 +58,10 @@ export default async function Judges() {
           <li>
             <Link href="/?asset=BTC&usd=1000&months=12&tab=companies#treasuries">What changes when debt is included?</Link> —
             market cap vs BTC value for each treasury company, with and without debt minus cash, and the price source.
+          </li>
+          <li>
+            <Link href="/validation">Does the method hold up?</Link> — the cost rule tested on 30 days of SoSoValue ETF
+            history, a prediction compared with a real SoDEX fill, and what history can&apos;t test.
           </li>
         </ul>
       </div>
