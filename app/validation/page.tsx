@@ -387,7 +387,7 @@ export default function Validation() {
               ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} shown, not counted)`
               : ""}
             {excludedTrades.length
-              ? `; ${excludedTrades.length} later trade${excludedTrades.length === 1 ? "" : "s"} without a published prediction excluded, with the reason`
+              ? `; ${excludedTrades.length} other trade${excludedTrades.length === 1 ? "" : "s"} on the account excluded, with the reason`
               : ""}
             {trades.length === 0 ? " so far · the protocol is below." : " · see section 3."}
           </li>

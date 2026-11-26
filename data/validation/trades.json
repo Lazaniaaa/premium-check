@@ -56,5 +56,63 @@
     "predictedCostBps": 13.155723691659071,
     "actualCostBps": 13.459394722766397,
     "note": "SoDEX's endpoint ignored the orderID filter and returned the fills of both orders in each response; only fills with the matching orderID are used. That filter was added to scripts/record-fill.mjs after its first run graded this attempt partial for exactly that reason; the raw responses are kept unfiltered."
+  },
+  {
+    "status": "complete",
+    "verified": true,
+    "reasons": [],
+    "symbol": "vBTC_vUSDC",
+    "usd": 12,
+    "predictionFile": "data/validation/predictions/2026-11-26T22-53-03-704Z.json",
+    "predictionCommit": "68a3637",
+    "predictionPushedAt": "2026-11-26T22:53:47.000Z",
+    "predictedAt": "2026-11-26T22:53:03.704Z",
+    "firstFillAt": "2026-11-26T22:54:13.275Z",
+    "lastFillAt": "2026-11-26T22:55:30.845Z",
+    "bookToBuySeconds": 69.571,
+    "buyToSellSeconds": 77.57,
+    "account": "0x896e10Eed096499beEd252A2154455aF46f75A5F",
+    "accountID": null,
+    "tradeIds": [
+      3392781,
+      3392785
+    ],
+    "feeRates": {
+      "model": 0.00065,
+      "symbol": 0.00065
+    },
+    "stepSize": 0.00001,
+    "buy": {
+      "orderID": 8334125290,
+      "fills": 1,
+      "predictedVwap": 60583,
+      "actualVwap": 60591,
+      "diffBps": 1.3205024511826748,
+      "qty": 0.00019,
+      "feePaid": 1.235e-7,
+      "feeAsset": "vBTC",
+      "feeRate": 0.00065,
+      "makerFills": 0
+    },
+    "sell": {
+      "orderID": 8334147418,
+      "fills": 1,
+      "predictedVwap": 60582,
+      "actualVwap": 60468,
+      "diffBps": 18.817470535802713,
+      "qty": 0.00018,
+      "feePaid": 0.00707476,
+      "feeAsset": "vUSDC",
+      "feeRate": 0.00065,
+      "makerFills": 0
+    },
+    "usdcSpent": 11.51229,
+    "usdcReturned": 10.877165244,
+    "baseLeft": 0.0000098765,
+    "predictedCostUsd": 0.01578768462368485,
+    "actualCostUsd": 0.03791255399999982,
+    "predictedCostBps": 13.156403853070708,
+    "actualCostBps": 32.93224371519465,
+    "note": "SoDEX's endpoint ignored the orderID filter and returned the account's other fills too; only fills with the matching orderID are used (raw responses kept unfiltered). Most of the difference is the sell leg: BTC fell about 20 bps in the 77.6 s between the buy and the sell."
   }
 ]

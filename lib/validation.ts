@@ -37,6 +37,14 @@ export const excludedTrades = [
     why:
       "by mistake the trade was placed before its prediction was pushed, so nothing shows the prediction came first; the sell also used 0.000000117 BTC left from the first trade (it sold more than the buy delivered after fees)",
   },
+  {
+    usd: 12,
+    window: "26 Nov 2026 22:52–22:53 UTC",
+    buyOrderID: 8334090412,
+    sellOrderID: 8334118785,
+    why:
+      "the buy was $12 while the prediction published for it (commit cee71db) was for $11, so it was sold back to start again with a new $12 prediction; that sell also used BTC left from earlier trades. The $11 prediction stays in the repo unused",
+  },
 ];
 export const datasetFile = "data/validation/etf-premium-history.json";
 

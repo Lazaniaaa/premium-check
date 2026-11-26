@@ -73,11 +73,11 @@ export default async function Judges() {
             none); data and re-run command in the repo;{" "}
             <Link href="/validation#trade">
               {`real-trade check: ${verifiedTrades.length} verified SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"} against the prediction pushed before it`}
-              {verifiedTrades[0]?.actualCostBps != null
-                ? ` (predicted ${verifiedTrades[0].predictedCostBps.toFixed(2)} bps, actual ${verifiedTrades[0].actualCostBps.toFixed(2)} bps)`
+              {verifiedTrades.length
+                ? ` (predicted → actual: ${verifiedTrades.map((t) => `${t.predictedCostBps.toFixed(2)} → ${t.actualCostBps?.toFixed(2) ?? "—"} bps`).join(", ")})`
                 : ""}
             </Link>
-            {excludedTrades.length ? `, ${excludedTrades.length} later trade without a published prediction excluded` : ""}
+            {excludedTrades.length ? `; ${excludedTrades.length} other trade${excludedTrades.length === 1 ? "" : "s"} on the account excluded, with the reason` : ""}
             {trades.length > verifiedTrades.length
               ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} published, not counted)`
               : trades.length === 0
