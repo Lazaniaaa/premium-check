@@ -4,9 +4,11 @@
 // published numbers stay reproducible (scripts/reproduce-validation.mjs).
 import history from "@/data/validation/etf-premium-history.json";
 import tradesJson from "@/data/validation/trades.json";
-import { backtest, type BacktestResult, type HorizonResult } from "./backtest";
+import funding from "@/data/validation/funding-history.json";
+import { HOURS_PER_YEAR } from "./calc";
+import { backtest, fundingBacktest, type BacktestResult, type FundingResult, type HorizonResult } from "./backtest";
 
-export type { Assumption, HorizonResult, Stats } from "./backtest";
+export type { Assumption, ErrorStats, FundingAssumption, FundingHorizon, HorizonResult, Stats } from "./backtest";
 
 /** A real SoDEX round trip next to the prediction committed before it (scripts/predict-trade.mjs). */
 export type TradeLeg = {
@@ -66,5 +68,18 @@ export function premiumBacktest(asset: "BTC" | "ETH"): Backtest {
     longest: r.horizons.at(-1) ?? null,
   };
   cache.set(asset, out);
+  return out;
+}
+
+export type FundingTest = FundingResult & { asset: "BTC" | "ETH"; frozenAt: string; venue: string };
+export const fundingFile = "data/validation/funding-history.json";
+
+/** "Today's hourly funding for the whole period", tested on Hyperliquid's hourly history (SoDEX publishes none). */
+const fcache = new Map<string, FundingTest>();
+export function fundingTest(asset: "BTC" | "ETH"): FundingTest {
+  if (fcache.has(asset)) return fcache.get(asset)!;
+  const f = funding as any;
+  const out: FundingTest = { ...fundingBacktest(f.coins[asset], undefined, HOURS_PER_YEAR), asset, frozenAt: f.frozenAt, venue: "Hyperliquid" };
+  fcache.set(asset, out);
   return out;
 }

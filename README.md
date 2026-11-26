@@ -152,7 +152,7 @@ The model choice was tested on the actual task: on parsing requests into the sch
 - **/journal** — a GitHub Action commits a dated snapshot and the day's validated note every day, with the change vs
   the previous day; the git history makes it tamper-evident. Below it, history straight from SoSoValue (clearly
   separated from what we recorded): 30 days of BTC ETF premium/discount and Strategy's BTC purchases.
-- **/validation** — one assumption tested where history allows it. The cost rule assumes an ETF's premium to NAV
+- **/validation** — two assumptions tested where history allows it. (1) The cost rule assumes an ETF's premium to NAV
   is the same at exit as at entry. On 22 sessions of SoSoValue history (26 Oct – 24 Nov 2026, all 12 BTC and 11 ETH
   US spot ETFs), after 10 sessions the reported closing premium moved by more than 0.35 % (BTC) / 0.34 % (ETH) in
   1 of 10 fund-windows; "sold at NAV" would have cut that to 0.19 % / 0.23 %; after 1 session the fund's past median
@@ -163,8 +163,15 @@ The model choice was tested on the actual task: on parsing requests into the sch
   `node scripts/reproduce-validation.mjs` re-computes the tables without a key, with the same `lib/backtest.ts`.
   Real-trade check: a prediction with the full order book is committed *before* a SoDEX round trip
   (`scripts/predict-trade.mjs`), then `scripts/record-fill.mjs` reads the fills from SoDEX's public account-trades
-  endpoint. Status is shown on the page (0 verified round trips until one is recorded). What history cannot test:
-  past SoDEX books, perp funding, treasury ratios.
+  endpoint. Status is shown on the page (0 verified round trips until one is recorded).
+  (2) A perp's cost uses today's hourly funding for the whole period. SoDEX publishes no market funding history, so
+  this is tested on Hyperliquid's public hourly history (Jun 2023 – Nov 2026, ~30,400 hours per coin, frozen in
+  `data/validation/funding-history.json` by `scripts/freeze-funding-history.mjs`) and labelled as another venue.
+  Over 12 months the rule missed the funding actually paid by more than 45 % (BTC) / 44 % (ETH) of the amount in
+  1 of 10 daily starts; a past 30-day average would have cut that to 27 % / 25 %. Only 3 non-overlapping 12-month
+  windows fit in that history. The rule stays (SoDEX has no history to average), and the answer now says when a
+  perp leads, or trails the cheapest route, by less than that miss. What history cannot test: past SoDEX books,
+  SoDEX's own funding history, treasury ratios.
 - **Tests on real data:** `fixtures/` holds responses recorded from the live APIs (key stripped).
   `tests/model.test.ts` runs the whole pipeline on them and re-derives each figure from the raw JSON
   (e.g. IBIT cost = 0.25 % fee, MSTR ratio from the raw snapshot and holdings), plus the edge cases reviewers found:
@@ -189,7 +196,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 53 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 57 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```
@@ -220,8 +227,8 @@ lib/
   snapshot.ts           compact snapshot shape
   trade.ts              SoDEX deep links and unsigned order tickets
   history.ts            ETF premium history and Strategy purchases from SoSoValue
-  backtest.ts           exit-premium backtest on one session calendar (pure, tested)
-  validation.ts         reads the frozen dataset and recorded trades for /validation
+  backtest.ts           exit-premium and perp-funding backtests (pure, tested)
+  validation.ts         reads the frozen datasets and recorded trades for /validation
   llm.ts                OpenAI Responses API client (strict JSON schema)
   query.ts              question parser + normalisation
   report.ts             facts, writer prompt, validator, template fallback
@@ -230,6 +237,7 @@ fixtures/               recorded real API responses (key stripped)
 tests/                  vitest
 data/                   daily snapshots and notes (Action), validation/ predictions and trades
 scripts/                predict-trade / record-fill (real-trade check), freeze-premium-history /
+                        freeze-funding-history /
                         reproduce-validation (backtest inputs and offline re-run), deploy, fixtures
 .github/workflows/      daily snapshot
 ```
@@ -247,7 +255,8 @@ scripts/                predict-trade / record-fill (real-trade check), freeze-p
 New project in Wave 3: comparison engine, SoDEX execution check, treasury market-cap ratios with 24/7 SoDEX pricing, ETF coverage
 for BTC and ETH, plain-language ask box, daily AI note in which the model types no digits (code inserts every number), SoDEX order tickets and deep links,
 /diag, daily journal with day-over-day changes and SoSoValue history, /judges, /validation (exit-premium assumption tested
-on 22 sessions of SoSoValue history with frozen inputs; protocol for checking a prediction against a real SoDEX fill), tests on recorded real data.
+on 22 sessions of SoSoValue history and the perp funding assumption on 3.5 years of Hyperliquid hourly funding, both with
+frozen inputs; protocol for checking a prediction against a real SoDEX fill), tests on recorded real data.
 
 ## Team
 

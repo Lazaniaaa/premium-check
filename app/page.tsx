@@ -3,7 +3,7 @@ import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from
 import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
 import { latestReport } from "@/lib/reports-store";
 import Link from "next/link";
-import { premiumBacktest } from "@/lib/validation";
+import { fundingTest, premiumBacktest } from "@/lib/validation";
 import { TabLink, Tabs, type TabDef } from "./components/tabs";
 import { METHOD_VERSION } from "@/lib/snapshot";
 
@@ -173,6 +173,38 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
     const etf = best.kind === "etf" ? best : runnerUp;
     return { tie: false, pair, move, gap, etf } as const;
   })();
+  // Same idea for perp funding, tested on Hyperliquid's hourly history (SoDEX publishes none).
+  // "lead": a perp is first or second and the gap between them is under the 1-in-10 miss of
+  // "today's rate × period" at this holding period. "behind": a ranked perp further down is
+  // within that miss of the cheapest route, so a lower funding rate could close the gap.
+  const fundingRun = fundingTest(asset);
+  const fundingH = fundingRun.horizons.find((h) => h.months === months) ?? null;
+  const fundingMove = fundingH?.today.p90Abs ?? null;
+  const fundingHint = (() => {
+    if (!best || !runnerUp || fundingMove == null) return null;
+    if (tied.length > 0) return [best, ...tied].some((r) => r.kind === "sodex_perp") ? ({ kind: "tie" } as const) : null;
+    if (best.kind !== "sodex_perp" && runnerUp.kind !== "sodex_perp") return null;
+    return runnerUp.cost! - best.cost! < fundingMove ? ({ kind: "lead" } as const) : null;
+  })();
+  const perpBehind = (() => {
+    const perp = ranked.find((r) => r.kind === "sodex_perp");
+    if (!best || !perp || fundingMove == null || fundingHint) return null;
+    if (perp.id === best.id || perp.id === runnerUp?.id || tied.some((r) => r.id === perp.id)) return null;
+    const gap = perp.cost! - best.cost!;
+    return gap < fundingMove ? { perp, gap } : null;
+  })();
+  const fundingLead = fundingHint?.kind === "lead";
+  const leadHint = (premiumHint && !premiumHint.tie) || fundingLead;
+  const monthYear = (iso: string | null) =>
+    iso ? new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }) : "—";
+  const FundingMiss = () => (
+    <span className="sub">
+      On {fundingRun.venue}&apos;s hourly {asset} funding ({monthYear(fundingRun.from)} – {monthYear(fundingRun.to)}; SoDEX
+      publishes no funding history), funding paid over {horizon} missed &ldquo;the starting hourly rate × {horizon}&rdquo; by
+      more than {pct(fundingMove, 1)} of the amount ({usd(amount * (fundingMove ?? 0), 2)} here) in 1 of 10 starts, in either
+      direction. <Link href="/validation#funding">How we checked</Link>
+    </span>
+  );
 
   const query = `asset=${asset}&usd=${amount}&months=${months}${etfPct ? `&etfcost=${etfPct}` : ""}${exclude.length ? `&exclude=${exclude.join(",")}` : ""}`;
   const tabs: TabDef[] = [
@@ -326,23 +358,37 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           </p>
         )}
 
-        {premiumHint?.tie && (
+        {(premiumHint?.tie || fundingHint?.kind === "tie") && (
           <p className="muted">
-            <Link href="/validation#premium">How ETF exit prices could change this result</Link>
+            {premiumHint?.tie && <Link href="/validation#premium">How ETF exit prices could change this result</Link>}
+            {premiumHint?.tie && fundingHint?.kind === "tie" && " · "}
+            {fundingHint?.kind === "tie" && <Link href="/validation#funding">How perp funding could change this result</Link>}
           </p>
         )}
-        {premiumHint && !premiumHint.tie && (
+        {leadHint && (
           <p>
-            {short(best)} leads {short(runnerUp)} by {usd(amount * premiumHint.gap, 2)}.{" "}
-            {premiumHint.pair
-              ? `A change in the gap between their exit premiums could reverse that.`
-              : `A change in ${short(premiumHint.etf)}'s exit premium could reverse that.`}{" "}
-            <span className="sub">
-              In {premiumTest.sessions} sessions ({premiumTest.from} – {premiumTest.to}), 1 in 10{" "}
-              {premiumHint.pair ? "two-fund premium gaps" : `${asset} ETF premiums`} moved by more than {pct(premiumHint.move, 2)} (
-              {usd(amount * premiumHint.move, 2)} here) after {longest!.days} sessions.{" "}
-              <Link href="/validation#premium">How we checked</Link>
-            </span>
+            {short(best!)} leads {short(runnerUp)} by {usd(amount * (runnerUp.cost! - best!.cost!), 2)}.{" "}
+            {premiumHint && !premiumHint.tie
+              ? premiumHint.pair
+                ? `A change in the gap between their exit premiums could reverse that. `
+                : `A change in ${short(premiumHint.etf)}'s exit premium could reverse that. `
+              : ""}
+            {fundingLead ? `${premiumHint && !premiumHint.tie ? "So could" : "A change in"} perp funding${premiumHint && !premiumHint.tie ? "." : " could reverse that."} ` : ""}
+            {premiumHint && !premiumHint.tie && (
+              <span className="sub">
+                In {premiumTest.sessions} sessions ({premiumTest.from} – {premiumTest.to}), 1 in 10{" "}
+                {premiumHint.pair ? "two-fund premium gaps" : `${asset} ETF premiums`} moved by more than {pct(premiumHint.move, 2)} (
+                {usd(amount * premiumHint.move, 2)} here) after {longest!.days} sessions.{" "}
+                <Link href="/validation#premium">How we checked</Link>{" "}
+              </span>
+            )}
+            {fundingLead && <FundingMiss />}
+          </p>
+        )}
+        {perpBehind && (
+          <p className="sub">
+            {short(perpBehind.perp)} is {usd(amount * perpBehind.gap, 2)} behind {short(best!)} at today&apos;s funding rate.
+            Lower funding could close that gap. <FundingMiss />
           </p>
         )}
 
@@ -398,7 +444,7 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           <li>Reference price: SoDEX {asset}-USD index price (mark price if the index is unavailable); SoSoValue price shown as an independent cross-check.</li>
           <li>SoDEX round trip = 1 − (sell VWAP × (1 − fee)) ÷ (buy VWAP × (1 + fee)) for {usd(amount)} against the live order book (100 levels), tier-0 taker fees 0.065% spot / 0.04% perps. It is today&apos;s friction; tomorrow&apos;s book may differ.</li>
           <li>Gaps to a reference — an ETF&apos;s premium to NAV, a SoDEX market&apos;s gap to the index — are treated the same way for every route: shown, and assumed unchanged when you sell. If they change, the result changes by that amount.</li>
-          <li>Perp carry = current hourly funding × 8,760, i.e. what a year would cost if today&apos;s rate never changed. Funding resets every hour; the cost at zero funding is shown too.</li>
+          <li>Perp carry = current hourly funding × 8,760, i.e. what a year would cost if today&apos;s rate never changed. Funding resets every hour; the cost at zero funding is shown too. On another venue&apos;s history this rule missed by a lot over long periods (<Link href="/validation#funding">validation</Link>), so treat the perp cost as the least certain number here.</li>
           <li>ETF cost = sponsor fee × holding period + your commission and spread if you enter them. Not ranked, but shown: a fee SoSoValue reports as 0, funds that traded under $2M on the last day or where your amount exceeds 0.1% of that day&apos;s trading (a rule of thumb — we have no spread data), staking ETFs, and any route the order book cannot fill. Routes within 0.1 pp are called a tie.</li>
           <li>Company ratios: market cap ÷ BTC value, and (market cap + debt − cash) ÷ BTC value with debt and cash from the latest SoSoValue quarterly balance sheet. Preferred stock and dilution are not in that data, so these are simple ratios, not Strategy&apos;s own mNAV (since 23 Jul 2026 Strategy defines mNAV from net bitcoin per share after senior claims).</li>
           <li>Nothing here places orders. Execution numbers are a preview from the public order book.</li>

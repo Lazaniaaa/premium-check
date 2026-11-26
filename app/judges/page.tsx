@@ -3,7 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
-import { premiumBacktest, trades } from "@/lib/validation";
+import { fundingTest, premiumBacktest, trades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -36,6 +36,9 @@ export default async function Judges() {
   const mstr = btc.companies.find((c) => c.ticker === "MSTR");
   const newWriter = report?.note.points.some((p) => p.template);
   const sha = build.sha ? build.sha.slice(0, 7) : null;
+  const funding = fundingTest("BTC");
+  const fundingYears = (funding.hours / (24 * 365)).toFixed(1);
+  const fundingYear = funding.horizons.find((h) => h.months === 12);
 
   return (
     <>
@@ -61,8 +64,10 @@ export default async function Judges() {
             market cap vs BTC value for each treasury company, with and without debt minus cash, and the price source.
           </li>
           <li>
-            <Link href="/validation">Does the method hold up?</Link> — one assumption of the cost rule tested on {premiumBacktest("BTC").sessions}
-            sessions of SoSoValue ETF history (data and re-run command in the repo);{" "}
+            <Link href="/validation">Does the method hold up?</Link> — two assumptions of the cost rule tested: the ETF exit
+            premium on {premiumBacktest("BTC").sessions} sessions of SoSoValue ETF history, and &ldquo;today&apos;s funding
+            for the whole period&rdquo; on {fundingYears} years of hourly perp funding from another venue (SoDEX publishes
+            none); data and re-run command in the repo;{" "}
             {trades.length
               ? `${trades.length} SoDEX round trip${trades.length > 1 ? "s" : ""} checked against the prediction made before it`
               : "real-trade check: 0 verified round trips so far, protocol published"}
@@ -248,7 +253,12 @@ export default async function Judges() {
       <div className="card">
         <ul className="notes">
           <li>No spread data exists in the APIs: ETF liquidity uses a rule of thumb from daily value traded, and your broker cost is an input.</li>
-          <li>Perp funding is today&apos;s hourly rate over the period, not a forecast; the cost at zero funding is shown too.</li>
+          <li>
+            Perp funding is today&apos;s hourly rate over the period, not a forecast; the cost at zero funding is shown too. On{" "}
+            {funding.venue}&apos;s BTC history this rule missed 12 months of funding by more than{" "}
+            {fundingYear?.today.p90Abs != null ? pct(fundingYear.today.p90Abs, 0) : "—"} of the amount in 1 of 10 starts (
+            <Link href="/validation#funding">validation</Link>), so the answer flags when funding could change the order.
+          </li>
           <li>Company ratios exclude preferred stock and dilution (not in the data); they are not Strategy&apos;s own mNAV.</li>
           <li>The AI can still word a sentence poorly; every point lists the facts it used.</li>
         </ul>
