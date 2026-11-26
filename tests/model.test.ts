@@ -39,6 +39,7 @@ describe("BTC comparison on recorded data", () => {
     const ibit = btc.direct.find((r) => r.id === "etf-IBIT")!;
     expect(ibit.annualCarry).toBe(0.0025);
     expect(ibit.premiumNow).toBeCloseTo(hist[0].prem_dsc, 12);
+    expect(ibit.premiumAsOf).toBe(String(hist[0].date));
     expect(ibit.cost).toBeCloseTo(0.0025, 12);
   });
 

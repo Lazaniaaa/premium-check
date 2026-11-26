@@ -1,9 +1,12 @@
 import Link from "next/link";
 import {
+  afterFile,
   datasetFile,
   fundingFile,
   fundingTest,
   premiumBacktest,
+  premiumOutOfSample,
+  type OutOfSample,
   trades,
   type Backtest,
   type ErrorStats,
@@ -102,7 +105,7 @@ function FundingTable({ r }: { r: FundingTest }) {
           <thead>
             <tr>
               <th>Held for</th>
-              <th>Funding actually paid</th>
+              <th>Cumulative funding, constant $ position</th>
               <th>Starting hourly rate × period (our rule)</th>
               <th>No funding</th>
               <th>Past 30-day average</th>
@@ -132,12 +135,70 @@ function FundingTable({ r }: { r: FundingTest }) {
         </table>
       </div>
       <p className="sub">
-        Funding paid: median, and p10 – p90 below it, in % of the amount held (positive = longs paid). Other cells: typical miss
-        (median) / miss exceeded in 1 of 10 starts (p90) of |paid − predicted|; lowest p90 in bold. One start per day at 00:00
+        Cumulative funding: the sum of hourly rates over the period, i.e. what a long of a constant dollar size pays, in % of
+        that size (the site books perp carry the same way; a holder of a fixed coin amount pays more in dollars if the price
+        rises). Median, and p10 – p90 below it. Other cells: typical miss (median) / miss exceeded in 1 of 10 historical starts
+        (p90) of |cumulative − predicted|; lowest p90 in bold. These describe past starts on this venue, not a probability for
+        your position. One start per day at 00:00
         UTC; the &ldquo;starting rate&rdquo; is the last settled hour. Starts overlap heavily — only {last.independent}{" "}
         non-overlapping {last.months}-month window{last.independent === 1 ? " fits" : "s fit"} in this history — so the long
         horizons describe very few market paths. {r.dropped} early hours were dropped (the venue did not yet
-        settle every hour); {r.filled} isolated missing hours were filled with the mean of their neighbours.
+        settle every hour); {r.filled} isolated missing hours repeat the previous hour.
+      </p>
+    </>
+  );
+}
+
+function OutOfSampleTable({ rows, frozenAt, sessions }: { rows: OutOfSample[]; frozenAt: string; sessions: number }) {
+  const r0 = rows[0];
+  return (
+    <>
+      <h3 id="new-close">Out of sample: the first close after the dataset was frozen ({r0.exitDates.map(day).join(", ")})</h3>
+      <p>
+        The p90s above were frozen at {ms(frozenAt)}, before that day&apos;s US close. We then fetched the same SoSoValue
+        history again ({ms(r0.fetchedAt)}) and checked every fund on the new close: did its premium move by more than the
+        frozen p90 for that horizon?
+      </p>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Asset · sold after</th>
+              <th>Frozen p90 (our rule)</th>
+              <th>Funds that moved more</th>
+              <th>Median · largest move</th>
+              <th>&ldquo;Sold at NAV&rdquo;: over its p90</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.flatMap((o) =>
+              o.horizons.map((h) => (
+                <tr key={`${o.asset}-${h.days}`}>
+                  <td>
+                    {o.asset} · {h.days === 1 ? "1 session" : `${h.days} sessions`}
+                  </td>
+                  <td>{b(h.threshold)}</td>
+                  <td style={h.exceeded * 2 > h.n ? { fontWeight: 600 } : undefined}>
+                    {h.exceeded} of {h.n}
+                  </td>
+                  <td>
+                    {b(h.median)} <span className="muted">· {h.max ? `${h.max.ticker} ${b(h.max.move)}` : "—"}</span>
+                  </td>
+                  <td>
+                    {h.navExceeded} of {h.n} <span className="muted">(p90 {b(h.navThreshold)})</span>
+                  </td>
+                </tr>
+              )),
+            )}
+          </tbody>
+        </table>
+      </div>
+      <p className="sub">
+        One new date: the funds share the market move, so this is one event, not {rows.reduce((n, o) => n + (o.horizons[0]?.n ?? 0), 0)}{" "}
+        independent checks, and for 5 and 10 sessions the start lies inside the frozen sample. A p90 allows 1 in
+        10; when most funds exceed it, the {sessions}-session sample did not contain a move like this one. None of the{" "}
+        {rows.reduce((n, o) => n + o.shared, 0)} values the two copies share was revised ({rows.reduce((n, o) => n + o.revised, 0)}{" "}
+        changes). Later copy: <a href={`${REPO_URL}/blob/main/${afterFile}`}>{afterFile}</a>. US markets were closed on 26 Nov.
       </p>
     </>
   );
@@ -206,6 +267,9 @@ export default function Validation() {
   const [btc] = both;
   const oneDay = both.map((r) => ({ asset: r.asset, best: r.horizons[0].best }));
   const fund = [fundingTest("BTC"), fundingTest("ETH")];
+  const oos = [premiumOutOfSample("BTC"), premiumOutOfSample("ETH")];
+  const oos5 = oos.map((o) => o.horizons.find((h) => h.days === 5)!);
+  const oos10 = oos.map((o) => o.horizons.find((h) => h.days === 10)!);
   const year = fund.map((r) => ({ asset: r.asset, h: r.horizons.find((h) => h.months === 12)! }));
 
   return (
@@ -239,16 +303,26 @@ export default function Validation() {
           <li>
             <b>Perp funding</b>, tested on {fund[0].venue}&apos;s hourly history ({monthYear(fund[0].from)} –{" "}
             {monthYear(fund[0].to)}) because SoDEX publishes none: over 12 months, our rule — the starting hourly rate × the
-            period — missed the funding actually paid by more than{" "}
+            period — missed cumulative funding on a constant dollar position by more than{" "}
             {year.map((y, i) => (
               <span key={y.asset}>
                 {i ? " / " : ""}
                 <b>{p1(y.h.today.p90Abs)}</b>
               </span>
             ))}{" "}
-            of the amount (BTC / ETH) in 1 of 10 starts. A past 30-day average would have cut that to{" "}
-            {year.map((y) => p1(y.h.trailing30.p90Abs)).join(" / ")}. So the perp cost is the least certain number on the
-            site; the answer now says when funding could change the order.
+            of the amount (BTC / ETH) in 1 of 10 historical starts (typical miss{" "}
+            {year.map((y) => p1(y.h.today.medianAbs)).join(" / ")}). A past 30-day average would have cut the 1-in-10 miss
+            to {year.map((y) => p1(y.h.trailing30.p90Abs)).join(" / ")}. So the perp cost is the least certain number on the
+            site; the answer now shows the funding rate at which the perp would win, and how often this history averaged
+            below it.
+          </li>
+          <li>
+            <b>First close after freezing ({oos[0].exitDates.map(day).join(", ")}):</b> after 5 sessions the premium moved by
+            more than the frozen p90 in <b>{oos5[0].exceeded} of {oos5[0].n}</b> BTC and{" "}
+            <b>{oos5[1].exceeded} of {oos5[1].n}</b> ETH funds (after 10 sessions: {oos10[0].exceeded}/{oos10[0].n} and{" "}
+            {oos10[1].exceeded}/{oos10[1].n}). The funds moved together, so this is one market event — but it shows the p90s
+            from 22 sessions understate a day like this, for &ldquo;sold at NAV&rdquo; as much as for our rule.{" "}
+            <a href="#new-close">Details</a>
           </li>
           <li>
             <b>Real-trade check:</b>{" "}
@@ -283,6 +357,7 @@ export default function Validation() {
       {both.map((r) => (
         <BacktestTable key={r.asset} r={r} />
       ))}
+      <OutOfSampleTable rows={oos} frozenAt={btc.frozenAt} sessions={btc.sessions} />
 
       <h2 id="funding">2. Perp funding</h2>
       <p>
@@ -301,9 +376,12 @@ export default function Validation() {
         <FundingTable key={r.asset} r={r} />
       ))}
       <p>
-        What changed: when a perp leads, or trails the cheapest route, by less than the 1-in-10 miss at your holding period,
-        the answer on the main page now says so. We keep the rule itself: a 30-day average needs a funding history SoDEX doesn&apos;t
-        publish, and on this sample it was not the best at 12–24 months either.
+        What changed: the answer now gives the break-even funding — the average rate a year at which the perp costs the same
+        as the cheapest other route, (that route&apos;s cost − perp cost at zero funding) ÷ years — next to today&apos;s rate,
+        and how many {fund[0].venue} windows of your holding period averaged below it. Example on 26 Nov 2026: $1,000 of BTC for 12 months
+        with SoDEX spot at about $1.32 and the perp at $0.82 before funding gives about 0.05% a year. We keep the rule
+        itself: a 30-day average needs a funding history SoDEX doesn&apos;t publish, and on this sample it was not the best
+        at 12–24 months either.
       </p>
 
       <h2 id="trade">3. Prediction vs a real SoDEX fill</h2>

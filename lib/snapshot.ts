@@ -42,7 +42,7 @@ type AssetSnapshot = {
   reference: Comparison["reference"];
   cheapest: { id: string; name: string; cost: number | null } | null;
   perpAnnualFunding: number | null;
-  routes: { id: string; name: string; tradingCost: number | null; premiumNow: number | null; annualCarry: number | null; cost: number | null; ranked: boolean; flags: string[] }[];
+  routes: { id: string; name: string; tradingCost: number | null; premiumNow: number | null; premiumAsOf?: string | null; annualCarry: number | null; cost: number | null; ranked: boolean; flags: string[] }[];
   companies: {
     ticker: string;
     kind: string;
@@ -67,6 +67,7 @@ const compact = (c: Comparison): AssetSnapshot => {
       name: r.name,
       tradingCost: r.tradingCost,
       premiumNow: r.premiumNow,
+      ...(r.premiumAsOf !== undefined ? { premiumAsOf: r.premiumAsOf } : {}),
       annualCarry: r.annualCarry,
       cost: r.cost,
       ranked: r.ranked,

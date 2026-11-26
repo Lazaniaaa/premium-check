@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { backtest, fundingBacktest, type Series } from "@/lib/backtest";
-import { fundingTest, premiumBacktest } from "@/lib/validation";
+import { backtest, fundingBacktest, fundingPaid, outOfSample, type Series } from "@/lib/backtest";
+import { fundingShareBelow, fundingTest, premiumBacktest, premiumOutOfSample } from "@/lib/validation";
 
 const days = (ps: number[]) => ps.map((p, i) => ({ date: `2026-11-${String(i + 1).padStart(2, "0")}`, p }));
 
@@ -116,5 +116,47 @@ describe("frozen funding history", () => {
       expect(r.horizons.map((h) => h.months)).toEqual([1, 3, 6, 12, 24]);
       expect(r.horizons.every((h) => h.starts > 0 && h.today.n === h.starts)).toBe(true);
     }
+  });
+});
+
+describe("out of sample", () => {
+  it("checks frozen p90s on later closes, with starts from the frozen file", () => {
+    const frozen: Series = { A: days([0, 0.001, 0.002]), B: days([0, 0, 0]) };
+    const fr = backtest(frozen, [1, 2]);
+    // The later copy revises one old value (ignored for starts) and adds a new close.
+    const later: Series = {
+      A: [...days([0, 0.001, 0.009]), { date: "2026-11-04", p: 0.02 }],
+      B: [...days([0, 0, 0]), { date: "2026-11-04", p: 0 }],
+    };
+    const o = outOfSample(frozen, later, fr);
+    expect(o.exitDates).toEqual(["2026-11-04"]);
+    expect(o.revised).toBe(1);
+    expect(o.shared).toBe(6);
+    const [h1, h2] = o.horizons;
+    expect(h1.n).toBe(2);
+    expect(h1.max).toEqual({ ticker: "A", move: expect.closeTo(0.018, 12) }); // 0.02 - frozen 0.002, not the revised 0.009
+    expect(h1.exceeded).toBe(1);
+    expect(h2.max?.move).toBeCloseTo(0.019);
+  });
+
+  it("the committed later copy adds the 25 Nov close for every fund", () => {
+    for (const asset of ["BTC", "ETH"] as const) {
+      const o = premiumOutOfSample(asset);
+      const r = premiumBacktest(asset);
+      expect(o.exitDates).toEqual(["2026-11-25"]);
+      expect(o.horizons.every((h) => h.n === r.covered)).toBe(true);
+    }
+  });
+});
+
+describe("funding break-even context", () => {
+  it("counts windows whose cumulative funding averaged below a rate", () => {
+    const s = hours([...Array(24 * 6).fill(100)]); // 1e-8 an hour
+    const paid = fundingPaid(s, 1, 24 * 12, 24); // 24 h windows
+    expect(paid.length).toBe(5);
+    expect(paid[0]).toBeCloseTo(24 * 100 * 1e-10);
+    const year = fundingShareBelow("BTC", 12, -10);
+    expect(year.below).toBe(0);
+    expect(fundingShareBelow("BTC", 12, 10).below).toBe(year.n);
   });
 });

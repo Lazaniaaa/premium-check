@@ -1,7 +1,10 @@
 // Freezes the ETF premium/discount history used by /validation into the repo, so the
 // published numbers can be reproduced without an API key (scripts/reproduce-validation.mjs).
 //
-//   node scripts/freeze-premium-history.mjs
+//   node scripts/freeze-premium-history.mjs [--out data/validation/<file>.json]
+//
+// Default output is the backtest dataset. With --out it saves a later copy, used to check
+// the frozen p90s on sessions that closed after the dataset was frozen (out of sample).
 //
 // Reads SOSO_API_KEY from .env (never written anywhere). About 25 SoSoValue requests:
 // the US spot ETF lists for BTC and ETH and one /etfs/{ticker}/history per fund.
@@ -57,5 +60,7 @@ for (const asset of ["BTC", "ETH"]) {
   console.log(asset, `${Object.keys(funds).length}/${list.length} funds`, missing.length ? `missing ${missing.join(",")}` : "");
 }
 fs.mkdirSync("data/validation", { recursive: true });
-fs.writeFileSync("data/validation/etf-premium-history.json", JSON.stringify(out, null, 1) + "\n");
-console.log("Saved data/validation/etf-premium-history.json");
+const outIdx = process.argv.indexOf("--out");
+const file = outIdx > 0 ? process.argv[outIdx + 1] : "data/validation/etf-premium-history.json";
+fs.writeFileSync(file, JSON.stringify(out, null, 1) + "\n");
+console.log(`Saved ${file}`);

@@ -100,9 +100,11 @@ export function backtest(series: Series, horizons = HORIZON_DAYS): BacktestResul
 // Input is hourly funding in integer units of 1e-10 (data/validation/funding-history.json,
 // Hyperliquid: SoDEX publishes no market funding history). The leading stretch where the
 // venue did not yet settle every hour (runs of 2+ missing hours) is dropped; an isolated
-// missing hour after that is filled with the mean of its two neighbours and counted.
+// missing hour after that repeats the previous hour (no look-ahead) and is counted.
 // One start per day at 00:00 UTC; at each start the "known" rate is the last settled hour.
-// Errors are in fractions of the amount held: actual funding paid minus predicted.
+// "Paid" is the sum of hourly rates: cumulative funding on a constant dollar position, the
+// same way the site books perp carry (rate × hours on your amount). A holder of a fixed coin
+// quantity pays more in dollars when the price rises. Errors: paid minus predicted.
 
 export type FundingSeries = { firstHour: string; rates: (number | null)[] };
 export type FundingAssumption = "today" | "zero" | "trailing30";
@@ -116,8 +118,8 @@ export type FundingHorizon = {
   months: number;
   hours: number;
   starts: number; // daily start points (windows overlap)
-  independent: number; // non-overlapping windows that fit in the history
-  actual: { p10: number | null; median: number | null; p90: number | null }; // funding actually paid over the period
+  independent: number; // non-overlapping windows among the starts used
+  actual: { p10: number | null; median: number | null; p90: number | null }; // cumulative funding over the period
   today: ErrorStats; // today's hourly rate × hours: the site's rule
   zero: ErrorStats; // no funding at all
   trailing30: ErrorStats; // average of the past 30 days × hours
@@ -128,7 +130,7 @@ export type FundingResult = {
   to: string | null;
   hours: number; // hourly values used
   dropped: number; // leading hours dropped (venue not yet settling every hour)
-  filled: number; // isolated missing hours filled from their neighbours
+  filled: number; // isolated missing hours filled with the previous hour
   horizons: FundingHorizon[];
 };
 
@@ -146,24 +148,47 @@ const errorStats = (err: number[]): ErrorStats => {
   };
 };
 
-export function fundingBacktest(s: FundingSeries, months = FUNDING_MONTHS, hoursPerYear = 24 * 365, trailing = 720): FundingResult {
+function prepare(s: FundingSeries) {
   let cut = 0; // first hour after the last run of 2+ missing hours
   for (let i = 1; i < s.rates.length; i++) if (s.rates[i] === null && s.rates[i - 1] === null) cut = i + 1;
   while (cut < s.rates.length && s.rates[cut] === null) cut++;
   let filled = 0;
-  const r = s.rates.slice(cut).map((x, i, xs) => {
-    if (x !== null) return x;
-    filled++;
-    return (xs[i - 1]! + xs[i + 1]!) / 2; // isolated by construction; the last hour is always a record
-  });
+  const r: number[] = [];
+  for (const x of s.rates.slice(cut)) {
+    if (x === null) filled++;
+    r.push(x ?? r.at(-1)!); // isolated by construction, so the previous hour exists
+  }
   const t0 = Date.parse(s.firstHour) + cut * HOUR;
   const P = [0];
   for (const x of r) P.push(P.at(-1)! + x);
+  return { r, P, t0, cut, filled };
+}
+
+/** Daily 00:00 UTC start indices with a full trailing window before and H hours after. */
+function startsFor(n: number, t0: number, H: number, trailing: number) {
+  const out: number[] = [];
+  for (let i = trailing; i + H <= n; i++) if ((t0 + i * HOUR) % (24 * HOUR) === 0) out.push(i);
+  return out;
+}
+
+/** Cumulative funding (fraction of a constant dollar position) over each window, ascending. */
+export function fundingPaid(s: FundingSeries, months: number, hoursPerYear = 24 * 365, trailing = 720): number[] {
+  const { r, P, t0 } = prepare(s);
+  const H = Math.round((hoursPerYear * months) / 12);
+  return startsFor(r.length, t0, H, trailing)
+    .map((i) => (P[i + H] - P[i]) / UNIT)
+    .sort((a, b) => a - b);
+}
+
+export function fundingBacktest(s: FundingSeries, months = FUNDING_MONTHS, hoursPerYear = 24 * 365, trailing = 720): FundingResult {
+  const { r, P, t0, cut, filled } = prepare(s);
   const horizons = months.map((m): FundingHorizon => {
     const H = Math.round((hoursPerYear * m) / 12);
     const act: number[] = [], eToday: number[] = [], eZero: number[] = [], eTrail: number[] = [];
-    for (let i = trailing; i + H <= r.length; i++) {
-      if ((t0 + i * HOUR) % (24 * HOUR) !== 0) continue;
+    const starts = startsFor(r.length, t0, H, trailing);
+    let independent = 0;
+    for (let k = 0, next = -Infinity; k < starts.length; k++) if (starts[k] >= next) (independent++, (next = starts[k] + H));
+    for (const i of starts) {
       const actual = (P[i + H] - P[i]) / UNIT;
       act.push(actual);
       eToday.push(actual - (r[i - 1] / UNIT) * H);
@@ -174,7 +199,7 @@ export function fundingBacktest(s: FundingSeries, months = FUNDING_MONTHS, hours
       months: m,
       hours: H,
       starts: act.length,
-      independent: Math.floor(r.length / H),
+      independent,
       actual: { p10: quantile(act, 0.1), median: median(act), p90: quantile(act, 0.9) },
       today: errorStats(eToday),
       zero: errorStats(eZero),
@@ -194,4 +219,64 @@ export function fundingBacktest(s: FundingSeries, months = FUNDING_MONTHS, hours
     filled,
     horizons,
   };
+}
+
+// ---------------------------------------------------------------------------------------
+// Out of sample: the p90s above, frozen before a session closed, checked on that session.
+// The calendar is the frozen one plus the sessions in a later copy of the same history that
+// come after it. Start values come from the frozen file (as published); exit values from the
+// later copy. Revisions to dates both files share are counted, not used.
+
+export type OosHorizon = {
+  days: number;
+  threshold: number | null; // frozen p90 of |change| (same premium) for this horizon
+  n: number; // funds with both ends
+  exceeded: number; // funds whose move was larger than the frozen p90
+  median: number | null;
+  max: { ticker: string; move: number } | null;
+  navThreshold: number | null; // frozen p90 of |exit premium| (sold at NAV)
+  navExceeded: number;
+};
+export type OosResult = { exitDates: string[]; revised: number; shared: number; horizons: OosHorizon[] };
+
+export function outOfSample(frozen: Series, later: Series, frozenResult: BacktestResult): OosResult {
+  const val = (s: Series) => new Map(Object.entries(s).map(([t, pts]) => [t, new Map(pts.filter((x) => Number.isFinite(x.p)).map((x) => [x.date, x.p]))]));
+  const F = val(frozen);
+  const L = val(later);
+  const frozenCal = [...new Set([...F.values()].flatMap((m) => [...m.keys()]))].sort();
+  const lastFrozen = frozenCal.at(-1) ?? "";
+  const exitDates = [...new Set([...L.values()].flatMap((m) => [...m.keys()]))].filter((d) => d > lastFrozen).sort();
+  const calendar = [...frozenCal, ...exitDates];
+  let revised = 0, shared = 0;
+  for (const [t, m] of L) for (const [d, p] of m) if (F.get(t)?.has(d)) (shared++, F.get(t)!.get(d) !== p && revised++);
+  const at = (t: string, d: string) => (d > lastFrozen ? L.get(t)?.get(d) : F.get(t)?.get(d));
+  const tickers = [...new Set([...F.keys(), ...L.keys()])].sort();
+  const horizons = frozenResult.horizons.map((fh): OosHorizon => {
+    const moves: { ticker: string; move: number }[] = [];
+    let navExceeded = 0;
+    for (const exit of exitDates) {
+      const e = calendar.indexOf(exit);
+      if (e - fh.days < 0) continue;
+      const start = calendar[e - fh.days];
+      for (const t of tickers) {
+        const a = at(t, start), b = at(t, exit);
+        if (a === undefined || b === undefined) continue;
+        moves.push({ ticker: t, move: Math.abs(b - a) });
+        if (fh.zero.p90 != null && Math.abs(b) > fh.zero.p90) navExceeded++;
+      }
+    }
+    const thr = fh.unchanged.p90;
+    const top = moves.reduce<{ ticker: string; move: number } | null>((m, x) => (!m || x.move > m.move ? x : m), null);
+    return {
+      days: fh.days,
+      threshold: thr,
+      n: moves.length,
+      exceeded: thr == null ? 0 : moves.filter((x) => x.move > thr).length,
+      median: median(moves.map((x) => x.move)),
+      max: top,
+      navThreshold: fh.zero.p90,
+      navExceeded,
+    };
+  });
+  return { exitDates, revised, shared, horizons };
 }

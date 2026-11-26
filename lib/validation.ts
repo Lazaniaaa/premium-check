@@ -3,12 +3,13 @@
 // and recorded prediction-vs-fill trades. Reading committed files: no API quota, and the
 // published numbers stay reproducible (scripts/reproduce-validation.mjs).
 import history from "@/data/validation/etf-premium-history.json";
+import after from "@/data/validation/etf-premium-after.json";
 import tradesJson from "@/data/validation/trades.json";
 import funding from "@/data/validation/funding-history.json";
 import { HOURS_PER_YEAR } from "./calc";
-import { backtest, fundingBacktest, type BacktestResult, type FundingResult, type HorizonResult } from "./backtest";
+import { backtest, fundingBacktest, fundingPaid, outOfSample, type BacktestResult, type FundingResult, type HorizonResult } from "./backtest";
 
-export type { Assumption, ErrorStats, FundingAssumption, FundingHorizon, HorizonResult, Stats } from "./backtest";
+export type { Assumption, ErrorStats, OosHorizon, OosResult, FundingAssumption, FundingHorizon, HorizonResult, Stats } from "./backtest";
 
 /** A real SoDEX round trip next to the prediction committed before it (scripts/predict-trade.mjs). */
 export type TradeLeg = {
@@ -81,5 +82,32 @@ export function fundingTest(asset: "BTC" | "ETH"): FundingTest {
   const f = funding as any;
   const out: FundingTest = { ...fundingBacktest(f.coins[asset], undefined, HOURS_PER_YEAR), asset, frozenAt: f.frozenAt, venue: "Hyperliquid" };
   fcache.set(asset, out);
+  return out;
+}
+
+/**
+ * Share of historical windows (same venue and holding period) whose cumulative funding
+ * averaged below `annualRate` a year. Used to put a perp's break-even funding in context.
+ */
+const paidCache = new Map<string, number[]>();
+export function fundingShareBelow(asset: "BTC" | "ETH", months: number, annualRate: number): { below: number; n: number } {
+  const key = `${asset}:${months}`;
+  if (!paidCache.has(key)) paidCache.set(key, fundingPaid((funding as any).coins[asset], months, HOURS_PER_YEAR));
+  const xs = paidCache.get(key)!;
+  const limit = annualRate * (months / 12);
+  return { below: xs.filter((x) => x < limit).length, n: xs.length };
+}
+
+export const afterFile = "data/validation/etf-premium-after.json";
+export type OutOfSample = import("./backtest").OosResult & { asset: "BTC" | "ETH"; fetchedAt: string };
+
+/** The frozen p90s checked on sessions that closed after the dataset was frozen. */
+const oosCache = new Map<string, OutOfSample>();
+export function premiumOutOfSample(asset: "BTC" | "ETH"): OutOfSample {
+  if (oosCache.has(asset)) return oosCache.get(asset)!;
+  const a = (history as any).assets[asset].funds;
+  const b = (after as any).assets[asset].funds;
+  const out = { ...outOfSample(a, b, premiumBacktest(asset)), asset, fetchedAt: (after as any).frozenAt };
+  oosCache.set(asset, out);
   return out;
 }

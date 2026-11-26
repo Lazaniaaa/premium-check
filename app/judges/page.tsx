@@ -3,7 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
-import { fundingTest, premiumBacktest, trades } from "@/lib/validation";
+import { fundingTest, premiumBacktest, premiumOutOfSample, trades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -36,6 +36,8 @@ export default async function Judges() {
   const mstr = btc.companies.find((c) => c.ticker === "MSTR");
   const newWriter = report?.note.points.some((p) => p.template);
   const sha = build.sha ? build.sha.slice(0, 7) : null;
+  const oos5 = (["BTC", "ETH"] as const).map((a) => premiumOutOfSample(a).horizons.find((h) => h.days === 5)!);
+  const oosNote = `after 5 sessions ${oos5[0].exceeded} of ${oos5[0].n} BTC and ${oos5[1].exceeded} of ${oos5[1].n} ETH funds moved more than the frozen p90`;
   const funding = fundingTest("BTC");
   const fundingYears = (funding.hours / (24 * 365)).toFixed(1);
   const fundingYear = funding.horizons.find((h) => h.months === 12);
@@ -65,7 +67,8 @@ export default async function Judges() {
           </li>
           <li>
             <Link href="/validation">Does the method hold up?</Link> — two assumptions of the cost rule tested: the ETF exit
-            premium on {premiumBacktest("BTC").sessions} sessions of SoSoValue ETF history, and &ldquo;today&apos;s funding
+            premium on {premiumBacktest("BTC").sessions} sessions of SoSoValue ETF history, then on the first close after the data
+            was frozen ({oosNote}), and &ldquo;today&apos;s funding
             for the whole period&rdquo; on {fundingYears} years of hourly perp funding from another venue (SoDEX publishes
             none); data and re-run command in the repo;{" "}
             {trades.length
@@ -256,8 +259,9 @@ export default async function Judges() {
           <li>
             Perp funding is today&apos;s hourly rate over the period, not a forecast; the cost at zero funding is shown too. On{" "}
             {funding.venue}&apos;s BTC history this rule missed 12 months of funding by more than{" "}
-            {fundingYear?.today.p90Abs != null ? pct(fundingYear.today.p90Abs, 0) : "—"} of the amount in 1 of 10 starts (
-            <Link href="/validation#funding">validation</Link>), so the answer flags when funding could change the order.
+            {fundingYear?.today.p90Abs != null ? pct(fundingYear.today.p90Abs, 0) : "—"} of a constant dollar position in 1 of 10
+            historical starts (<Link href="/validation#funding">validation</Link>), so the answer shows the break-even funding
+            rate at which the perp would win, next to today&apos;s.
           </li>
           <li>Company ratios exclude preferred stock and dilution (not in the data); they are not Strategy&apos;s own mNAV.</li>
           <li>The AI can still word a sentence poorly; every point lists the facts it used.</li>

@@ -161,16 +161,21 @@ The model choice was tested on the actual task: on parsing requests into the sch
   between two funds for ETF vs ETF, the fund's own move for ETF vs SoDEX). The exact inputs are frozen in
   `data/validation/etf-premium-history.json` (`scripts/freeze-premium-history.mjs`), and
   `node scripts/reproduce-validation.mjs` re-computes the tables without a key, with the same `lib/backtest.ts`.
+  Out of sample: the dataset was frozen before the 25 Nov US close; a later copy
+  (`data/validation/etf-premium-after.json`, no earlier value revised) checks the frozen p90s on that close. After
+  5 sessions 8 of 12 BTC and 8 of 11 ETH funds moved more than the frozen p90 (0/12 and 3/11 after 10 sessions);
+  "sold at NAV" was exceeded just as often. One correlated event, but it shows 22 sessions understate days like it.
   Real-trade check: a prediction with the full order book is committed *before* a SoDEX round trip
   (`scripts/predict-trade.mjs`), then `scripts/record-fill.mjs` reads the fills from SoDEX's public account-trades
   endpoint. Status is shown on the page (0 verified round trips until one is recorded).
   (2) A perp's cost uses today's hourly funding for the whole period. SoDEX publishes no market funding history, so
   this is tested on Hyperliquid's public hourly history (Jun 2023 – Nov 2026, ~30,400 hours per coin, frozen in
   `data/validation/funding-history.json` by `scripts/freeze-funding-history.mjs`) and labelled as another venue.
-  Over 12 months the rule missed the funding actually paid by more than 45 % (BTC) / 44 % (ETH) of the amount in
+  Over 12 months the rule missed cumulative funding on a constant dollar position by more than 45 % (BTC) / 44 % (ETH) in
   1 of 10 daily starts; a past 30-day average would have cut that to 27 % / 25 %. Only 3 non-overlapping 12-month
-  windows fit in that history. The rule stays (SoDEX has no history to average), and the answer now says when a
-  perp leads, or trails the cheapest route, by less than that miss. What history cannot test: past SoDEX books,
+  windows fit in that history. The rule stays (SoDEX has no history to average); the answer now shows the
+  break-even funding rate at which the perp would beat the cheapest other route, next to today's rate and how many
+  historical windows averaged below it. What history cannot test: past SoDEX books,
   SoDEX's own funding history, treasury ratios.
 - **Tests on real data:** `fixtures/` holds responses recorded from the live APIs (key stripped).
   `tests/model.test.ts` runs the whole pipeline on them and re-derives each figure from the raw JSON
@@ -196,7 +201,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 57 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 60 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```

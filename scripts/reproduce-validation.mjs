@@ -4,7 +4,7 @@
 //
 //   node scripts/reproduce-validation.mjs
 import fs from "node:fs";
-import { backtest, fundingBacktest } from "../lib/backtest.ts";
+import { backtest, fundingBacktest, outOfSample } from "../lib/backtest.ts";
 import { HOURS_PER_YEAR } from "../lib/calc.ts";
 
 const d = JSON.parse(fs.readFileSync("data/validation/etf-premium-history.json", "utf8"));
@@ -19,6 +19,19 @@ for (const [asset, a] of Object.entries(d.assets)) {
       `${String(h.days).padStart(8)}  ${String(h.startDates).padStart(6)}  ${String(h.unchanged.n).padStart(12)}  ` +
         [h.unchanged, h.zero, h.pastMedian].map((s) => `${bp(s.median)} /${bp(s.p90)}`).join("  ") +
         `  ${bp(h.pairwise.median)} /${bp(h.pairwise.p90)} (${h.pairwise.n})`,
+    );
+}
+
+const later = JSON.parse(fs.readFileSync("data/validation/etf-premium-after.json", "utf8"));
+console.log(`
+Out of sample: frozen p90s checked on sessions in a copy fetched ${later.frozenAt}.`);
+for (const [asset, a] of Object.entries(d.assets)) {
+  const o = outOfSample(a.funds, later.assets[asset].funds, backtest(a.funds));
+  console.log(`${asset}: new closes ${o.exitDates.join(", ")}; ${o.revised} of ${o.shared} shared values revised`);
+  for (const h of o.horizons)
+    console.log(
+      `  after ${String(h.days).padStart(2)} sessions: ${h.exceeded}/${h.n} funds moved more than the frozen p90 (${bp(h.threshold)} bps), ` +
+        `median ${bp(h.median)}, max ${h.max?.ticker} ${bp(h.max?.move)}; at NAV ${h.navExceeded}/${h.n} over ${bp(h.navThreshold)}`,
     );
 }
 

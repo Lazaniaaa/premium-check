@@ -3,7 +3,7 @@ import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from
 import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
 import { latestReport } from "@/lib/reports-store";
 import Link from "next/link";
-import { fundingTest, premiumBacktest } from "@/lib/validation";
+import { fundingShareBelow, fundingTest, premiumBacktest } from "@/lib/validation";
 import { TabLink, Tabs, type TabDef } from "./components/tabs";
 import { METHOD_VERSION } from "@/lib/snapshot";
 
@@ -173,38 +173,23 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
     const etf = best.kind === "etf" ? best : runnerUp;
     return { tie: false, pair, move, gap, etf } as const;
   })();
-  // Same idea for perp funding, tested on Hyperliquid's hourly history (SoDEX publishes none).
-  // "lead": a perp is first or second and the gap between them is under the 1-in-10 miss of
-  // "today's rate × period" at this holding period. "behind": a ranked perp further down is
-  // within that miss of the cheapest route, so a lower funding rate could close the gap.
+  // Perp funding: the one number that decides whether the perp wins. Break-even = the average
+  // funding a year at which the perp costs the same as the cheapest other ranked route:
+  // (that route's cost - perp cost at zero funding) / years. Put in context with how often
+  // Hyperliquid's hourly history (SoDEX publishes none) averaged below it over this period.
   const fundingRun = fundingTest(asset);
-  const fundingH = fundingRun.horizons.find((h) => h.months === months) ?? null;
-  const fundingMove = fundingH?.today.p90Abs ?? null;
-  const fundingHint = (() => {
-    if (!best || !runnerUp || fundingMove == null) return null;
-    if (tied.length > 0) return [best, ...tied].some((r) => r.kind === "sodex_perp") ? ({ kind: "tie" } as const) : null;
-    if (best.kind !== "sodex_perp" && runnerUp.kind !== "sodex_perp") return null;
-    return runnerUp.cost! - best.cost! < fundingMove ? ({ kind: "lead" } as const) : null;
-  })();
-  const perpBehind = (() => {
-    const perp = ranked.find((r) => r.kind === "sodex_perp");
-    if (!best || !perp || fundingMove == null || fundingHint) return null;
-    if (perp.id === best.id || perp.id === runnerUp?.id || tied.some((r) => r.id === perp.id)) return null;
-    const gap = perp.cost! - best.cost!;
-    return gap < fundingMove ? { perp, gap } : null;
-  })();
-  const fundingLead = fundingHint?.kind === "lead";
-  const leadHint = (premiumHint && !premiumHint.tie) || fundingLead;
+  const perpRoute = ranked.find((r) => r.kind === "sodex_perp");
+  const perpAlt = ranked.find((r) => r.kind !== "sodex_perp");
+  const perpBreakEven =
+    perpRoute && perpAlt && perpRoute.costAtZeroFunding != null && perpRoute.annualCarry != null
+      ? (() => {
+          const rate = (perpAlt.cost! - perpRoute.costAtZeroFunding!) / (months / 12);
+          return { rate, now: perpRoute.annualCarry!, hist: fundingShareBelow(asset, months, rate) };
+        })()
+      : null;
+  const leadHint = premiumHint && !premiumHint.tie;
   const monthYear = (iso: string | null) =>
     iso ? new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }) : "—";
-  const FundingMiss = () => (
-    <span className="sub">
-      On {fundingRun.venue}&apos;s hourly {asset} funding ({monthYear(fundingRun.from)} – {monthYear(fundingRun.to)}; SoDEX
-      publishes no funding history), funding paid over {horizon} missed &ldquo;the starting hourly rate × {horizon}&rdquo; by
-      more than {pct(fundingMove, 1)} of the amount ({usd(amount * (fundingMove ?? 0), 2)} here) in 1 of 10 starts, in either
-      direction. <Link href="/validation#funding">How we checked</Link>
-    </span>
-  );
 
   const query = `asset=${asset}&usd=${amount}&months=${months}${etfPct ? `&etfcost=${etfPct}` : ""}${exclude.length ? `&exclude=${exclude.join(",")}` : ""}`;
   const tabs: TabDef[] = [
@@ -358,11 +343,9 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           </p>
         )}
 
-        {(premiumHint?.tie || fundingHint?.kind === "tie") && (
+        {premiumHint?.tie && (
           <p className="muted">
-            {premiumHint?.tie && <Link href="/validation#premium">How ETF exit prices could change this result</Link>}
-            {premiumHint?.tie && fundingHint?.kind === "tie" && " · "}
-            {fundingHint?.kind === "tie" && <Link href="/validation#funding">How perp funding could change this result</Link>}
+            <Link href="/validation#premium">How ETF exit prices could change this result</Link>
           </p>
         )}
         {leadHint && (
@@ -373,7 +356,6 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
                 ? `A change in the gap between their exit premiums could reverse that. `
                 : `A change in ${short(premiumHint.etf)}'s exit premium could reverse that. `
               : ""}
-            {fundingLead ? `${premiumHint && !premiumHint.tie ? "So could" : "A change in"} perp funding${premiumHint && !premiumHint.tie ? "." : " could reverse that."} ` : ""}
             {premiumHint && !premiumHint.tie && (
               <span className="sub">
                 In {premiumTest.sessions} sessions ({premiumTest.from} – {premiumTest.to}), 1 in 10{" "}
@@ -382,13 +364,19 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
                 <Link href="/validation#premium">How we checked</Link>{" "}
               </span>
             )}
-            {fundingLead && <FundingMiss />}
           </p>
         )}
-        {perpBehind && (
-          <p className="sub">
-            {short(perpBehind.perp)} is {usd(amount * perpBehind.gap, 2)} behind {short(best!)} at today&apos;s funding rate.
-            Lower funding could close that gap. <FundingMiss />
+        {perpBreakEven && perpRoute && perpAlt && (
+          <p>
+            {perpBreakEven.rate < 0
+              ? `${short(perpRoute)} ${perpBreakEven.now < perpBreakEven.rate ? "stays cheaper than" : "beats"} ${short(perpAlt)} ${perpBreakEven.now < perpBreakEven.rate ? "while" : "only if"} longs are paid funding: on average more than ${pct(-perpBreakEven.rate)} a year`
+              : `${short(perpRoute)} ${perpBreakEven.now < perpBreakEven.rate ? "stays cheaper than" : "beats"} ${short(perpAlt)} ${perpBreakEven.now < perpBreakEven.rate ? "while" : "only if"} funding averages below ${pct(perpBreakEven.rate)} a year`}
+            ; now {pct(perpBreakEven.now)}.{" "}
+            <span className="sub">
+              On {fundingRun.venue}&apos;s hourly {asset} funding ({monthYear(fundingRun.from)} – {monthYear(fundingRun.to)}; SoDEX
+              publishes none), {perpBreakEven.hist.below} of {perpBreakEven.hist.n} {months}-month windows averaged below that.{" "}
+              <Link href="/validation#funding">How we checked</Link>
+            </span>
           </p>
         )}
 

@@ -63,6 +63,7 @@ export type DirectRoute = {
   units: number | null; // asset-equivalent kept at a constant price: usd / ref x (1 - cost)
   ranked: boolean; // false when the cost can't be trusted for a ranking (see flags)
   premiumNow: number | null; // ETF premium to NAV / SoDEX market vs index, assumed unchanged at exit
+  premiumAsOf?: string | null; // ETFs: the session that premium is from (SoSoValue history can lag the snapshot)
   costAtZeroFunding?: number | null; // perps only: the same route if funding were zero
   fillableUsd?: number; // when the visible book can't absorb the whole amount
   notes: string[];
@@ -301,6 +302,7 @@ async function directRoutes(
         tradingCost: etfTradingCost,
         annualCarry: feeUnverified ? null : d.fee,
         premiumNow: d.premium,
+        premiumAsOf: d.premiumDate,
         notes: [
           d.premiumDate
             ? `Premium to NAV ${signedPctStr(d.premium, 3)} on ${d.premiumDate}${range}; assumed unchanged when you sell`
