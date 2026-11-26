@@ -306,6 +306,66 @@ details.card > summary { font-weight: 650; }
   th, td { padding: 9px 10px; }
 }
 
+/* ---- polish: hierarchy, rhythm, character (styles only) ---- */
+:root { --bg-glow-2: rgba(14, 165, 233, 0.06); --radius: 16px; }
+:root[data-theme="dark"] { --bg-glow-2: rgba(56, 189, 248, 0.05); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg-glow-2: rgba(56, 189, 248, 0.05); } }
+body {
+  background:
+    radial-gradient(900px 420px at 12% -140px, var(--bg-glow), transparent 70%) no-repeat,
+    radial-gradient(900px 420px at 88% -160px, var(--bg-glow-2), transparent 70%) no-repeat,
+    var(--bg);
+}
+a { text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+
+/* brand mark: a check on the gradient tile */
+.brand::before {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat,
+    linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+}
+
+/* headings */
+h1 { font-size: 34px; font-weight: 750; letter-spacing: -0.03em; }
+h2 { display: flex; align-items: center; gap: 10px; }
+h2::before {
+  content: ""; flex: none; width: 4px; height: 1em; border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), #0ea5e9);
+}
+.scenario > summary > span:first-child { color: var(--text); font-weight: 500; }
+
+/* the answer: one headline, then a clear order of detail */
+.answer { padding: 22px 26px; }
+.answer .big { font-size: 24px; margin-bottom: 10px; }
+.answer > p { font-size: 14.5px; }
+.answer > p.muted { font-size: 13px; }
+.answer > p:has(> .sub) { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line-strong); }
+.answer > details { margin-top: 10px; font-size: 13px; }
+
+/* tables: room for route names, calmer rank column */
+th, td { padding: 12px 14px; }
+#panel-routes .table-wrap td:nth-child(2) { min-width: 210px; }
+#panel-routes .table-wrap td:first-child { color: var(--muted); }
+.best td:first-child { color: var(--accent-strong); font-weight: 700; }
+
+/* cards */
+.card { transition: border-color .15s, box-shadow .15s; }
+.ticket:hover, .grid2 > .card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-lg); }
+.footer { margin-top: 24px; }
+main.wrap { padding-top: 36px; padding-bottom: 48px; }
+
+@media (max-width: 640px) {
+  h1 { font-size: 25px; }
+  main.wrap { padding-top: 22px; }
+  .answer { padding: 16px 16px 14px 20px; }
+  .answer .big { font-size: 19px; }
+  .answer > p { font-size: 14px; line-height: 1.55; }
+  .answer > p.muted, .answer > details { font-size: 12.5px; }
+  th, td { padding: 10px; }
+  #panel-routes .table-wrap td:nth-child(2) { min-width: 150px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
