@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "day": "2026-11-26",
+  "generatedAt": "2026-11-26T08:48:44.401Z",
+  "by": "github-actions",
+  "snapshotTakenAt": "2026-11-26T08:48:21.553Z",
+  "facts": [
+    {
+      "id": "F1",
+      "template": "Comparison basis: {basis_usd} held for {basis_months} months; costs include trading and recurring costs.",
+      "text": "Comparison basis: $1,000 held for 12 months; costs include trading and recurring costs.",
+      "vars": {
+        "basis_usd": {
+          "value": "$1,000",
+          "label": "amount compared"
+        },
+        "basis_months": {
+          "value": "12",
+          "label": "holding period in months"
+        }
+      }
+    },
+    {
+      "id": "F2",
+      "template": "BTC reference price {btc_price} (SoDEX BTC-USD index); the SoSoValue price differs by {btc_soso_diff}.",
+      "text": "BTC reference price $60,966 (SoDEX BTC-USD index); the SoSoValue price differs by 21.7 bps.",
+      "vars": {
+        "btc_price": {
+          "value": "$60,966",
+          "label": "BTC reference price"
+        },
+        "btc_soso_diff": {
+          "value": "21.7 bps",
+          "label": "gap between SoSoValue and SoDEX prices"
+        }
+      }
+    },
+    {
+      "id": "F3",
+      "template": "Cheapest way to hold BTC: {btc_best_name} at {btc_best_cost} total cost.",
+      "text": "Cheapest way to hold BTC: SoDEX spot vBTC/vUSDC at 0.13% total cost.",
+      "vars": {
+        "btc_best_name": {
+          "value": "SoDEX spot vBTC/vUSDC",
+          "label": "cheapest BTC route"
+        },
+        "btc_best_cost": {
+          "value": "0.13%",
+          "label": "its total cost over the period"
+        }
+      }
+    },
+    {
+      "id": "F4",
+      "template": "Second cheapest BTC route: {btc_second_name} at {btc_second_cost}.",
+      "text": "Second cheapest BTC route: Morgan Stanley Bitcoin Trust (MSBT) at 0.14%.",
+      "vars": {
+        "btc_second_name": {
+          "value": "Morgan Stanley Bitcoin Trust (MSBT)",
+          "label": "second cheapest BTC route"
+        },
+        "btc_second_cost": {
+          "value": "0.14%",
+          "label": "its total cost over the period"
+        }
+      }
+    },
+    {
+      "id": "F5",
+      "template": "BlackRock IBIT total cost {ibit_cost} (sponsor fee {ibit_fee} a year).",
+      "text": "BlackRock IBIT total cost 0.25% (sponsor fee 0.25% a year).",
+      "vars": {
+        "ibit_cost": {
+          "value": "0.25%",
+          "label": "IBIT total cost over the period"
+        },
+        "ibit_fee": {
+          "value": "0.25%",
+          "label": "IBIT yearly sponsor fee"
+        }
+      }
+    },
+    {
+      "id": "F6",
+      "template": "SoDEX BTC-USD perp funding is {btc_funding_year} a year at the current hourly rate.",
+      "text": "SoDEX BTC-USD perp funding is 10.95% a year at the current hourly rate.",
+      "vars": {
+        "btc_funding_year": {
+          "value": "10.95%",
+          "label": "BTC perp funding per year if today's rate stayed"
+        }
+      }
+    },
+    {
+      "id": "F7",
+      "template": "Holding BTC through the SoDEX perp costs {btc_perp_cost} in total.",
+      "text": "Holding BTC through the SoDEX perp costs 11.03% in total.",
+      "vars": {
+        "btc_perp_cost": {
+          "value": "11.03%",
+          "label": "BTC perp total cost over the period"
+        }
+      }
+    },
+    {
+      "id": "F8",
+      "template": "Strategy (MSTR): market cap is {mstr_ratio_equity} its BTC value; adding debt and subtracting cash it is {mstr_ratio_debt}. Price {mstr_price} from {mstr_price_source}.",
+      "text": "Strategy (MSTR): market cap is 0.64× its BTC value; adding debt and subtracting cash it is 0.72×. Price $82.23 from the SoDEX MSTR-USD perp (24/7 proxy).",
+      "vars": {
+        "mstr_ratio_equity": {
+          "value": "0.64×",
+          "label": "Strategy market cap ÷ BTC value"
+        },
+        "mstr_ratio_debt": {
+          "value": "0.72×",
+          "label": "Strategy (market cap + debt − cash) ÷ BTC value"
+        },
+        "mstr_price": {
+          "value": "$82.23",
+          "label": "Strategy share price used"
+        },
+        "mstr_price_source": {
+          "value": "the SoDEX MSTR-USD perp (24/7 proxy)",
+          "label": "where that price came from"
+        }
+      }
+    },
+    {
+      "id": "F9",
+      "template": "{treasuries_below} of {treasuries_total} treasury companies have a market cap below the value of their BTC (before debt).",
+      "text": "7 of 7 treasury companies have a market cap below the value of their BTC (before debt).",
+      "vars": {
+        "treasuries_below": {
+          "value": "7",
+          "label": "treasury companies with market cap below their BTC value"
+        },
+        "treasuries_total": {
+          "value": "7",
+          "label": "treasury companies compared"
+        }
+      }
+    },
+    {
+      "id": "F10",
+      "template": "Cheapest way to hold ETH: {eth_best_name} at {eth_best_cost} total cost.",
+      "text": "Cheapest way to hold ETH: SoDEX spot vETH/vUSDC at 0.14% total cost.",
+      "vars": {
+        "eth_best_name": {
+          "value": "SoDEX spot vETH/vUSDC",
+          "label": "cheapest ETH route"
+        },
+        "eth_best_cost": {
+          "value": "0.14%",
+          "label": "its total cost over the period"
+        }
+      }
+    },
+    {
+      "id": "F11",
+      "template": "SoDEX ETH-USD perp funding is {eth_funding_year} a year at the current hourly rate.",
+      "text": "SoDEX ETH-USD perp funding is 10.55% a year at the current hourly rate.",
+      "vars": {
+        "eth_funding_year": {
+          "value": "10.55%",
+          "label": "ETH perp funding per year if today's rate stayed"
+        }
+      }
+    },
+    {
+      "id": "F12",
+      "template": "{eth_staking_count} ETH ETFs stake and pay distributions, which this comparison does not model, so they are not ranked.",
+      "text": "4 ETH ETFs stake and pay distributions, which this comparison does not model, so they are not ranked.",
+      "vars": {
+        "eth_staking_count": {
+          "value": "4",
+          "label": "staking ETH ETFs left out of the ranking"
+        }
+      }
+    },
+    {
+      "id": "F13",
+      "template": "Previous snapshot ({prev_day}): Strategy's market cap was {prev_mstr_ratio_equity} its BTC value.",
+      "text": "Previous snapshot (2026-11-25): Strategy's market cap was 0.61× its BTC value.",
+      "vars": {
+        "prev_day": {
+          "value": "2026-11-25",
+          "label": "date of the previous snapshot"
+        },
+        "prev_mstr_ratio_equity": {
+          "value": "0.61×",
+          "label": "Strategy market cap ÷ BTC value on that day"
+        }
+      }
+    },
+    {
+      "id": "F14",
+      "template": "Previous snapshot ({prev_day}): SoDEX BTC perp funding was {prev_btc_funding_year} a year.",
+      "text": "Previous snapshot (2026-11-25): SoDEX BTC perp funding was 8.86% a year.",
+      "vars": {
+        "prev_day": {
+          "value": "2026-11-25",
+          "label": "date of the previous snapshot"
+        },
+        "prev_btc_funding_year": {
+          "value": "8.86%",
+          "label": "BTC perp funding per year on that day"
+        }
+      }
+    }
+  ],
+  "note": {
+    "headline": "SoDEX spot vBTC/vUSDC is the cheapest BTC route at 0.13% total cost.",
+    "headlineTemplate": "{btc_best_name} is the cheapest BTC route at {btc_best_cost} total cost.",
+    "headlineFacts": [
+      "F3"
+    ],
+    "points": [
+      {
+        "text": "The comparison covers $1,000 held for 12 months, including trading and recurring costs. The runner-up for BTC is Morgan Stanley Bitcoin Trust (MSBT) at 0.14%.",
+        "template": "The comparison covers {basis_usd} held for {basis_months} months, including trading and recurring costs. The runner-up for BTC is {btc_second_name} at {btc_second_cost}.",
+        "facts": [
+          "F1",
+          "F4"
+        ]
+      },
+      {
+        "text": "For ETH, SoDEX spot vETH/vUSDC is cheapest at 0.14%. The comparison leaves out 4 staking ETH funds because it does not model their distributions.",
+        "template": "For ETH, {eth_best_name} is cheapest at {eth_best_cost}. The comparison leaves out {eth_staking_count} staking ETH funds because it does not model their distributions.",
+        "facts": [
+          "F10",
+          "F12"
+        ]
+      },
+      {
+        "text": "On the spot routes’ platform, the BTC perpetual contract costs 11.03% in total. If current hourly funding rates held, annual funding would be 10.95% for BTC and 10.55% for ETH.",
+        "template": "On the spot routes’ platform, the BTC perpetual contract costs {btc_perp_cost} in total. If current hourly funding rates held, annual funding would be {btc_funding_year} for BTC and {eth_funding_year} for ETH.",
+        "facts": [
+          "F3",
+          "F7",
+          "F6",
+          "F11"
+        ]
+      },
+      {
+        "text": "Strategy’s market cap is 0.64× its BTC value, or 0.72× after adding debt and subtracting cash. Before debt, 7 of 7 treasury companies have market caps below their BTC value.",
+        "template": "Strategy’s market cap is {mstr_ratio_equity} its BTC value, or {mstr_ratio_debt} after adding debt and subtracting cash. Before debt, {treasuries_below} of {treasuries_total} treasury companies have market caps below their BTC value.",
+        "facts": [
+          "F8",
+          "F9"
+        ]
+      }
+    ]
+  },
+  "author": {
+    "kind": "llm",
+    "model": "gpt-6.1-terra",
+    "attempts": 1,
+    "tokens": {
+      "input": 1247,
+      "output": 820
+    }
+  }
+}

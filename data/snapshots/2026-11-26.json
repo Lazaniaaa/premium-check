@@ -1,0 +1,567 @@
+{
+  "schema": 2,
+  "methodVersion": 2,
+  "takenAt": "2026-11-26T08:48:21.553Z",
+  "takenBy": "github-actions",
+  "params": {
+    "usd": 1000,
+    "months": 12
+  },
+  "btc": {
+    "reference": {
+      "price": 60966,
+      "source": "SoDEX BTC-USD index price",
+      "sosoPrice": 60833.62,
+      "deviationBps": -21.71374208575272
+    },
+    "cheapest": {
+      "id": "sodex-spot",
+      "name": "SoDEX spot vBTC/vUSDC",
+      "cost": 0.001315585332798297
+    },
+    "perpAnnualFunding": 0.1095,
+    "routes": [
+      {
+        "id": "sodex-spot",
+        "name": "SoDEX spot vBTC/vUSDC",
+        "tradingCost": 0.001315585332798297,
+        "premiumNow": -0.0029606666010563165,
+        "annualCarry": 0,
+        "cost": 0.001315585332798297,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-MSBT",
+        "name": "MSBT — Morgan Stanley Bitcoin Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.00399707240273961,
+        "annualCarry": 0.0014,
+        "cost": 0.0014,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-BTC",
+        "name": "BTC — Grayscale Bitcoin Mini Trust",
+        "tradingCost": 0,
+        "premiumNow": -0.00046236603601945703,
+        "annualCarry": 0.0015,
+        "cost": 0.0015,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-EZBC",
+        "name": "EZBC — Franklin Templeton Digital Holdings Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.004554065102673199,
+        "annualCarry": 0.0019,
+        "cost": 0.0019,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-BITB",
+        "name": "BITB — Bitwise Bitcoin ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.004184635753629262,
+        "annualCarry": 0.002,
+        "cost": 0.002,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-ARKB",
+        "name": "ARKB — ARK 21Shares Bitcoin ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.004218118792912673,
+        "annualCarry": 0.0021,
+        "cost": 0.0021,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-IBIT",
+        "name": "IBIT — iShares Bitcoin Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.004392559181627842,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-HODL",
+        "name": "HODL — VanEck Bitcoin ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.0032375064472764947,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-GBTC",
+        "name": "GBTC — Grayscale Bitcoin Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.00013360974747755883,
+        "annualCarry": 0.015,
+        "cost": 0.015,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "sodex-perp",
+        "name": "SoDEX perp BTC-USD (1x long)",
+        "tradingCost": 0.0008161054286879299,
+        "premiumNow": -0.002189745103828411,
+        "annualCarry": 0.1095,
+        "cost": 0.11031610542868793,
+        "ranked": true,
+        "flags": [
+          "funding_varies"
+        ]
+      },
+      {
+        "id": "etf-BTCO",
+        "name": "BTCO — Invesco Galaxy Bitcoin ETF",
+        "tradingCost": 0,
+        "premiumNow": -0.0001971526978731264,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-BTCW",
+        "name": "BTCW — WisdomTree Bitcoin Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.0047458956706876165,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-BRRR",
+        "name": "BRRR — Valkyrie Bitcoin Fund",
+        "tradingCost": 0,
+        "premiumNow": 0.004459658744307093,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-FBTC",
+        "name": "FBTC — Fidelity Wise Origin Bitcoin Fund",
+        "tradingCost": 0,
+        "premiumNow": 0.004528687804227216,
+        "annualCarry": null,
+        "cost": null,
+        "ranked": false,
+        "flags": [
+          "fee_unverified"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "kind": "treasury",
+        "btcHolding": 851305,
+        "holdingsAsOf": "2026-11-23",
+        "price": 82.23,
+        "priceSource": "sodex_24_7",
+        "mnavEquity": 0.6395184828765831,
+        "mnavWithDebt": 0.7228082704732616
+      },
+      {
+        "ticker": "ASST",
+        "kind": "treasury",
+        "btcHolding": 43404,
+        "holdingsAsOf": "2026-11-16",
+        "price": 14.95,
+        "priceSource": "exchange",
+        "mnavEquity": 0.6674134838388341,
+        "mnavWithDebt": 0.6136954335039972
+      },
+      {
+        "ticker": "MARA",
+        "kind": "miner",
+        "btcHolding": 35303,
+        "holdingsAsOf": "2026-03-31",
+        "price": 5.42,
+        "priceSource": "exchange",
+        "mnavEquity": 0.9755887115624622,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "BLSH",
+        "kind": "operating",
+        "btcHolding": 24000,
+        "holdingsAsOf": "2025-08-13",
+        "price": 19.65,
+        "priceSource": "exchange",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "SPCX",
+        "kind": "operating",
+        "btcHolding": 18712,
+        "holdingsAsOf": "2025-12-31",
+        "price": 128.47,
+        "priceSource": "sodex_24_7",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "GLXY",
+        "kind": "operating",
+        "btcHolding": 18380,
+        "holdingsAsOf": "2026-03-31",
+        "price": 11.56,
+        "priceSource": "exchange",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "COIN",
+        "kind": "operating",
+        "btcHolding": 17864,
+        "holdingsAsOf": "2026-07-30",
+        "price": 106.47,
+        "priceSource": "sodex_24_7",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "HUT",
+        "kind": "miner",
+        "btcHolding": 16332,
+        "holdingsAsOf": "2026-03-31",
+        "price": 48.83,
+        "priceSource": "exchange",
+        "mnavEquity": 5.886766310301926,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "RIOT",
+        "kind": "miner",
+        "btcHolding": 15679,
+        "holdingsAsOf": "2026-03-31",
+        "price": 16.65,
+        "priceSource": "exchange",
+        "mnavEquity": 6.535103118226302,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "CLSK",
+        "kind": "miner",
+        "btcHolding": 11920,
+        "holdingsAsOf": "2026-03-31",
+        "price": 5.18,
+        "priceSource": "exchange",
+        "mnavEquity": 1.8305841364270148,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "TSLA",
+        "kind": "operating",
+        "btcHolding": 11509,
+        "holdingsAsOf": "2025-03-31",
+        "price": 382.32,
+        "priceSource": "sodex_24_7",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "XYZ",
+        "kind": "operating",
+        "btcHolding": 9117,
+        "holdingsAsOf": "2026-06-30",
+        "price": 76.1,
+        "priceSource": "exchange",
+        "mnavEquity": null,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "ABTC",
+        "kind": "miner",
+        "btcHolding": 8427,
+        "holdingsAsOf": "2026-09-30",
+        "price": 3.7,
+        "priceSource": "exchange",
+        "mnavEquity": 0.1930842281092379,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "NXTT",
+        "kind": "treasury",
+        "btcHolding": 5833,
+        "holdingsAsOf": "2025-06-30",
+        "price": 3.61,
+        "priceSource": "exchange",
+        "mnavEquity": 0.02863666575090019,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "NAKA",
+        "kind": "treasury",
+        "btcHolding": 4467,
+        "holdingsAsOf": "2026-06-30",
+        "price": 3.325,
+        "priceSource": "exchange",
+        "mnavEquity": 0.2239961642736628,
+        "mnavWithDebt": 0.7587490780017716
+      },
+      {
+        "ticker": "DDC",
+        "kind": "treasury",
+        "btcHolding": 2899,
+        "holdingsAsOf": "2026-06-17",
+        "price": 0.0865,
+        "priceSource": "exchange",
+        "mnavEquity": 0.03336319565391584,
+        "mnavWithDebt": 0.4650169393580872
+      },
+      {
+        "ticker": "CAN",
+        "kind": "miner",
+        "btcHolding": 1915,
+        "holdingsAsOf": "2026-06-30",
+        "price": 0.1247,
+        "priceSource": "exchange",
+        "mnavEquity": 0.7740800295392142,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "FUFU",
+        "kind": "miner",
+        "btcHolding": 1812,
+        "holdingsAsOf": "2026-05-14",
+        "price": 0.8963,
+        "priceSource": "exchange",
+        "mnavEquity": 0.2571702022583572,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "CIFR",
+        "kind": "miner",
+        "btcHolding": 1500,
+        "holdingsAsOf": "2025-09-30",
+        "price": 5.51,
+        "priceSource": "exchange",
+        "mnavEquity": 27.496984905575786,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "EMPD",
+        "kind": "treasury",
+        "btcHolding": 1067,
+        "holdingsAsOf": "2026-11-06",
+        "price": 2.19,
+        "priceSource": "exchange",
+        "mnavEquity": 0.9822901487549976,
+        "mnavWithDebt": 1.781197653578695
+      },
+      {
+        "ticker": "CANG",
+        "kind": "miner",
+        "btcHolding": 1026,
+        "holdingsAsOf": "2026-03-31",
+        "price": 1.41,
+        "priceSource": "exchange",
+        "mnavEquity": 0.886378645426566,
+        "mnavWithDebt": null
+      },
+      {
+        "ticker": "NA",
+        "kind": "treasury",
+        "btcHolding": 1000,
+        "holdingsAsOf": "2025-06-26",
+        "price": 0.99,
+        "priceSource": "exchange",
+        "mnavEquity": 0.3305388116327133,
+        "mnavWithDebt": 2.093223127480891
+      }
+    ],
+    "errors": []
+  },
+  "eth": {
+    "reference": {
+      "price": 1698.6,
+      "source": "SoDEX ETH-USD index price",
+      "sosoPrice": 1698.45,
+      "deviationBps": -0.8830801836801072
+    },
+    "cheapest": {
+      "id": "sodex-spot",
+      "name": "SoDEX spot vETH/vUSDC",
+      "cost": 0.0014335057464479606
+    },
+    "perpAnnualFunding": 0.10548131868124799,
+    "routes": [
+      {
+        "id": "sodex-spot",
+        "name": "SoDEX spot vETH/vUSDC",
+        "tradingCost": 0.0014335057464479606,
+        "premiumNow": -0.001089132226539502,
+        "annualCarry": 0,
+        "cost": 0.0014335057464479606,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-ETHW",
+        "name": "ETHW — Bitwise Ethereum ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.004284921285428123,
+        "annualCarry": 0.002,
+        "cost": 0.002,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-ETHA",
+        "name": "ETHA — iShares Ethereum Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.0009098940326666138,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "etf-FETH",
+        "name": "FETH — Fidelity Ethereum Fund",
+        "tradingCost": 0,
+        "premiumNow": 0.003296631236326064,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": true,
+        "flags": []
+      },
+      {
+        "id": "sodex-perp",
+        "name": "SoDEX perp ETH-USD (1x long)",
+        "tradingCost": 0.0008585258476113689,
+        "premiumNow": -0.00038266807959486115,
+        "annualCarry": 0.10548131868124799,
+        "cost": 0.10633984452885936,
+        "ranked": true,
+        "flags": [
+          "funding_varies"
+        ]
+      },
+      {
+        "id": "etf-MSSE",
+        "name": "MSSE — Morgan Stanley Ethereum Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.0032136840455103677,
+        "annualCarry": 0.0014,
+        "cost": 0.0014,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-ETH",
+        "name": "ETH — Grayscale Ethereum Mini Trust",
+        "tradingCost": 0,
+        "premiumNow": -0.0007757951900697613,
+        "annualCarry": 0.0015,
+        "cost": 0.0015,
+        "ranked": false,
+        "flags": [
+          "staking_unmodeled"
+        ]
+      },
+      {
+        "id": "etf-EZET",
+        "name": "EZET — Franklin Ethereum Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.003680029317815414,
+        "annualCarry": 0.0019,
+        "cost": 0.0019,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-ETHV",
+        "name": "ETHV — VanEck Ethereum Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.002838460014409794,
+        "annualCarry": 0.002,
+        "cost": 0.002,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-TETH",
+        "name": "TETH — 21Shares Ethereum ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.003927330410921304,
+        "annualCarry": 0.0021,
+        "cost": 0.0021,
+        "ranked": false,
+        "flags": [
+          "thin_trading",
+          "staking_unmodeled"
+        ]
+      },
+      {
+        "id": "etf-QETH",
+        "name": "QETH — Invesco Galaxy Ethereum ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.0007044267790410341,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": false,
+        "flags": [
+          "thin_trading"
+        ]
+      },
+      {
+        "id": "etf-ETHB",
+        "name": "ETHB — iShares Staked Ethereum Trust ETF",
+        "tradingCost": 0,
+        "premiumNow": 0.0035850235939423047,
+        "annualCarry": 0.0025,
+        "cost": 0.0025,
+        "ranked": false,
+        "flags": [
+          "staking_unmodeled"
+        ]
+      },
+      {
+        "id": "etf-ETHE",
+        "name": "ETHE — Grayscale Ethereum Trust",
+        "tradingCost": 0,
+        "premiumNow": 0.0009254118082546725,
+        "annualCarry": 0.025,
+        "cost": 0.025,
+        "ranked": false,
+        "flags": [
+          "staking_unmodeled"
+        ]
+      }
+    ],
+    "companies": [],
+    "errors": []
+  },
+  "errors": []
+}
