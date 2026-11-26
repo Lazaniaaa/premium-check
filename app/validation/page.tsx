@@ -9,6 +9,7 @@ import {
   type OutOfSample,
   trades,
   verifiedTrades,
+  excludedTrades,
   type Backtest,
   type ErrorStats,
   type FundingTest,
@@ -237,6 +238,11 @@ function TradeTable({ t }: { t: TradeRecord }) {
         <span className={t.verified ? "good" : "bad"}>{t.verified ? "Verified" : STATUS[t.status]}</span>
       </b>
       {t.reasons.length > 0 && <div className="sub bad">{t.reasons.join("; ")}</div>}
+      <div style={{ marginTop: 4 }}>
+        Predicted <b>{bps(t.predictedCostBps)}</b> · actual <b>{bps(t.actualCostBps)}</b> · difference{" "}
+        <b>{diffBps != null ? `${diffBps >= 0 ? "+" : "−"}${bps(Math.abs(diffBps))}` : "—"}</b>
+        {diffUsd != null ? ` (${diffUsd >= 0 ? "+" : "−"}${usd(Math.abs(diffUsd), 4)})` : ""} for this one round trip
+      </div>
       <div className="sub">
         Prediction (book at {ms(t.predictedAt)}) in{" "}
         {t.predictionCommit ? <a href={`${REPO_URL}/commit/${t.predictionCommit}`}>{t.predictionCommit.slice(0, 7)}</a> : "—"}, pushed{" "}
@@ -293,8 +299,12 @@ function TradeTable({ t }: { t: TradeRecord }) {
         {t.baseLeft ?? "—"} {t.symbol.split("_")[0]} left after fees (lot step {t.stepSize}), valued at the sell price. Fee rate:
         site model {pct(t.feeRates.model, 3)}, SoDEX symbol {pct(t.feeRates.symbol, 3)}. The market can move between the two
         legs; without a second book snapshot that part of any difference is not separated.
-        {t.note ? ` ${t.note}` : ""} <a href={`${REPO_URL}/blob/main/${t.predictionFile}`}>Prediction + full book</a> · fills on
-        SoDEX:{" "}
+        {t.note ? ` ${t.note}` : ""}{" "}
+        <a href={`${REPO_URL}/blob/${t.predictionCommit ?? "main"}/${t.predictionFile}`}>
+          Prediction + full book{t.predictionCommit ? ` as pushed in ${t.predictionCommit.slice(0, 7)}` : ""}
+        </a>{" "}
+        · <a href={`${REPO_URL}/blob/main/${t.predictionFile.replace("/predictions/", "/fills/")}`}>raw fills as recorded</a> ·
+        live on SoDEX (the endpoint returns all of the account&apos;s fills):{" "}
         {[t.buy.orderID, t.sell.orderID].map((id, i) => (
           <span key={id}>
             {i ? ", " : ""}
@@ -376,6 +386,9 @@ export default function Validation() {
             {trades.length > verifiedTrades.length
               ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} shown, not counted)`
               : ""}
+            {excludedTrades.length
+              ? `; ${excludedTrades.length} later trade${excludedTrades.length === 1 ? "" : "s"} without a published prediction excluded, with the reason`
+              : ""}
             {trades.length === 0 ? " so far · the protocol is below." : " · see section 3."}
           </li>
         </ul>
@@ -436,6 +449,17 @@ export default function Validation() {
       {trades.map((t) => (
         <TradeTable key={t.predictionFile} t={t} />
       ))}
+      {excludedTrades.map((x) => (
+        <div className="card" style={{ marginBottom: 12 }} key={x.buyOrderID}>
+          <b>
+            {usd(x.usd)} round trip, {x.window} · <span className="bad">Excluded</span>
+          </b>
+          <div className="sub">
+            Orders {x.buyOrderID} (buy) and {x.sellOrderID} (sell) on the same account: {x.why}. Both fills are visible in the
+            account&apos;s public history; they are not graded or counted. Verified round trips: {verifiedTrades.length}.
+          </div>
+        </div>
+      ))}
       <div className="card">
           <b>
             {verifiedTrades.length} verified round trip{verifiedTrades.length === 1 ? "" : "s"} so far.
@@ -456,7 +480,8 @@ export default function Validation() {
               <a href={`${REPO_URL}/blob/main/lib/trade-record.ts`}>lib/trade-record.ts</a> grades the attempt:{" "}
               <b>complete</b> only if both orders filled on the predicted market and side, after the predicted book, with
               fees in BTC or USDC and less than one lot step of BTC left; otherwise <b>partial</b> or <b>failed</b>. Only
-              complete attempts pushed in time count as verified; every attempt is published.
+              complete attempts pushed in time count as verified; every attempt is shown, and trades on the account without a
+              published prediction are listed as excluded, with the reason.
             </li>
           </ol>
           <span className="sub">

@@ -27,6 +27,17 @@ export type Backtest = BacktestResult & {
 export const trades = tradesJson as unknown as TradeRecord[];
 /** Only complete round trips whose prediction GitHub shows was pushed before the first fill. */
 export const verifiedTrades = trades.filter((t) => t.verified);
+/** Trades on the same account that never had a published prediction, so they are not attempts under the protocol. */
+export const excludedTrades = [
+  {
+    usd: 11,
+    window: "26 Nov 2026 22:09–22:11 UTC",
+    buyOrderID: 8333369259,
+    sellOrderID: 8333394778,
+    why:
+      "by mistake the trade was placed before its prediction was pushed, so nothing shows the prediction came first; the sell also used 0.000000117 BTC left from the first trade (it sold more than the buy delivered after fees)",
+  },
+];
 export const datasetFile = "data/validation/etf-premium-history.json";
 
 const cache = new Map<string, Backtest>();

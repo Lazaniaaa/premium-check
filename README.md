@@ -171,7 +171,12 @@ The model choice was tested on the actual task: on parsing requests into the sch
   complete only if both orders filled on the predicted market and side, after the predicted book, with fees in the
   base or quote coin and under one lot step left; otherwise partial or failed. It counts as verified only if complete
   and GitHub's server time for the push of the prediction commit (activity API) is before the first fill. Every
-  attempt is published; the page shows predicted / actual / difference in dollars and bps, and both order ids.
+  attempt is shown; the page shows predicted / actual / difference in dollars and bps, and both order ids.
+  Result (26 Nov 2026): one verified $11 BTC spot round trip — predicted 13.16 bps, actual 13.46 bps (+0.30 bps),
+  mostly the 0.065% fee each way; it checks fee, side of the book, lot rounding and cash accounting on one small
+  fill, not depth. A later $11 trade on the same account is listed as excluded: it was placed before its prediction
+  was pushed, and its sell also used BTC left from the first trade. The orderID filter in `record-fill.mjs` was
+  added after its first run, when the endpoint turned out to ignore it (raw responses are kept unfiltered).
   (2) A perp's cost uses today's hourly funding for the whole period. SoDEX publishes no market funding history, so
   this is tested on Hyperliquid's public hourly history (Jun 2023 – Nov 2026, ~30,400 hours per coin, frozen in
   `data/validation/funding-history.json` by `scripts/freeze-funding-history.mjs`) and labelled as another venue.
@@ -205,7 +210,7 @@ npm install
 cp .env.example .env        # add SOSO_API_KEY (SoSoValue OpenAPI) and OPENAI_API_KEY
 npm run dev                 # live APIs, cached
 npm run dev:fixture         # offline, on the recorded real responses in fixtures/
-npm test                    # 66 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
+npm test                    # 67 tests (+1 opt-in live AI check): math, full pipeline on fixtures, note validator, order tickets, edge cases
 npm run deploy              # stamp commit, deploy to Vercel, warm the cache
 npm run record              # re-record fixtures (~130 SoSoValue requests)
 ```

@@ -55,6 +55,6 @@
     "actualCostUsd": 0.014744740000001144,
     "predictedCostBps": 13.155723691659071,
     "actualCostBps": 13.459394722766397,
-    "note": "SoDEX's endpoint returned 2 fill(s) of other orders in the two responses (it ignored the orderID filter); only fills with the matching orderID are used. Raw responses are kept unfiltered."
+    "note": "SoDEX's endpoint ignored the orderID filter and returned the fills of both orders in each response; only fills with the matching orderID are used. That filter was added to scripts/record-fill.mjs after its first run graded this attempt partial for exactly that reason; the raw responses are kept unfiltered."
   }
 ]

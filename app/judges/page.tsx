@@ -3,7 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
-import { fundingTest, premiumBacktest, premiumOutOfSample, trades, verifiedTrades } from "@/lib/validation";
+import { excludedTrades, fundingTest, premiumBacktest, premiumOutOfSample, trades, verifiedTrades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -71,7 +71,13 @@ export default async function Judges() {
             was frozen ({oosNote}), and &ldquo;today&apos;s funding
             for the whole period&rdquo; on {fundingYears} years of hourly perp funding from another venue (SoDEX publishes
             none); data and re-run command in the repo;{" "}
-            {`real-trade check: ${verifiedTrades.length} verified SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"} against the prediction pushed before it`}
+            <Link href="/validation#trade">
+              {`real-trade check: ${verifiedTrades.length} verified SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"} against the prediction pushed before it`}
+              {verifiedTrades[0]?.actualCostBps != null
+                ? ` (predicted ${verifiedTrades[0].predictedCostBps.toFixed(2)} bps, actual ${verifiedTrades[0].actualCostBps.toFixed(2)} bps)`
+                : ""}
+            </Link>
+            {excludedTrades.length ? `, ${excludedTrades.length} later trade without a published prediction excluded` : ""}
             {trades.length > verifiedTrades.length
               ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} published, not counted)`
               : trades.length === 0

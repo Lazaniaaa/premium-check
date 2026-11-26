@@ -1,4 +1,4 @@
-import { afterFile, datasetFile, fundingFile, fundingTest, premiumBacktest, premiumOutOfSample, trades } from "@/lib/validation";
+import { afterFile, datasetFile, fundingFile, fundingTest, premiumBacktest, premiumOutOfSample, trades, excludedTrades } from "@/lib/validation";
 
 // Everything behind /validation as JSON: the exit-premium backtest for BTC and ETH ETFs on
 // the frozen SoSoValue dataset (raw inputs in the repo at datasetFile), the perp funding
@@ -13,6 +13,7 @@ export function GET() {
       fundingDataset: fundingFile,
       fundingBacktest: [fundingTest("BTC"), fundingTest("ETH")],
       trades,
+      excludedTrades,
     },
     { headers: { "content-disposition": 'inline; filename="premium-check-validation.json"' } },
   );
