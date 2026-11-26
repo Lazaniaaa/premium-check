@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import { ThemeToggle } from "./components/theme-toggle";
 import "./globals.css";
+
+const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
+
+// Applies a stored theme before the first paint, so a dark choice never flashes light.
+const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
 export const metadata: Metadata = {
   title: "Premium Check",
@@ -10,7 +18,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <header className="topbar">
           <div className="wrap topbar-inner">
@@ -36,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <a href="https://github.com/Lazaniaaa/premium-check">GitHub</a>
                 </div>
               </details>
+              <ThemeToggle />
             </nav>
           </div>
         </header>
