@@ -11,14 +11,19 @@ export const METHOD_VERSION = 2;
 
 /**
  * Method of a stored snapshot. Files from before methodVersion existed are told apart by
- * their fields: method 1 stored `entryPremium` (ETF premium counted as a cost), method 2
- * stores `tradingCost`.
+ * their fields: method 1 stored `entryPremium` (ETF premium counted as a cost). A file with
+ * `tradingCost` but no methodVersion (25 Nov 2026) is transitional, 1.5: ETF cost already
+ * as in method 2, but ETFs were still filtered by net assets (under $100M not ranked)
+ * instead of daily value traded. It is not compared with either neighbour.
  */
 export function methodOf(s: Pick<Snapshot, "methodVersion" | "btc">): number {
   if (s.methodVersion) return s.methodVersion;
   const r = s.btc?.routes?.[0] as Record<string, unknown> | undefined;
-  return r && "tradingCost" in r ? 2 : 1;
+  return r && "tradingCost" in r ? 1.5 : 1;
 }
+
+/** Short label for a method version, as shown in the journal. */
+export const methodLabel = (m: number) => (m === 1.5 ? "transitional (v2 cost, $100M net-asset ETF filter)" : `method v${m}`);
 
 /** Tickers the AI note may only mention through {variables} (BTC / ETH are excluded: they are also the coins). */
 export function protectedTerms(s: Snapshot): string[] {

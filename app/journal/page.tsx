@@ -1,7 +1,7 @@
 import { int, pct, ratio, signedPct, timeUtc, usd } from "@/lib/format";
 import { etfPremiumHistory, strategyPurchases } from "@/lib/history";
 import { DailyNote } from "../components/daily-note";
-import { methodOf, type Snapshot } from "@/lib/snapshot";
+import { methodLabel, methodOf, type Snapshot } from "@/lib/snapshot";
 import type { Report } from "@/lib/report";
 
 export const dynamic = "force-dynamic";
@@ -90,7 +90,7 @@ export default async function Journal() {
                     <td>
                       {file.name.replace(".json", "")}
                       <span className="sub">
-                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy} · method v${methodOf(snap)}`}
+                        {`${timeUtc(snap.takenAt)} · ${snap.takenBy} · ${methodLabel(methodOf(snap))}`}
                       </span>
                       {older && !sameMethod && <span className="sub">method changed since the previous day — no comparison</span>}
                     </td>

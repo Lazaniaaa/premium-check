@@ -188,6 +188,7 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         })()
       : null;
   const leadHint = premiumHint && !premiumHint.tie;
+  const signedPct = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${pct(Math.abs(x))}`;
   const monthYear = (iso: string | null) =>
     iso ? new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }) : "—";
 
@@ -368,14 +369,13 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
         )}
         {perpBreakEven && perpRoute && perpAlt && (
           <p>
-            {perpBreakEven.rate < 0
-              ? `${short(perpRoute)} ${perpBreakEven.now < perpBreakEven.rate ? "stays cheaper than" : "beats"} ${short(perpAlt)} ${perpBreakEven.now < perpBreakEven.rate ? "while" : "only if"} longs are paid funding: on average more than ${pct(-perpBreakEven.rate)} a year`
-              : `${short(perpRoute)} ${perpBreakEven.now < perpBreakEven.rate ? "stays cheaper than" : "beats"} ${short(perpAlt)} ${perpBreakEven.now < perpBreakEven.rate ? "while" : "only if"} funding averages below ${pct(perpBreakEven.rate)} a year`}
-            ; now {pct(perpBreakEven.now)}.{" "}
+            {short(perpRoute)} {perpBreakEven.now < perpBreakEven.rate ? "stays cheaper than" : "beats"} {short(perpAlt)}{" "}
+            {perpBreakEven.now < perpBreakEven.rate ? "while" : "only if"} funding averages below <b>{signedPct(perpBreakEven.rate)} a year</b>{perpBreakEven.rate < 0 ? " (longs receive funding)" : ""}. Now {signedPct(perpBreakEven.now)} a year
+            {perpBreakEven.now > 0 ? " (longs pay)" : perpBreakEven.now < 0 ? " (longs receive)" : ""}.{" "}
             <span className="sub">
               On {fundingRun.venue}&apos;s hourly {asset} funding ({monthYear(fundingRun.from)} – {monthYear(fundingRun.to)}; SoDEX
-              publishes none), {perpBreakEven.hist.below} of {perpBreakEven.hist.n} {months}-month windows averaged below that.{" "}
-              <Link href="/validation#funding">How we checked</Link>
+              publishes none), {perpBreakEven.hist.below} of {perpBreakEven.hist.n} {months}-month windows averaged below{" "}
+              {signedPct(perpBreakEven.rate)} a year. <Link href="/validation#funding">How we checked</Link>
             </span>
           </p>
         )}

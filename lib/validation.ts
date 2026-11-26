@@ -11,38 +11,9 @@ import { backtest, fundingBacktest, fundingPaid, outOfSample, type BacktestResul
 
 export type { Assumption, ErrorStats, OosHorizon, OosResult, FundingAssumption, FundingHorizon, HorizonResult, Stats } from "./backtest";
 
-/** A real SoDEX round trip next to the prediction committed before it (scripts/predict-trade.mjs). */
-export type TradeLeg = {
-  predictedVwap: number;
-  actualVwap: number;
-  diffBps: number; // actual vs predicted, positive = worse for you
-  qty: number;
-  feePaid: number;
-  feeAsset: string;
-  feeRate: number | null; // fee / notional actually charged
-};
-export type TradeRecord = {
-  symbol: string;
-  usd: number;
-  predictionFile: string;
-  predictionCommit: string | null; // commit that published the prediction before the trade
-  predictedAt: string; // book block time, ms precision
-  firstFillAt: string;
-  lastFillAt: string;
-  account: string;
-  tradeIds: number[];
-  feeRates: { model: number; symbol: number };
-  buy: TradeLeg;
-  sell: TradeLeg;
-  usdcSpent: number;
-  usdcReturned: number;
-  baseLeft: number; // BTC not sold back (lot rounding)
-  predictedCostUsd: number;
-  actualCostUsd: number; // usdcSpent - usdcReturned - value of baseLeft at the sell price
-  predictedCostBps: number;
-  actualCostBps: number;
-  note?: string;
-};
+/** Real SoDEX round trips next to the prediction published before each (lib/trade-record.ts). */
+import type { TradeRecord } from "./trade-record";
+export type { TradeLeg, TradeRecord, TradeStatus } from "./trade-record";
 
 export type Backtest = BacktestResult & {
   asset: "BTC" | "ETH";
@@ -52,7 +23,10 @@ export type Backtest = BacktestResult & {
   longest: HorizonResult | null;
 };
 
-export const trades = tradesJson as TradeRecord[];
+/** Every recorded attempt, including failed and partial ones. */
+export const trades = tradesJson as unknown as TradeRecord[];
+/** Only complete round trips whose prediction GitHub shows was pushed before the first fill. */
+export const verifiedTrades = trades.filter((t) => t.verified);
 export const datasetFile = "data/validation/etf-premium-history.json";
 
 const cache = new Map<string, Backtest>();

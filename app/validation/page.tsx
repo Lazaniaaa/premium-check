@@ -8,6 +8,7 @@ import {
   premiumOutOfSample,
   type OutOfSample,
   trades,
+  verifiedTrades,
   type Backtest,
   type ErrorStats,
   type FundingTest,
@@ -204,39 +205,80 @@ function OutOfSampleTable({ rows, frozenAt, sessions }: { rows: OutOfSample[]; f
   );
 }
 
+const STATUS = { complete: "Complete", partial: "Partial — not counted", failed: "Failed — not counted" };
+const n2 = (x: number | null, d = 2) => (x == null ? "—" : x.toFixed(d));
+
 function TradeTable({ t }: { t: TradeRecord }) {
   const leg = (name: string, l: TradeRecord["buy"]) => (
     <tr>
-      <td>{name}</td>
-      <td>{l.predictedVwap.toFixed(2)}</td>
-      <td>{l.actualVwap.toFixed(2)}</td>
-      <td>{bps(l.diffBps)}</td>
-      <td>{l.qty}</td>
+      <td>
+        {name}
+        <div className="sub">order {l.orderID} · {l.fills} fill{l.fills === 1 ? "" : "s"}</div>
+      </td>
+      <td className="num">{n2(l.predictedVwap)}</td>
+      <td className="num">{n2(l.actualVwap)}</td>
+      <td className="num">{bps(l.diffBps)}</td>
+      <td className="num">{l.qty}</td>
       <td>
         {l.feePaid} {l.feeAsset}
-        <div className="sub">{l.feeRate != null ? `rate ${pct(l.feeRate, 3)}` : ""}</div>
+        <div className="sub">
+          {l.feeRate != null ? `rate ${pct(l.feeRate, 3)}` : ""}
+          {l.makerFills ? ` · ${l.makerFills} maker` : ""}
+        </div>
       </td>
     </tr>
   );
+  const diffUsd = t.actualCostUsd != null ? t.actualCostUsd - t.predictedCostUsd : null;
+  const diffBps = t.actualCostBps != null ? t.actualCostBps - t.predictedCostBps : null;
   return (
     <div className="card" style={{ marginBottom: 12 }}>
       <b>
-        {usd(t.usd)} {t.symbol} round trip
+        {usd(t.usd)} {t.symbol} round trip ·{" "}
+        <span className={t.verified ? "good" : "bad"}>{t.verified ? "Verified" : STATUS[t.status]}</span>
       </b>
+      {t.reasons.length > 0 && <div className="sub bad">{t.reasons.join("; ")}</div>}
       <div className="sub">
-        Prediction (book at {ms(t.predictedAt)}) published in{" "}
-        {t.predictionCommit ? <a href={`${REPO_URL}/commit/${t.predictionCommit}`}>{t.predictionCommit.slice(0, 7)}</a> : "—"}{" "}
-        before the trade · fills {ms(t.firstFillAt)} → {ms(t.lastFillAt)}
+        Prediction (book at {ms(t.predictedAt)}) in{" "}
+        {t.predictionCommit ? <a href={`${REPO_URL}/commit/${t.predictionCommit}`}>{t.predictionCommit.slice(0, 7)}</a> : "—"}, pushed{" "}
+        {t.predictionPushedAt ? `${ms(t.predictionPushedAt)} (GitHub server time)` : "—"} · fills{" "}
+        {t.firstFillAt ? ms(t.firstFillAt) : "—"} → {t.lastFillAt ? ms(t.lastFillAt) : "—"} · book → buy {n2(t.bookToBuySeconds, 1)} s,
+        buy → sell {n2(t.buyToSellSeconds, 1)} s
       </div>
-      <div className="table-wrap" style={{ marginTop: 8 }}>
+      <div className="table-wrap" style={{ marginTop: 10 }}>
+        <table>
+          <thead>
+            <tr>
+              <th>Round-trip cost</th>
+              <th className="num">Predicted</th>
+              <th className="num">Actual</th>
+              <th className="num">Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>US dollars</td>
+              <td className="num">{usd(t.predictedCostUsd, 4)}</td>
+              <td className="num">{t.actualCostUsd != null ? usd(t.actualCostUsd, 4) : "—"}</td>
+              <td className="num">{diffUsd != null ? `${diffUsd >= 0 ? "+" : "−"}${usd(Math.abs(diffUsd), 4)}` : "—"}</td>
+            </tr>
+            <tr>
+              <td>Basis points</td>
+              <td className="num">{bps(t.predictedCostBps)}</td>
+              <td className="num">{bps(t.actualCostBps)}</td>
+              <td className="num">{diffBps != null ? `${diffBps >= 0 ? "+" : "−"}${bps(Math.abs(diffBps))}` : "—"}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="table-wrap" style={{ marginTop: 10 }}>
         <table>
           <thead>
             <tr>
               <th>Leg</th>
-              <th>Predicted VWAP</th>
-              <th>Actual VWAP</th>
-              <th>Difference</th>
-              <th>Quantity</th>
+              <th className="num">Predicted VWAP</th>
+              <th className="num">Actual VWAP</th>
+              <th className="num">Worse by</th>
+              <th className="num">Quantity</th>
               <th>Fee charged</th>
             </tr>
           </thead>
@@ -246,17 +288,21 @@ function TradeTable({ t }: { t: TradeRecord }) {
           </tbody>
         </table>
       </div>
-      <p style={{ marginBottom: 4 }}>
-        Round-trip cost: predicted <b>{usd(t.predictedCostUsd, 4)}</b> ({bps(t.predictedCostBps)}), actual{" "}
-        <b>{usd(t.actualCostUsd, 4)}</b> ({bps(t.actualCostBps)}).
-      </p>
-      <p className="sub">
-        Spent {usd(t.usdcSpent, 4)} USDC, got back {usd(t.usdcReturned, 4)}; {t.baseLeft} BTC left from lot rounding, valued at
-        the sell price. Fee rate: site model {pct(t.feeRates.model, 3)}, SoDEX symbol {pct(t.feeRates.symbol, 3)}, charged as
-        shown per leg.
-        {t.note ? ` ${t.note}` : ""} <a href={`${REPO_URL}/blob/main/${t.predictionFile}`}>Prediction + full book</a> ·{" "}
-        <a href={`https://mainnet-gw.sodex.dev/api/v1/spot/accounts/${t.account}/trades?symbol=${t.symbol}`}>fills on SoDEX</a>{" "}
-        (trade ids {t.tradeIds.join(", ")})
+      <p className="sub" style={{ marginTop: 8 }}>
+        Spent {t.usdcSpent != null ? usd(t.usdcSpent, 4) : "—"} USDC, got back {t.usdcReturned != null ? usd(t.usdcReturned, 4) : "—"};{" "}
+        {t.baseLeft ?? "—"} {t.symbol.split("_")[0]} left after fees (lot step {t.stepSize}), valued at the sell price. Fee rate:
+        site model {pct(t.feeRates.model, 3)}, SoDEX symbol {pct(t.feeRates.symbol, 3)}. The market can move between the two
+        legs; without a second book snapshot that part of any difference is not separated.
+        {t.note ? ` ${t.note}` : ""} <a href={`${REPO_URL}/blob/main/${t.predictionFile}`}>Prediction + full book</a> · fills on
+        SoDEX:{" "}
+        {[t.buy.orderID, t.sell.orderID].map((id, i) => (
+          <span key={id}>
+            {i ? ", " : ""}
+            <a href={`https://mainnet-gw.sodex.dev/api/v1/spot/accounts/${t.account}/trades?symbol=${t.symbol}&orderID=${id}`}>
+              order {id}
+            </a>
+          </span>
+        ))}
       </p>
     </div>
   );
@@ -326,9 +372,11 @@ export default function Validation() {
           </li>
           <li>
             <b>Real-trade check:</b>{" "}
-            {trades.length === 0
-              ? "0 verified round trips so far · the protocol is below."
-              : `${trades.length} verified SoDEX round trip${trades.length > 1 ? "s" : ""} · see section 3.`}
+            {verifiedTrades.length} verified SoDEX round trip{verifiedTrades.length === 1 ? "" : "s"}
+            {trades.length > verifiedTrades.length
+              ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} shown, not counted)`
+              : ""}
+            {trades.length === 0 ? " so far · the protocol is below." : " · see section 3."}
           </li>
         </ul>
         <span className="sub">
@@ -387,19 +435,21 @@ export default function Validation() {
       <h2 id="trade">3. Prediction vs a real SoDEX fill</h2>
       {trades.length === 0 ? (
         <div className="card">
-          <b>0 verified round trips so far.</b> The protocol, so that one small trade can be checked end to end:
+          <b>0 verified round trips so far.</b> The protocol, fixed before the first trade:
           <ol className="notes" style={{ marginTop: 6 }}>
             <li>
               <a href={`${REPO_URL}/blob/main/scripts/predict-trade.mjs`}>scripts/predict-trade.mjs</a> saves the prediction,
-              the code version and the full order book it used; the file is committed and pushed before the trade, so
-              GitHub&apos;s timestamp shows it came first.
+              the code version and the full order book it used. It is committed and pushed before the trade; GitHub&apos;s
+              server time for that push (its activity API, not commit dates) must be earlier than the first fill.
             </li>
             <li>A taker buy at market, then the bought quantity sold back at market, within seconds.</li>
             <li>
-              <a href={`${REPO_URL}/blob/main/scripts/record-fill.mjs`}>scripts/record-fill.mjs</a> reads the fills from
-              SoDEX&apos;s public account-trades endpoint and shows, per leg, predicted vs actual VWAP, quantity and the fee
-              actually charged, plus USDC spent and returned and any BTC left from lot rounding. Failed or partial attempts
-              are published too.
+              <a href={`${REPO_URL}/blob/main/scripts/record-fill.mjs`}>scripts/record-fill.mjs</a> reads the fills of
+              exactly the two orders (SoDEX&apos;s public account-trades endpoint, filtered by orderID) and{" "}
+              <a href={`${REPO_URL}/blob/main/lib/trade-record.ts`}>lib/trade-record.ts</a> grades the attempt:{" "}
+              <b>complete</b> only if both orders filled on the predicted market and side, after the predicted book, with
+              fees in BTC or USDC and less than one lot step of BTC left; otherwise <b>partial</b> or <b>failed</b>. Only
+              complete attempts pushed in time count as verified; every attempt is published.
             </li>
           </ol>
           <span className="sub">

@@ -114,6 +114,7 @@ describe("third review (Astra) cases", () => {
     const { methodOf } = await import("@/lib/snapshot");
     const read = (d: string) => JSON.parse(fs.readFileSync(`data/snapshots/${d}.json`, "utf8"));
     expect(methodOf(read("2026-11-24"))).toBe(1);
-    expect(methodOf(read("2026-11-25"))).toBe(2);
+    expect(methodOf(read("2026-11-25"))).toBe(1.5); // transitional: v2 cost, old net-asset ETF filter
+    expect(methodOf(read("2026-11-26"))).toBe(2);
   });
 });

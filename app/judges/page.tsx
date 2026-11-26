@@ -3,7 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
-import { fundingTest, premiumBacktest, premiumOutOfSample, trades } from "@/lib/validation";
+import { fundingTest, premiumBacktest, premiumOutOfSample, trades, verifiedTrades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -71,9 +71,12 @@ export default async function Judges() {
             was frozen ({oosNote}), and &ldquo;today&apos;s funding
             for the whole period&rdquo; on {fundingYears} years of hourly perp funding from another venue (SoDEX publishes
             none); data and re-run command in the repo;{" "}
-            {trades.length
-              ? `${trades.length} SoDEX round trip${trades.length > 1 ? "s" : ""} checked against the prediction made before it`
-              : "real-trade check: 0 verified round trips so far, protocol published"}
+            {`real-trade check: ${verifiedTrades.length} verified SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"} against the prediction pushed before it`}
+            {trades.length > verifiedTrades.length
+              ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} published, not counted)`
+              : trades.length === 0
+                ? ", protocol published"
+                : ""}
             ; and what history can&apos;t test.
           </li>
         </ul>
