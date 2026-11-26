@@ -157,7 +157,7 @@ p { margin: 8px 0; }
 .answer p { margin: 6px 0; }
 
 /* forms */
-.form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+.form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
 .form label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 500; color: var(--muted); }
 .form input, .form select {
   font: inherit; color: var(--text); background: var(--surface);
