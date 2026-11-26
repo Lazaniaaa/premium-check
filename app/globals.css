@@ -319,10 +319,10 @@ body {
 a { text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent); }
 a:hover { text-decoration-color: currentColor; }
 
-/* brand mark: a check on the gradient tile */
+/* brand mark: the percent sign of the site icon on the gradient tile */
 .brand::before {
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='white' stroke-width='7' stroke-linecap='round'%3E%3Ccircle cx='22' cy='22' r='7'/%3E%3Ccircle cx='42' cy='42' r='7'/%3E%3Cpath d='M45 17L19 47'/%3E%3C/svg%3E") center / 16px no-repeat,
     linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
 }
 
