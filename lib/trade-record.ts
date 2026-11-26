@@ -71,7 +71,7 @@ export type TradeRecord = {
   usdcReturned: number | null;
   baseLeft: number | null; // coin not sold back (lot rounding and fees in coin)
   predictedCostUsd: number;
-  actualCostUsd: number | null; // usdcSpent - usdcReturned - value of baseLeft at the sell VWAP
+  actualCostUsd: number | null; // usdcSpent - usdcReturned - value of baseLeft at the sell VWAP (negative baseLeft = coin from an earlier balance, adds to cost)
   predictedCostBps: number;
   actualCostBps: number | null;
   note?: string;
@@ -171,7 +171,7 @@ export function evaluateRoundTrip(a: {
     baseLeft = Number((B.qty - B.feeBase - S.qty - S.feeBase).toFixed(12));
     if (baseLeft < -1e-12) reasons.push(`sold ${(-baseLeft).toPrecision(3)} ${base} more than bought`);
     else if (baseLeft >= step - 1e-12) reasons.push(`${baseLeft} ${base} left, more than one lot step (${step})`);
-    if (sells.length) actualCostUsd = usdcSpent - usdcReturned - Math.max(baseLeft, 0) * (S.actualVwap ?? 0);
+    if (sells.length) actualCostUsd = usdcSpent - usdcReturned - baseLeft * (S.actualVwap ?? 0);
     if (reasons.length) status = "partial";
   }
   const pushed = a.predictionPushedAt ? Date.parse(a.predictionPushedAt) : NaN;

@@ -51,6 +51,14 @@ describe("trade record", () => {
     expect(r.reasons.join()).toMatch(/more than one lot step/);
   });
 
+  it("selling coin from an earlier balance is partial and its value counts as cost", () => {
+    const r = evaluateRoundTrip({ ...base, ...pushedBefore, buyFills: [buy], sellFills: [{ ...sell, quantity: 0.00033 }] });
+    expect(r.status).toBe("partial");
+    expect(r.reasons.join()).toMatch(/more than bought/);
+    expect(r.baseLeft).toBeCloseTo(-0.00000021, 12);
+    expect(r.actualCostUsd).toBeCloseTo(r.usdcSpent! - r.usdcReturned! + 0.00000021 * 59990, 9);
+  });
+
   it("a fill of another order in the same window is flagged, not silently used", () => {
     const r = evaluateRoundTrip({ ...base, ...pushedBefore, buyFills: [buy, { ...buy, tradeID: 9, orderID: 99 }], sellFills: [sell] });
     expect(r.status).toBe("partial");

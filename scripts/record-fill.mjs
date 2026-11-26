@@ -1,7 +1,7 @@
 // Records a real SoDEX spot round trip next to the prediction published before it.
 //
 //   node scripts/record-fill.mjs --prediction data/validation/predictions/<file>.json \
-//     --account 0x... --buy-order <orderID> --sell-order <orderID> --commit <sha> [--account-id <n>]
+//     --account 0x... --buy-order <orderID> --sell-order <orderID> --commit <sha> [--account-id <n>] [--note <text>]
 //
 // Fetches the fills of exactly those two orders from SoDEX's public account-trades endpoint
 // (asks with orderID, then keeps only fills whose orderID matches: on 26 Nov 2026 the endpoint
@@ -74,6 +74,7 @@ const rec = evaluateRoundTrip({
 });
 if (dropped)
   rec.note = `SoDEX's endpoint returned ${dropped} fill(s) of other orders in the two responses (it ignored the orderID filter); only fills with the matching orderID are used. Raw responses are kept unfiltered.`;
+if (args.note) rec.note = [rec.note, args.note].filter(Boolean).join(" ");
 const file = "data/validation/trades.json";
 const all = JSON.parse(readFileSync(file, "utf8")).filter((t) => t.predictionFile !== rec.predictionFile);
 writeFileSync(file, JSON.stringify([...all, rec], null, 2) + "\n");
