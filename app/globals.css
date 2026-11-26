@@ -342,6 +342,10 @@ h2::before {
 .answer > p.muted { font-size: 13px; }
 .answer > p:has(> .sub) { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line-strong); }
 .answer > details { margin-top: 10px; font-size: 13px; }
+.answer > p.checked {
+  font-size: 13px; margin-top: 12px; padding: 8px 12px; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent-soft) 70%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+}
 
 /* tables: room for route names, calmer rank column */
 th, td { padding: 12px 14px; }

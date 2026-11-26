@@ -173,8 +173,8 @@ The model choice was tested on the actual task: on parsing requests into the sch
   and GitHub's server time for the push of the prediction commit (activity API) is before the first fill. Every
   attempt is shown; the page shows predicted / actual / difference in dollars and bps, and both order ids.
   Result (26 Nov 2026): two verified BTC spot round trips. $11: predicted 13.16 bps, actual 13.46 bps (+0.30 bps),
-  mostly the 0.065% fee each way. $12: predicted 13.16 bps, actual 32.93 bps — the buy was 1.3 bps off, but BTC
-  fell about 20 bps in the 78 s before the sell. They check fee, side of the book, lot rounding and cash accounting
+  mostly the 0.065% fee each way. $12: predicted 13.16 bps, actual 32.93 bps — the buy was 1.3 bps off, the sell
+  filled 18.8 bps below the predicted price 78 s later (no second book snapshot, so the price move is not separated). They check fee, side of the book, lot rounding and cash accounting
   on small fills, not depth, and show how much a delay between the legs can cost. Two other trades on the same
   account are listed as excluded with the reason (one placed before its prediction was pushed, one bought for a
   different amount than its prediction and sold back to start again). The orderID filter in `record-fill.mjs` was

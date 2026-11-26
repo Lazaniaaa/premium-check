@@ -3,7 +3,7 @@ import { bps, compactUsd, int, pct, ratio, signedPct, timeUtc, units, usd } from
 import { ROUTE_GROUPS, type RouteGroup } from "@/lib/query";
 import { latestReport } from "@/lib/reports-store";
 import Link from "next/link";
-import { fundingShareBelow, fundingTest, premiumBacktest } from "@/lib/validation";
+import { excludedTrades, fundingShareBelow, fundingTest, premiumBacktest, verifiedTrades } from "@/lib/validation";
 import { TabLink, Tabs, type TabDef } from "./components/tabs";
 import { METHOD_VERSION } from "@/lib/snapshot";
 
@@ -395,6 +395,25 @@ export default async function Page({ searchParams }: { searchParams: SP }) {
           {reasons.length > 0 ? ` · not ranked: ${reasons.map(([why, n]) => `${n} ${why}`).join(", ")}` : ""}
           {best && worst && worst.id !== best.id ? ` · most expensive ranked: ${worst.name.split(" — ")[0]} ${usd(amount * worst.cost!, 2)}` : ""}
         </p>
+
+        {verifiedTrades.length > 0 && (
+          <p className="checked">
+            <b>Checked against live SoDEX fills:</b>{" "}
+            {verifiedTrades.map((t, i) => (
+              <span key={t.predictionFile}>
+                {i ? " · " : ""}
+                {usd(t.usd)} BTC, predicted {t.predictedCostBps.toFixed(2)} → actual{" "}
+                {t.actualCostBps != null ? t.actualCostBps.toFixed(2) : "—"} bps (buy → sell{" "}
+                {t.buyToSellSeconds != null ? Math.round(t.buyToSellSeconds) : "—"} s)
+              </span>
+            ))}
+            .{" "}
+            <Link href="/validation#trade">
+              See {verifiedTrades.length === 1 ? "the trade" : `all ${verifiedTrades.length} trades`}
+              {excludedTrades.length ? ` and ${excludedTrades.length} exclusion${excludedTrades.length === 1 ? "" : "s"}` : ""}
+            </Link>
+          </p>
+        )}
 
         <details>
           <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>

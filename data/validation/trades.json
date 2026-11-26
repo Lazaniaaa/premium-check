@@ -113,6 +113,6 @@
     "actualCostUsd": 0.03791255399999982,
     "predictedCostBps": 13.156403853070708,
     "actualCostBps": 32.93224371519465,
-    "note": "SoDEX's endpoint ignored the orderID filter and returned the account's other fills too; only fills with the matching orderID are used (raw responses kept unfiltered). Most of the difference is the sell leg: BTC fell about 20 bps in the 77.6 s between the buy and the sell."
+    "note": "SoDEX's endpoint ignored the orderID filter and returned the account's other fills too; only fills with the matching orderID are used (raw responses kept unfiltered). Most of the difference is the sell leg: it filled 18.8 bps below the predicted price, 77.6 s after the buy. Without a book snapshot before the sell, the part due to the price moving in that time is not separated."
   }
 ]

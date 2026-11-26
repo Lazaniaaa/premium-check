@@ -3,7 +3,7 @@ import { buildComparison, TIE_SHARE, type Comparison } from "@/lib/model";
 import { pct, ratio, usd } from "@/lib/format";
 import { latestReport, REPO_URL } from "@/lib/reports-store";
 import build from "@/lib/build-info.json";
-import { excludedTrades, fundingTest, premiumBacktest, premiumOutOfSample, trades, verifiedTrades } from "@/lib/validation";
+import { excludedTrades, fundingTest, premiumBacktest, premiumOutOfSample, verifiedTrades } from "@/lib/validation";
 
 export const maxDuration = 60;
 
@@ -51,7 +51,7 @@ export default async function Judges() {
       </p>
 
       <div className="card">
-        <b>Four questions, one click each</b>
+        <b>Five questions, one click each</b>
         <ul className="notes" style={{ color: "var(--text)", marginTop: 6 }}>
           <li>
             <Link href="/?asset=BTC&usd=2000&months=6">Does my broker change the answer?</Link> — a near-tie between ETFs and
@@ -70,20 +70,22 @@ export default async function Judges() {
             premium on {premiumBacktest("BTC").sessions} sessions of SoSoValue ETF history, then on the first close after the data
             was frozen ({oosNote}), and &ldquo;today&apos;s funding
             for the whole period&rdquo; on {fundingYears} years of hourly perp funding from another venue (SoDEX publishes
-            none); data and re-run command in the repo;{" "}
-            <Link href="/validation#trade">
-              {`real-trade check: ${verifiedTrades.length} verified SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"} against the prediction pushed before it`}
-              {verifiedTrades.length
-                ? ` (predicted → actual: ${verifiedTrades.map((t) => `${t.predictedCostBps.toFixed(2)} → ${t.actualCostBps?.toFixed(2) ?? "—"} bps`).join(", ")})`
-                : ""}
-            </Link>
-            {excludedTrades.length ? `; ${excludedTrades.length} other trade${excludedTrades.length === 1 ? "" : "s"} on the account excluded, with the reason` : ""}
-            {trades.length > verifiedTrades.length
-              ? ` (${trades.length - verifiedTrades.length} other attempt${trades.length - verifiedTrades.length === 1 ? "" : "s"} published, not counted)`
-              : trades.length === 0
-                ? ", protocol published"
-                : ""}
-            ; and what history can&apos;t test.
+            none); data and re-run command in the repo; and what history can&apos;t test.
+          </li>
+          <li>
+            <Link href="/validation#trade">Does a published prediction match a real trade?</Link> —{" "}
+            {verifiedTrades.length === 0
+              ? "protocol published, no verified SoDEX round trip yet."
+              : verifiedTrades
+                  .map(
+                    (t) =>
+                      `${usd(t.usd)} BTC: predicted ${t.predictedCostBps.toFixed(2)} → actual ${t.actualCostBps?.toFixed(2) ?? "—"} bps (buy → sell ${t.buyToSellSeconds != null ? Math.round(t.buyToSellSeconds) : "—"} s)`,
+                  )
+                  .join(" · ") +
+                ` — ${verifiedTrades.length} SoDEX round trip${verifiedTrades.length === 1 ? "" : "s"}, each against a prediction GitHub shows was pushed before it` +
+                (excludedTrades.length
+                  ? `; ${excludedTrades.length} other trade${excludedTrades.length === 1 ? "" : "s"} on the account excluded, with the reason.`
+                  : ".")}
           </li>
         </ul>
       </div>
