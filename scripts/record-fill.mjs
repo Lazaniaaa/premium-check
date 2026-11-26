@@ -4,7 +4,9 @@
 //     --account 0x... --buy-order <orderID> --sell-order <orderID> --commit <sha> [--account-id <n>]
 //
 // Fetches the fills of exactly those two orders from SoDEX's public account-trades endpoint
-// (filter orderID, no time window guessing), saves the raw responses to data/validation/fills/,
+// (asks with orderID, then keeps only fills whose orderID matches: on 26 Nov 2026 the endpoint
+// ignored the orderID parameter and returned every fill of the account, so the filter is done
+// here and the dropped fills are counted), saves the raw responses to data/validation/fills/,
 // reads GitHub's server time for the push of the prediction commit, and evaluates the attempt
 // with lib/trade-record.ts: complete / partial / failed, verified only if complete and pushed
 // before the first fill. Every attempt is recorded, including failed and partial ones.
@@ -41,8 +43,12 @@ writeFileSync(
 );
 const list = (b) => (Array.isArray(b.data) ? b.data : b.data?.trades ?? []);
 for (const x of [...list(buyRaw), ...list(sellRaw)]) console.log(JSON.stringify(x));
-const buyFills = list(buyRaw).map(parseUserTrade);
-const sellFills = list(sellRaw).map(parseUserTrade);
+// The endpoint may ignore orderID; keep only the fills of the given order (raw response kept as is).
+const own = (b, id) => list(b).map(parseUserTrade).filter((f) => f.orderID === Number(id));
+const buyFills = own(buyRaw, args["buy-order"]);
+const sellFills = own(sellRaw, args["sell-order"]);
+const dropped = list(buyRaw).length + list(sellRaw).length - buyFills.length - sellFills.length;
+if (dropped) console.log(`Dropped ${dropped} fill(s) of other orders returned by the endpoint.`);
 
 // GitHub's own record of when the prediction commit was pushed (server time, not commit dates).
 let pushedAt = null;
@@ -66,6 +72,8 @@ const rec = evaluateRoundTrip({
   predictionCommit: args.commit ?? null,
   predictionPushedAt: pushedAt,
 });
+if (dropped)
+  rec.note = `SoDEX's endpoint returned ${dropped} fill(s) of other orders in the two responses (it ignored the orderID filter); only fills with the matching orderID are used. Raw responses are kept unfiltered.`;
 const file = "data/validation/trades.json";
 const all = JSON.parse(readFileSync(file, "utf8")).filter((t) => t.predictionFile !== rec.predictionFile);
 writeFileSync(file, JSON.stringify([...all, rec], null, 2) + "\n");

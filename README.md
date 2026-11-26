@@ -167,7 +167,7 @@ The model choice was tested on the actual task: on parsing requests into the sch
   "sold at NAV" was exceeded just as often. One correlated event, but it shows 22 sessions understate days like it.
   Real-trade check: a prediction with the full order book is committed *before* a SoDEX round trip
   (`scripts/predict-trade.mjs`), then `scripts/record-fill.mjs` reads the fills of exactly the buy and the sell order
-  (SoDEX's public account-trades endpoint, filtered by orderID) and `lib/trade-record.ts` grades the attempt:
+  (SoDEX's public account-trades endpoint; it ignores the orderID filter, so the script keeps only fills with the matching orderID) and `lib/trade-record.ts` grades the attempt:
   complete only if both orders filled on the predicted market and side, after the predicted book, with fees in the
   base or quote coin and under one lot step left; otherwise partial or failed. It counts as verified only if complete
   and GitHub's server time for the push of the prediction commit (activity API) is before the first fill. Every

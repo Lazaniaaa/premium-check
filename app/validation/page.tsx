@@ -433,9 +433,14 @@ export default function Validation() {
       </p>
 
       <h2 id="trade">3. Prediction vs a real SoDEX fill</h2>
-      {trades.length === 0 ? (
-        <div className="card">
-          <b>0 verified round trips so far.</b> The protocol, fixed before the first trade:
+      {trades.map((t) => (
+        <TradeTable key={t.predictionFile} t={t} />
+      ))}
+      <div className="card">
+          <b>
+            {verifiedTrades.length} verified round trip{verifiedTrades.length === 1 ? "" : "s"} so far.
+          </b>{" "}
+          The protocol, fixed before the first trade:
           <ol className="notes" style={{ marginTop: 6 }}>
             <li>
               <a href={`${REPO_URL}/blob/main/scripts/predict-trade.mjs`}>scripts/predict-trade.mjs</a> saves the prediction,
@@ -445,7 +450,9 @@ export default function Validation() {
             <li>A taker buy at market, then the bought quantity sold back at market, within seconds.</li>
             <li>
               <a href={`${REPO_URL}/blob/main/scripts/record-fill.mjs`}>scripts/record-fill.mjs</a> reads the fills of
-              exactly the two orders (SoDEX&apos;s public account-trades endpoint, filtered by orderID) and{" "}
+              exactly the two orders (SoDEX&apos;s public account-trades endpoint; it ignored the orderID filter and returned
+              the account&apos;s other fills too, so the script keeps only fills with the matching orderID and saves the raw
+              responses unfiltered) and{" "}
               <a href={`${REPO_URL}/blob/main/lib/trade-record.ts`}>lib/trade-record.ts</a> grades the attempt:{" "}
               <b>complete</b> only if both orders filled on the predicted market and side, after the predicted book, with
               fees in BTC or USDC and less than one lot step of BTC left; otherwise <b>partial</b> or <b>failed</b>. Only
@@ -456,10 +463,7 @@ export default function Validation() {
             An $11 trade fits inside the best price level, so it checks spread, side of the book, lot rounding and fees — not
             depth. Depth is shown from the live book on the Execution tab.
           </span>
-        </div>
-      ) : (
-        trades.map((t) => <TradeTable key={t.predictionFile} t={t} />)
-      )}
+      </div>
 
       <h2 id="limits">4. What history can&apos;t test</h2>
       <div className="card">

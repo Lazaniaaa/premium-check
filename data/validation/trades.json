@@ -1,1 +1,60 @@
-[]
+[
+  {
+    "status": "complete",
+    "verified": true,
+    "reasons": [],
+    "symbol": "vBTC_vUSDC",
+    "usd": 11,
+    "predictionFile": "data/validation/predictions/2026-11-26T21-45-21-904Z.json",
+    "predictionCommit": "5f45e4b",
+    "predictionPushedAt": "2026-11-26T21:46:46.000Z",
+    "predictedAt": "2026-11-26T21:45:21.904Z",
+    "firstFillAt": "2026-11-26T21:48:28.668Z",
+    "lastFillAt": "2026-11-26T21:48:37.744Z",
+    "bookToBuySeconds": 186.764,
+    "buyToSellSeconds": 9.076,
+    "account": "0x896e10Eed096499beEd252A2154455aF46f75A5F",
+    "accountID": null,
+    "tradeIds": [
+      3392618,
+      3392620
+    ],
+    "feeRates": {
+      "model": 0.00065,
+      "symbol": 0.00065
+    },
+    "stepSize": 0.00001,
+    "buy": {
+      "orderID": 8333009507,
+      "fills": 1,
+      "predictedVwap": 60834,
+      "actualVwap": 60861,
+      "diffBps": 4.438307525396982,
+      "qty": 0.00018,
+      "feePaid": 1.17e-7,
+      "feeAsset": "vBTC",
+      "feeRate": 0.00065,
+      "makerFills": 0
+    },
+    "sell": {
+      "orderID": 8333011944,
+      "fills": 1,
+      "predictedVwap": 60832.99999999999,
+      "actualVwap": 60856,
+      "diffBps": -3.7808426347553596,
+      "qty": 0.00017,
+      "feePaid": 0.00672459,
+      "feeAsset": "vUSDC",
+      "feeRate": 0.00065,
+      "makerFills": 0
+    },
+    "usdcSpent": 10.95498,
+    "usdcReturned": 10.338795412,
+    "baseLeft": 0.000009883,
+    "predictedCostUsd": 0.014471296060824979,
+    "actualCostUsd": 0.014744740000001144,
+    "predictedCostBps": 13.155723691659071,
+    "actualCostBps": 13.459394722766397,
+    "note": "SoDEX's endpoint returned 2 fill(s) of other orders in the two responses (it ignored the orderID filter); only fills with the matching orderID are used. Raw responses are kept unfiltered."
+  }
+]

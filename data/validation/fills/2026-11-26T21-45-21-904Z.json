@@ -1,0 +1,71 @@
+{
+ "fetchedAt": "2026-11-26T21:52:21.260Z",
+ "account": "0x896e10Eed096499beEd252A2154455aF46f75A5F",
+ "accountID": null,
+ "buyOrder": "8333009507",
+ "sellOrder": "8333011944",
+ "buy": {
+  "code": 0,
+  "timestamp": 1795729940163,
+  "data": [
+   {
+    "symbol": "vBTC_vUSDC",
+    "tradeID": 3392620,
+    "orderID": 8333011944,
+    "clOrdID": "web_1795729717825_of2g5o",
+    "side": "SELL",
+    "price": "60856",
+    "quantity": "0.00017",
+    "fee": "0.006724588",
+    "feeCoin": "vUSDC",
+    "time": 1795729717744,
+    "isMaker": false
+   },
+   {
+    "symbol": "vBTC_vUSDC",
+    "tradeID": 3392618,
+    "orderID": 8333009507,
+    "clOrdID": "web_1795729707522_b7rexs",
+    "side": "BUY",
+    "price": "60861",
+    "quantity": "0.00018",
+    "fee": "0.000000117",
+    "feeCoin": "vBTC",
+    "time": 1795729708668,
+    "isMaker": false
+   }
+  ]
+ },
+ "sell": {
+  "code": 0,
+  "timestamp": 1795729940562,
+  "data": [
+   {
+    "symbol": "vBTC_vUSDC",
+    "tradeID": 3392620,
+    "orderID": 8333011944,
+    "clOrdID": "web_1795729717825_of2g5o",
+    "side": "SELL",
+    "price": "60856",
+    "quantity": "0.00017",
+    "fee": "0.006724588",
+    "feeCoin": "vUSDC",
+    "time": 1795729717744,
+    "isMaker": false
+   },
+   {
+    "symbol": "vBTC_vUSDC",
+    "tradeID": 3392618,
+    "orderID": 8333009507,
+    "clOrdID": "web_1795729707522_b7rexs",
+    "side": "BUY",
+    "price": "60861",
+    "quantity": "0.00018",
+    "fee": "0.000000117",
+    "feeCoin": "vBTC",
+    "time": 1795729708668,
+    "isMaker": false
+   }
+  ]
+ }
+}
