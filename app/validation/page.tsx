@@ -453,7 +453,7 @@ export default function Validation() {
             </li>
           </ol>
           <span className="sub">
-            A $20 trade fits inside the best price level, so it checks spread, side of the book, lot rounding and fees — not
+            An $11 trade fits inside the best price level, so it checks spread, side of the book, lot rounding and fees — not
             depth. Depth is shown from the live book on the Execution tab.
           </span>
         </div>
