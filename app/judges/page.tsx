@@ -47,7 +47,8 @@ export default async function Judges() {
       <h1>For judges: Premium Check in 60 seconds</h1>
       <p className="lede">
         One question: <b>what does it really cost to hold BTC or ETH</b> — SoDEX spot or perps, a spot ETF, or a
-        treasury stock — for my amount and holding period? Everything is live; nothing needs a login.
+        treasury stock — for my amount and holding period? Everything is live; nothing needs a login.{" "}
+        <a href="https://youtu.be/zV3PFn8o5NA">Watch the 90-second demo video</a>.
       </p>
 
       <div className="card">
